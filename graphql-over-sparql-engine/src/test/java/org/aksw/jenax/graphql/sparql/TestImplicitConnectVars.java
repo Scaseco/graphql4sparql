@@ -1,7 +1,11 @@
 package org.aksw.jenax.graphql.sparql;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
 
 import org.aksw.jenax.graphql.sparql.v2.util.ElementUtils;
 import org.apache.jena.sparql.algebra.Algebra;
@@ -11,8 +15,6 @@ import org.apache.jena.sparql.core.Var;
 import org.apache.jena.sparql.engine.Rename;
 import org.apache.jena.sparql.lang.arq.ParserARQ;
 import org.apache.jena.sparql.syntax.Element;
-import org.junit.Assert;
-import org.junit.Test;
 
 public class TestImplicitConnectVars {
 
@@ -89,7 +91,7 @@ public class TestImplicitConnectVars {
         List<Var> expected = expectedVarNames == null ? null : Var.varList(Arrays.asList(expectedVarNames));
         Element elt = ParserARQ.parseElement(eltStr);
         List<Var> actual = ElementUtils.inferConnecVars(elt);
-        Assert.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
 }

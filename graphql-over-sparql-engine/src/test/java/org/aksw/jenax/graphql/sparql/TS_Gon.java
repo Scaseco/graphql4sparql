@@ -1,10 +1,13 @@
 package org.aksw.jenax.graphql.sparql;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Objects;
 
+import org.junit.jupiter.api.Test;
+
 import org.aksw.jenax.graphql.sparql.v2.gon.model.GonProvider;
-import org.junit.Assert;
-import org.junit.Test;
 
 public abstract class TS_Gon<K, V> {
     protected GonProvider<K, V> provider;
@@ -17,27 +20,27 @@ public abstract class TS_Gon<K, V> {
     @Test
     public void testObject() {
         Object obj = provider.newObject();
-        Assert.assertTrue(provider.isObject(obj));
-        Assert.assertFalse(provider.isArray(obj));
-        Assert.assertFalse(provider.isLiteral(obj));
-        Assert.assertFalse(provider.isNull(obj));
+        assertTrue(provider.isObject(obj));
+        assertFalse(provider.isArray(obj));
+        assertFalse(provider.isLiteral(obj));
+        assertFalse(provider.isNull(obj));
     }
 
     @Test
     public void testArray() {
         Object arr = provider.newArray();
-        Assert.assertFalse(provider.isObject(arr));
-        Assert.assertTrue(provider.isArray(arr));
-        Assert.assertFalse(provider.isLiteral(arr));
-        Assert.assertFalse(provider.isNull(arr));
+        assertFalse(provider.isObject(arr));
+        assertTrue(provider.isArray(arr));
+        assertFalse(provider.isLiteral(arr));
+        assertFalse(provider.isNull(arr));
     }
 
     @Test
     public void testNull() {
         Object nil = provider.newNull();
-        Assert.assertFalse(provider.isObject(nil));
-        Assert.assertFalse(provider.isArray(nil));
-        Assert.assertFalse(provider.isLiteral(nil));
-        Assert.assertTrue(provider.isNull(nil));
+        assertFalse(provider.isObject(nil));
+        assertFalse(provider.isArray(nil));
+        assertFalse(provider.isLiteral(nil));
+        assertTrue(provider.isNull(nil));
     }
 }

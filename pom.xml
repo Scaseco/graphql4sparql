@@ -13,7 +13,8 @@
 	<version>6.0.0-1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>GraphQL over SPARQL System</name>
-	<description>GraphQL-to-SPARQL rewrite system and schema generator. Based on Apache Jena.</description>
+	<description>GraphQL-to-SPARQL rewrite system and schema generator. Based on
+		Apache Jena.</description>
 	<url>https://github.com/Scaseco/graphql-over-sparql</url>
 	<issueManagement>
 		<url>https://github.com/Scaseco/graphql-over-sparql/issues</url>
@@ -29,7 +30,8 @@
 	<scm>
 		<url>https://github.com/Scaseco/jenax</url>
 		<connection>scm:git:git://github.com/Scaseco/graphql-over-sparql.git</connection>
-		<developerConnection>scm:git:git@github.com:Scaseco/graphql-over-sparql.git</developerConnection>
+		<developerConnection>
+			scm:git:git@github.com:Scaseco/graphql-over-sparql.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 	<developers>
@@ -40,21 +42,23 @@
 			<organizationUrl>http://aksw.org</organizationUrl>
 		</developer>
 	</developers>
-        <modules>
+	<modules>
 		<module>graphql-over-sparql-legacy</module>
-                <module>graphql-over-sparql-utils</module>
-                <module>graphql-over-sparql-schemagen</module>
-                <module>graphql-over-sparql-engine</module>
-                <module>graphql-over-sparql-ui</module>
-                <module>graphql-over-sparql-fuseki-mod</module>
-        </modules>
+		<module>graphql-over-sparql-utils</module>
+		<module>graphql-over-sparql-schemagen</module>
+		<module>graphql-over-sparql-engine</module>
+		<module>graphql-over-sparql-ui</module>
+		<module>graphql-over-sparql-fuseki-mod</module>
+	</modules>
 	<properties>
-	    <!--
+		<!--
 		<slf4j.version>2.0.17</slf4j.version>
 		<log4j.version>2.25.3</log4j.version>
 		-->
 		<jena.version>6.0.0</jena.version>
 		<jenax.version>6.0.0-1-SNAPSHOT</jenax.version>
+
+		<junit.version>6.0.2</junit.version>
 
 		<javaee-api.version>6.0</javaee-api.version>
 		<!-- Project Settings -->
@@ -69,7 +73,7 @@
 	</properties>
 	<dependencyManagement>
 		<dependencies>
-            <dependency>
+			<dependency>
 				<groupId>org.apache.jena</groupId>
 				<artifactId>apache-jena-libs</artifactId>
 				<version>${jena.version}</version>
@@ -77,13 +81,22 @@
 				<type>pom</type>
 			</dependency>
 
-            <dependency>
+			<dependency>
 				<groupId>org.aksw.jenax</groupId>
 				<artifactId>jenax-bom</artifactId>
 				<version>${jenax.version}</version>
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
+
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit-bom</artifactId>
+				<version>${junit.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 	<distributionManagement>
@@ -217,7 +230,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.0.0-M1</version>
+				<version>3.5.4</version>
 				<!-- <configuration> <skipTests>false</skipTests>
 				</configuration> -->
 			</plugin>

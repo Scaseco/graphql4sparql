@@ -1,8 +1,11 @@
 package org.aksw.jenax.graphql.sparql;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import org.aksw.jenax.graphql.sparql.v2.gon.model.GonProviderJava;
-import org.junit.Assert;
-import org.junit.Test;
 
 public class TestGonJava
     extends TS_Gon<String, Object>
@@ -28,10 +31,10 @@ public class TestGonJava
     @Test
     public void testLiteral() {
         Object lit = provider.newLiteral("test");
-        Assert.assertFalse(provider.isObject(lit));
-        Assert.assertFalse(provider.isArray(lit));
-        Assert.assertTrue(provider.isLiteral(lit));
-        Assert.assertFalse(provider.isNull(lit));
+        assertFalse(provider.isObject(lit));
+        assertFalse(provider.isArray(lit));
+        assertTrue(provider.isLiteral(lit));
+        assertFalse(provider.isNull(lit));
     }
 }
 

@@ -1,16 +1,17 @@
 package org.aksw.jenax.graphql.sparql;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFParser;
 import org.apache.jena.sparql.core.DatasetGraph;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 public class TestGraphQlToSparqlMultiVars {
     public static DatasetGraph testDsg;
 
-    @BeforeClass
+    @BeforeAll
     public static void tearUp() {
         testDsg = RDFParser.fromString(
                 """
@@ -31,7 +32,7 @@ public class TestGraphQlToSparqlMultiVars {
             .toDatasetGraph();
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         testDsg = null;
     }

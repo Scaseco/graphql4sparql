@@ -1,7 +1,16 @@
 package org.aksw.jenax.graphql.sparql;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.util.Iterator;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+
+import org.junit.jupiter.api.Test;
 
 import org.aksw.jenax.graphql.sparql.v2.exec.api.low.GraphQlFieldExec;
 import org.aksw.jenax.graphql.sparql.v2.exec.api.low.RdfGraphQlProcessorFactoryImpl;
@@ -21,13 +30,6 @@ import org.aksw.jenax.graphql.util.GraphQlUtils;
 import org.apache.jena.graph.Node;
 import org.apache.jena.sparql.exec.QueryExec;
 import org.apache.jena.sparql.path.P_Path0;
-import org.junit.Assert;
-import org.junit.Test;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonPrimitive;
 
 import graphql.language.AstComparator;
 import graphql.language.Document;
@@ -458,7 +460,7 @@ public class TestGraphQlTransform {
         Document actualDoc = GraphQlUtils.applyTransform(inputDoc, transform);
         // System.out.println(AstPrinter.printAst(actualDoc));
 
-        Assert.assertTrue(AstComparator.isEqual(actualDoc, expectedDoc));
+        assertTrue(AstComparator.isEqual(actualDoc, expectedDoc));
     }
 
 }

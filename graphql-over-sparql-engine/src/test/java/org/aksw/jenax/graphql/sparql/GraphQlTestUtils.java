@@ -1,6 +1,11 @@
 package org.aksw.jenax.graphql.sparql;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Iterator;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 
 import org.aksw.jenax.graphql.sparql.v2.exec.api.low.GraphQlFieldExec;
 import org.aksw.jenax.graphql.sparql.v2.exec.api.low.RdfGraphQlProcessorFactoryImpl;
@@ -10,10 +15,6 @@ import org.aksw.jenax.graphql.sparql.v2.ron.RdfElement;
 import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.sparql.exec.QueryExec;
 import org.apache.jena.sparql.path.P_Path0;
-import org.junit.Assert;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 
 public class GraphQlTestUtils {
     private static Gson gson = new Gson();
@@ -40,7 +41,7 @@ public class GraphQlTestUtils {
             }
         }
 
-        Assert.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     public static void doAssertRon(DatasetGraph dataset, String documentStr, String expectedResult) {
@@ -65,7 +66,7 @@ public class GraphQlTestUtils {
             }
         }
 
-        Assert.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
 
@@ -91,6 +92,6 @@ public class GraphQlTestUtils {
             }
         }
 
-        Assert.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 }

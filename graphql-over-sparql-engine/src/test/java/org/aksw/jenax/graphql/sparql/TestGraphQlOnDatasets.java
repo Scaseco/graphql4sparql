@@ -1,15 +1,16 @@
 package org.aksw.jenax.graphql.sparql;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFParser;
 import org.apache.jena.sparql.core.DatasetGraph;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 public class TestGraphQlOnDatasets {
     public static DatasetGraph testDsg;
 
-    @BeforeClass
+    @BeforeAll
     public static void tearUp() {
         testDsg = RDFParser.fromString(
                 """

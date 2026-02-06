@@ -1,11 +1,12 @@
 package org.aksw.jenax.graphql.sparql;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFParser;
 import org.apache.jena.sparql.core.DatasetGraph;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 /** Tests where fields access variables of ancestors (not just immediate parents). */
 public class TestGraphQlVarAccess {
@@ -24,12 +25,12 @@ public class TestGraphQlVarAccess {
         return result;
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void tearUp() {
         testDsg = createTestData();
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         testDsg = null;
     }

@@ -6,6 +6,10 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 
+import com.google.gson.JsonElement;
+
+import org.junit.jupiter.api.Test;
+
 import org.aksw.jenax.graphql.sparql.v2.exec.api.high.GraphQlExec;
 import org.aksw.jenax.graphql.sparql.v2.exec.api.high.GraphQlExecFactory;
 import org.aksw.jenax.graphql.sparql.v2.exec.api.low.GraphQlFieldExecImpl;
@@ -20,9 +24,6 @@ import org.aksw.jenax.graphql.util.GraphQlUtils;
 import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.sparql.core.DatasetGraphFactory;
 import org.apache.jena.sparql.exec.QueryExec;
-import org.junit.Test;
-
-import com.google.gson.JsonElement;
 
 import graphql.language.Document;
 import graphql.parser.Parser;

@@ -1,12 +1,13 @@
 package org.aksw.jenax.graphql.sparql;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFParser;
 import org.apache.jena.sparql.core.DatasetGraph;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
 
 public class TestGraphQlArray {
 
@@ -26,12 +27,12 @@ public class TestGraphQlArray {
         return result;
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void tearUp() {
         testDsg = createTestData();
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         testDsg = null;
     }
@@ -116,7 +117,7 @@ public class TestGraphQlArray {
      *   Should &commat;array on query level causes the query to return an array?
      */
     @Test
-    @Ignore
+    @Disabled
     public void testArray03() {
         GraphQlTestUtils.doAssertJson(testDsg,
             """

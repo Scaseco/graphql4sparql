@@ -1,13 +1,14 @@
 package org.aksw.jenax.graphql.sparql;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 import org.aksw.jenax.graphql.sparql.v2.schema.GraphQlSchemaUtils;
 import org.aksw.jenax.graphql.sparql.v2.schema.SchemaNavigator;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFParser;
 import org.apache.jena.sparql.core.DatasetGraph;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 import graphql.language.Document;
 import graphql.parser.Parser;
@@ -15,7 +16,7 @@ import graphql.parser.Parser;
 public class TestGraphQlInlineFragments {
     public static DatasetGraph testDsg;
 
-    @BeforeClass
+    @BeforeAll
     public static void tearUp() {
         testDsg = RDFParser.fromString(
                 """
@@ -78,7 +79,7 @@ public class TestGraphQlInlineFragments {
             .listEdges().forEach(x -> System.out.println(x.getFieldDefinition()));
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         testDsg = null;
     }

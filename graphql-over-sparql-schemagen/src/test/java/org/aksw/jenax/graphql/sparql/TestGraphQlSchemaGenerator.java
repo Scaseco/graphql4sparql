@@ -1,7 +1,13 @@
 package org.aksw.jenax.graphql.sparql;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
 import java.util.Objects;
+
+import org.junit.jupiter.api.Test;
 
 import org.aksw.jenax.arq.util.prefix.ShortNameMgr;
 import org.aksw.jenax.arq.util.prefix.ShortNameMgr.Name;
@@ -12,8 +18,6 @@ import org.aksw.jenax.graphql.util.GraphQlUtils;
 import org.apache.jena.graph.Graph;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFParserBuilder;
-import org.junit.Assert;
-import org.junit.Test;
 
 import graphql.language.AstPrinter;
 import graphql.language.Document;
@@ -89,10 +93,10 @@ public class TestGraphQlSchemaGenerator {
         ShortNameMgr nameMgr = new ShortNameMgr(GraphQlUtils::safeName);
         Name n1 = nameMgr.allocate("https://www.openstreetmap.org/wiki/Key:old:uic_ref");
         Name n2 = nameMgr.allocate("https://www.openstreetmap.org/wiki/Key:old_uic_ref");
-        Assert.assertNotEquals(n1.shortName(), n2.shortName());
-        Assert.assertNotEquals(n1.localName(), n2.localName());
-        Assert.assertEquals(n1.prefix(), n2.prefix());
-        Assert.assertEquals(n1.ns(), n2.ns());
+        assertNotEquals(n1.shortName(), n2.shortName());
+        assertNotEquals(n1.localName(), n2.localName());
+        assertEquals(n1.prefix(), n2.prefix());
+        assertEquals(n1.ns(), n2.ns());
     }
 
     private static void test(String dataStr) {
@@ -122,7 +126,7 @@ public class TestGraphQlSchemaGenerator {
             System.err.println("Actual:");
             System.err.println(AstPrinter.printAst(copyDoc));
         }
-        Assert.assertTrue(isEquals);
+        assertTrue(isEquals);
         return originalDoc;
     }
 }

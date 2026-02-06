@@ -1,9 +1,9 @@
 package org.aksw.jenax.graphql.sparql;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import org.aksw.jenax.fuseki.mod.graphql.ServerUtils;
 import org.aksw.jenax.web.servlet.graphql.GraphQlUi;
@@ -13,12 +13,12 @@ import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.sparql.core.DatasetGraphFactory;
 import org.apache.jena.vocabulary.RDF;
 
-@Ignore("Test must build or unpack a Fuseki config")
+@Disabled("Test must build or unpack a Fuseki config")
 public class TestGraphQLFuseki {
     private DatasetGraph dsg;
     private FusekiServer server;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         dsg = DatasetGraphFactory.create();
         setupTestData(dsg);
@@ -65,7 +65,7 @@ public class TestGraphQLFuseki {
 //        GeometryGenerator.generateGraph(dsg.getGraph(graphName1), envelope, conf);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         server.stop();
     }

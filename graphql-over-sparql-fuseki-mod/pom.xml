@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>graphql-over-sparql-fuseki-mod</artifactId>
-        <name>graphql-over-sparql-fmod</name>
+        <name>graphql-over-sparql-fuseki-mod</name>
 	<description>GraphQL Fuseki Module</description>
 
 	<parent>
-		<groupId>org.aksw.jenax</groupId>
-		<artifactId>jenax-graphql-v2-parent</artifactId>
+		<groupId>org.aksw.graphql-over-sparql</groupId>
+		<artifactId>graphql-over-sparql-parent</artifactId>
 		<version>6.0.0-1-SNAPSHOT</version>
 	</parent>
 
@@ -57,8 +57,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

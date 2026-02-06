@@ -9,8 +9,8 @@
 	<packaging>jar</packaging>
 
 	<parent>
-		<groupId>org.aksw.jenax</groupId>
-		<artifactId>jenax-graphql-v2-parent</artifactId>
+		<groupId>org.aksw.graphql-over-sparql</groupId>
+		<artifactId>graphql-over-sparql-parent</artifactId>
 		<version>6.0.0-1-SNAPSHOT</version>
 	</parent>
 
@@ -38,8 +38,8 @@
 
 		<!-- Unit Testing -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
 

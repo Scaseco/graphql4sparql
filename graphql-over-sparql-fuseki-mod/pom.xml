@@ -4,8 +4,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>graphql-over-sparql-fmod</artifactId>
-    <name>graphql-over-sparql-fmod</name>
+	<artifactId>graphql-over-sparql-fuseki-mod</artifactId>
+        <name>graphql-over-sparql-fmod</name>
 	<description>GraphQL Fuseki Module</description>
 
 	<parent>

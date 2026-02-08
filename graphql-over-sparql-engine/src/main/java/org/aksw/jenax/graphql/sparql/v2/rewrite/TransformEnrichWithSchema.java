@@ -35,9 +35,13 @@ public class TransformEnrichWithSchema
 
     public TraversalControl enterQuery(OperationDefinition node, TraverserContext<Node> context) {
         if (!context.isVisited()) {
-            SchemaNode schemaNode = schemaNavigator.getOrCreateSchemaNode("Query");
-            context.setVar(SchemaNode.class, schemaNode);
-
+            try {
+                SchemaNode schemaNode = schemaNavigator.getOrCreateSchemaNode("Query");
+                context.setVar(SchemaNode.class, schemaNode);
+            } catch (Exception e) {
+                // If there is no query node in the schema then abort.
+                return TraversalControl.ABORT;
+            }
 //            RewriteResult<K> rr = context.getVarFromParents(RewriteResult.class);
 //            // Directive stateIdDirective = GraphQlUtils.expectAtMostOneDirective(node, "globalId");
 //            String stateId = readStateId(node);

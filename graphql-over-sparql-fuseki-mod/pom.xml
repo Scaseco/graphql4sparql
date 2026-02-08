@@ -29,33 +29,19 @@
 			<artifactId>graphql-over-sparql-ui</artifactId>
 		</dependency>
 
-        <!-- TODO This dep should go away once the GraphQlExecUtils has been migrated to engine (or client) module -->
-		<dependency>
-			<groupId>org.aksw.graphql-over-sparql</groupId>
-			<artifactId>graphql-over-sparql-legacy</artifactId>
-		</dependency>
-
-
-		<!-- Temporary dependency for the newer GraphQL frontend; needs to be
-		separated from the server -->
-		<!--		<dependency>-->
-		<!--			<groupId>org.aksw.jenax</groupId>-->
-		<!--			<artifactId>jenax-server-core</artifactId>-->
-		<!--		</dependency>-->
-
 		<dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>jena-fuseki-server</artifactId>
 			<scope>compile</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>jakarta.servlet</groupId>
-			<artifactId>jakarta.servlet-api</artifactId>
-			<!-- Override currently needed because of jenax and fuseki server differences - jenax should migrate to fuseki. -->
-			<version>6.1.0</version>
-			<scope>compile</scope>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>jakarta.servlet</groupId>-->
+<!--			<artifactId>jakarta.servlet-api</artifactId>-->
+<!--			 Override currently needed because of jenax and fuseki server differences - jenax should migrate to fuseki. -->
+<!--			<version>6.1.0</version>-->
+<!--			<scope>compile</scope>-->
+<!--		</dependency>-->
 
 		<dependency>
 			<groupId>org.aksw.jenax</groupId>

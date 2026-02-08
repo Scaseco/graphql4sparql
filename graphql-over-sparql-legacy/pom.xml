@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>graphql-over-sparql-legacy</artifactId>
-        <name>graphql-over-sparql-legacy</name>
+	<name>graphql-over-sparql-legacy</name>
 	<packaging>jar</packaging>
 
 	<parent>
@@ -21,7 +21,8 @@
 			<artifactId>graphql-java</artifactId>
 		</dependency>
 
-		<!-- Plugins bundle is needed for schema generator; specifically the norse:set extensions -->
+		<!-- Plugins bundle is needed for schema generator; specifically the
+		norse:set extensions -->
 		<dependency>
 			<groupId>org.aksw.jenax</groupId>
 			<artifactId>jenax-arq-plugins-bundle</artifactId>
@@ -66,7 +67,7 @@
 		<dependency>
 			<groupId>org.aksw.jenax</groupId>
 			<artifactId>jenax-models-polyfill</artifactId>
-			<scope>test</scope>	
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

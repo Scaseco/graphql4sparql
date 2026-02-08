@@ -107,14 +107,16 @@ public class TestGraphQLFuseki {
             Lang.TURTLE).toModel();
 
         String[] argv = new String[] { "--empty" };
+        int port = 3033;
         server = FusekiMain.builder(FusekiModules.getSystemModules(), argv).parseConfig(configModel)
+                .port(port)
                 // .parseConfigFile("/home/raven/Repositories/coypu/fuseki-with-jenax/run/config.ttl")
                 // .addServlet("graphql.bundle.js", serv)
-                // .staticFileBase("/home/raven/Projects/Eclipse/jenax/jenax-graphql-parent/jenax-graphql-v2-parent/jenax-graphql-v2-ui/frontend/build")
+                // .staticFileBase("jenax/jenax-graphql-parent/jenax-graphql-v2-parent/jenax-graphql-v2-ui/frontend/build")
                 // .staticFileBase(Path.of("").toAbsolutePath().toString())
-                .add("test", dsg).build();
+                .build();
         server.start();
-        int port = server.getPort();
+        // int port = server.getPort();
         String serverUrl = "http://localhost:" + port + "/";
         String sparqlQueryUrl = serverUrl + "graphql-test";
         String sparqlUpdateUrl = serverUrl + "graphql-test/update";

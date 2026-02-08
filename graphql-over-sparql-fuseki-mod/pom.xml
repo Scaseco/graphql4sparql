@@ -20,14 +20,21 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.aksw.jenax</groupId>
-			<artifactId>jenax-graphql-v2-engine</artifactId>
+			<groupId>org.aksw.graphql-over-sparql</groupId>
+			<artifactId>graphql-over-sparql-engine</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.aksw.jenax</groupId>
-			<artifactId>jenax-graphql-v2-ui</artifactId>
+			<groupId>org.aksw.graphql-over-sparql</groupId>
+			<artifactId>graphql-over-sparql-ui</artifactId>
 		</dependency>
+
+        <!-- TODO This dep should go away once the GraphQlExecUtils has been migrated to engine (or client) module -->
+		<dependency>
+			<groupId>org.aksw.graphql-over-sparql</groupId>
+			<artifactId>graphql-over-sparql-legacy</artifactId>
+		</dependency>
+
 
 		<!-- Temporary dependency for the newer GraphQL frontend; needs to be
 		separated from the server -->

@@ -97,6 +97,35 @@
 				<scope>import</scope>
 			</dependency>
 
+			<dependency>
+				<groupId>org.aksw.graphql-over-sparql</groupId>
+				<artifactId>graphql-over-sparql-legacy</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aksw.graphql-over-sparql</groupId>
+				<artifactId>graphql-over-sparql-utils</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aksw.graphql-over-sparql</groupId>
+				<artifactId>graphql-over-sparql-engine</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aksw.graphql-over-sparql</groupId>
+				<artifactId>graphql-over-sparql-ui</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aksw.graphql-over-sparql</groupId>
+				<artifactId>graphql-over-sparql-fuseki-mod</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<distributionManagement>

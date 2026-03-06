@@ -3,14 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<!-- <parent> <groupId>org.aksw.jenax</groupId>
-	<artifactId>jenax-parent</artifactId>
-        <name>jenax-parent</name> 
-		<version>4.5.0-1-SNAPSHOT</version> </parent>
-	<artifactId>jenax-bom</artifactId> -->
 	<groupId>org.aksw.graphql-over-sparql</groupId>
 	<artifactId>graphql-over-sparql-parent</artifactId>
-	<version>6.0.0-1-SNAPSHOT</version>
+	<version>6.1.0-1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>GraphQL over SPARQL System</name>
 	<description>GraphQL-to-SPARQL rewrite system and schema generator. Based on
@@ -43,7 +38,7 @@
 		</developer>
 	</developers>
 	<modules>
-		<module>graphql-over-sparql-legacy</module>
+		<!--		<module>graphql-over-sparql-legacy</module>-->
 		<module>graphql-over-sparql-utils</module>
 		<module>graphql-over-sparql-schemagen</module>
 		<module>graphql-over-sparql-engine</module>
@@ -56,7 +51,8 @@
 		<log4j.version>2.25.3</log4j.version>
 		-->
 		<jena.version>6.0.0</jena.version>
-		<jenax.version>6.0.0-1-SNAPSHOT</jenax.version>
+		<graphql.version>22.1</graphql.version>
+		<!--		<jenax.version>6.0.0-1-SNAPSHOT</jenax.version>-->
 
 		<junit.version>6.0.2</junit.version>
 
@@ -80,14 +76,30 @@
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
+			<dependency>
+				<groupId>org.apache.jena</groupId>
+				<artifactId>jena-arq</artifactId>
+				<version>${jena.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.jena</groupId>
+				<artifactId>jena-fuseki-server</artifactId>
+				<version>${jena.version}</version>
+			</dependency>
 
 			<dependency>
-				<groupId>org.aksw.jenax</groupId>
-				<artifactId>jenax-bom</artifactId>
-				<version>${jenax.version}</version>
-				<scope>import</scope>
-				<type>pom</type>
+				<groupId>com.graphql-java</groupId>
+				<artifactId>graphql-java</artifactId>
+				<version>${graphql.version}</version>
 			</dependency>
+
+			<!--			<dependency>-->
+			<!--				<groupId>org.aksw.jenax</groupId>-->
+			<!--				<artifactId>jenax-bom</artifactId>-->
+			<!--				<version>${jenax.version}</version>-->
+			<!--				<scope>import</scope>-->
+			<!--				<type>pom</type>-->
+			<!--			</dependency>-->
 
 			<dependency>
 				<groupId>org.junit</groupId>

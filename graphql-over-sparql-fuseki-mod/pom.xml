@@ -5,17 +5,17 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>graphql-over-sparql-fuseki-mod</artifactId>
-        <name>graphql-over-sparql-fuseki-mod</name>
+	<name>graphql-over-sparql-fuseki-mod</name>
 	<description>GraphQL Fuseki Module</description>
 
 	<parent>
 		<groupId>org.aksw.graphql-over-sparql</groupId>
 		<artifactId>graphql-over-sparql-parent</artifactId>
-		<version>6.0.0-1-SNAPSHOT</version>
+		<version>6.1.0-1-SNAPSHOT</version>
 	</parent>
 
 	<properties>
-		<automatic.module.name>org.apache.jena.fuseki.graphql</automatic.module.name>
+		<automatic.module.name>org.apache.jena.fuseki.graphql-over-sparql</automatic.module.name>
 	</properties>
 
 	<dependencies>
@@ -32,21 +32,6 @@
 		<dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>jena-fuseki-server</artifactId>
-			<scope>compile</scope>
-		</dependency>
-
-<!--		<dependency>-->
-<!--			<groupId>jakarta.servlet</groupId>-->
-<!--			<artifactId>jakarta.servlet-api</artifactId>-->
-<!--			 Override currently needed because of jenax and fuseki server differences - jenax should migrate to fuseki. -->
-<!--			<version>6.1.0</version>-->
-<!--			<scope>compile</scope>-->
-<!--		</dependency>-->
-
-		<dependency>
-			<groupId>org.aksw.jenax</groupId>
-			<artifactId>jenax-resources-test-config</artifactId>
-			<scope>test</scope>
 		</dependency>
 
 		<dependency>
@@ -81,13 +66,6 @@
 					<artifactId>jena-arq</artifactId>
 					<scope>provided</scope>
 				</dependency>
-				<!--
-				<dependency>
-					<groupId>org.apache.jena</groupId>
-					<artifactId>jena-fuseki-main</artifactId>
-					<scope>provided</scope>
-				</dependency>
-				-->
 				<dependency>
 					<groupId>org.apache.jena</groupId>
 					<artifactId>jena-fuseki-server</artifactId>
@@ -104,18 +82,6 @@
 					<artifactId>slf4j-api</artifactId>
 					<scope>provided</scope>
 				</dependency>
-
-<!--		<dependency>-->
-<!--			<groupId>org.apache.jena</groupId>-->
-<!--			<artifactId>jena-geosparql</artifactId>-->
-<!--					<scope>provided</scope>-->
-<!--		</dependency>-->
-
-				<!--				<dependency>-->
-				<!--					<groupId>org.apache.jena</groupId>-->
-				<!--					<artifactId>jena-geosparql</artifactId>-->
-				<!--					<scope>provided</scope>-->
-				<!--				</dependency>-->
 			</dependencies>
 			<build>
 				<plugins>
@@ -130,12 +96,9 @@
 								</goals>
 								<configuration>
 									<transformers>
-										<transformer
-											implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
-										<transformer
-											implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer" />
-										<transformer
-											implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer">
+										<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+										<transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer" />
+										<transformer implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer">
 											<addHeader>false</addHeader>
 										</transformer>
 									</transformers>

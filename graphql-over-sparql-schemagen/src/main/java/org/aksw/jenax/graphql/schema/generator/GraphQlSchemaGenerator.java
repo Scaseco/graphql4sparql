@@ -16,19 +16,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.aksw.jenax.arq.util.node.NodeCollection;
-import org.aksw.jenax.arq.util.prefix.ShortNameMgr;
-import org.aksw.jenax.dataaccess.sparql.datasource.RDFDataSource;
+import org.aksw.commons.utils.trie.ShortNameMgr;
 import org.aksw.jenax.graphql.util.GraphQlUtils;
-import org.aksw.jenax.stmt.core.SparqlStmtMgr;
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.NodeFactory;
-import org.apache.jena.query.Query;
-import org.apache.jena.sparql.algebra.Table;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-
+import graphql.com.google.common.collect.HashMultimap;
+import graphql.com.google.common.collect.Multimap;
 import graphql.language.Argument;
 import graphql.language.Definition;
 import graphql.language.Directive;
@@ -78,6 +72,7 @@ public class GraphQlSchemaGenerator {
     /** Artificial classes referred to by their properties. */
     protected Map<Set<PropertyInfo>, Node> propertiesToStructuralClass = new LinkedHashMap<>();
 
+    /* Non-standard SPARQL-based version. Should go to a JenaX binding.
     public static List<TypeInfo> summarize(RDFDataSource dataSource) {
         Query dataSummary = SparqlStmtMgr.loadQuery("data-summary.rq");
         Table table = dataSource.asLinkSource().newQuery().query(dataSummary).table();
@@ -91,9 +86,9 @@ public class GraphQlSchemaGenerator {
             (Set<Node>)NodeCollection.extractOrNull(b.get("allTgtDTypes")),
             ((Number)b.get("maxTgtDCard").getLiteral().getValue()).longValue() > 1))
         .toList();
-
         return result;
     }
+    */
 
     public GraphQlSchemaGenerator() {
         this(null);

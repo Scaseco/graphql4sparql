@@ -9,11 +9,11 @@ import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
-import org.aksw.jenax.arq.util.prefix.ShortNameMgr;
-import org.aksw.jenax.arq.util.prefix.ShortNameMgr.Name;
-import org.aksw.jenax.dataaccess.sparql.linksource.RDFLinkSources;
+import org.aksw.commons.utils.trie.ShortNameMgr;
+import org.aksw.commons.utils.trie.ShortNameMgr.Name;
 import org.aksw.jenax.graphql.schema.generator.GraphQlSchemaGenerator;
 import org.aksw.jenax.graphql.schema.generator.GraphQlSchemaGenerator.TypeInfo;
+import org.aksw.jenax.graphql.schema.generator.GraphQlSchemaSummarizer;
 import org.aksw.jenax.graphql.util.GraphQlUtils;
 import org.apache.jena.graph.Graph;
 import org.apache.jena.riot.Lang;
@@ -101,7 +101,7 @@ public class TestGraphQlSchemaGenerator {
 
     private static void test(String dataStr) {
         Graph graph = RDFParserBuilder.create().fromString(dataStr).lang(Lang.TURTLE).toGraph();
-        List<TypeInfo> types = GraphQlSchemaGenerator.summarize(RDFLinkSources.of(graph).asDataSource());
+        List<TypeInfo> types = GraphQlSchemaSummarizer.summarize(graph);
         System.out.println("Begin of summary:");
         types.forEach(t -> System.out.println(t));
         System.out.println("End of summary.");

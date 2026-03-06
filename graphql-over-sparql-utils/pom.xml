@@ -5,13 +5,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>graphql-over-sparql-utils</artifactId>
-    <name>graphql-over-sparql-utils</name>
+	<name>graphql-over-sparql-utils</name>
 	<packaging>jar</packaging>
 
 	<parent>
-		<groupId>org.aksw.jenax</groupId>
-		<artifactId>jenax-graphql-v2-parent</artifactId>
-		<version>6.0.0-1-SNAPSHOT</version>
+		<groupId>org.aksw.graphql-over-sparql</groupId>
+		<artifactId>graphql-over-sparql-parent</artifactId>
+		<version>6.1.0-1-SNAPSHOT</version>
 	</parent>
 
 	<dependencies>
@@ -27,17 +27,10 @@
 
 		<!-- Unit Testing -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>org.aksw.jenax</groupId>
-			<artifactId>jenax-resources-test-config</artifactId>
-			<scope>test</scope>
-		</dependency>
-
 	</dependencies>
 </project>
 

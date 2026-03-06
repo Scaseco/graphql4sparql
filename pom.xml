@@ -44,6 +44,7 @@
 		<module>graphql-over-sparql-engine</module>
 		<module>graphql-over-sparql-ui</module>
 		<module>graphql-over-sparql-fuseki-mod</module>
+		<module>graphql-over-sparql-bom</module>
 	</modules>
 	<properties>
 		<!--

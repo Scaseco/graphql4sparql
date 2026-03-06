@@ -33,6 +33,10 @@ public class GraphQlSchemaSummarizer {
             Node s = sIt.next();
             Set<Node> sTypes = getTypesOf(graph, s);
             Map<Node, StatAccumulator> accs = sTypesToAccs.computeIfAbsent(sTypes, st -> new HashMap<>());
+
+            Map<Node, Long> pToLiteralCount = new HashMap<>();
+            Map<Node, Long> pToResourceCount = new HashMap<>();
+
             Iterator<Triple> tIt = graph.find(s, Node.ANY, Node.ANY);
             try { while (tIt.hasNext()) {
                 Triple t = tIt.next();
@@ -46,13 +50,24 @@ public class GraphQlSchemaSummarizer {
                         : XSD.xstring.asNode(); // or use RDF plain literal marker
 
                     acc.literalDatatypes.add(dt);
-                    ++acc.literalCountPerSubject;
+                    pToLiteralCount.merge(p, 1l, Long::sum);
                 } else {
                     Set<Node> oTypes = getTypesOf(graph, o);
                     acc.resourceTypes.addAll(oTypes);
-                    ++acc.resourceObjectsPerSubject;
+                    pToResourceCount.merge(p, 1l, Long::sum);
                 }
             } } finally { Iter.close(tIt); }
+
+            for (var e : pToResourceCount.entrySet()) {
+                Node pp = e.getKey();
+                StatAccumulator pAcc = accs.get(pp);
+                pAcc.resourceObjectsPerSubject = Math.max(pAcc.resourceObjectsPerSubject, e.getValue());
+            }
+            for (var e : pToLiteralCount.entrySet()) {
+                Node pp = e.getKey();
+                StatAccumulator pAcc = accs.get(pp);
+                pAcc.literalCountPerSubject = Math.max(pAcc.literalCountPerSubject, e.getValue());
+            }
         } } finally { Iter.close(sIt); }
 
         // Convert accumulators to result records

@@ -11,7 +11,7 @@
 	<parent>
 		<groupId>org.aksw.graphql-over-sparql</groupId>
 		<artifactId>graphql-over-sparql-parent</artifactId>
-		<version>6.1.0-1-SNAPSHOT</version>
+		<version>6.0.0-1-SNAPSHOT</version>
 	</parent>
 
 	<properties>

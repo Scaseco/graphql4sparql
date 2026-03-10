@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.aksw.graphql-over-sparql</groupId>
 	<artifactId>graphql-over-sparql-parent</artifactId>
-	<version>6.1.0-1-SNAPSHOT</version>
+	<version>6.0.0-1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>GraphQL over SPARQL System</name>
 	<description>GraphQL-to-SPARQL rewrite system and schema generator. Based on
@@ -55,14 +55,12 @@
 		<graphql.version>22.1</graphql.version>
 		<!--		<jenax.version>6.0.0-1-SNAPSHOT</jenax.version>-->
 
-		<junit.version>6.0.2</junit.version>
+		<junit.version>6.0.3</junit.version>
 
 		<javaee-api.version>6.0</javaee-api.version>
 		<!-- Project Settings -->
 		<maven.compiler.release>21</maven.compiler.release>
-		<!-- <maven.compiler.target>17</maven.compiler.target> -->
-		<!--
-		<java.version.javadoc>http://java.sun.com/javase/9/docs/api/</java.version.javadoc> -->
+
 		<file.encoding>UTF-8</file.encoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

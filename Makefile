@@ -16,27 +16,17 @@ loud = echo "@@" $(1);$(1)
 help:   ## Show these help instructions
 	@sed -rn 's/^([a-zA-Z_-]+):.*?## (.*)$$/"\1" "\2"/p' < $(MAKEFILE_LIST) | xargs printf "make %-20s# %s\n"
 
-distjar-fmod: ## Create only the standalone jar-with-dependencies for the Fuseki Mod
+uberjar-fuseki-mod: ## Create only the standalone jar-with-dependencies for the Fuseki Mod
 	$(MCCS) $(POM) package -Pbundle -pl :graphql-over-sparql-pkg-fuseki-mod -am $(ARGS)
-	file=`find '$(CWD)/graphql-over-sparql--pkg-parent/graphql-over-sparql-pkg-fuseki-mod/target' -name '*-jar-with-dependencies.jar'`
+	file=`find '$(CWD)/graphql-over-sparql-pkg-parent/graphql-over-sparql-pkg-fuseki-mod/target' -name '*-jar-with-dependencies.jar'`
 	printf '\nCreated package:\n\n%s\n\n' "$$file"
 
 release-github: SHELL:=/bin/bash
 release-github: ## Create files for Github upload
 	@set -eu
 	ver=$(VER)
-	$(call loud,$(MAKE) deb-rebuild)
-	p1=`find rdf-processing-toolkit-pkg-parent/rdf-processing-toolkit-pkg-deb-cli/target | grep '\.deb$$'`
-	$(call loud,cp "$$p1" "rpt-$${ver/-/\~}.deb")
-	$(call loud,$(MAKE) rpm-rebuild)
-	p1=`find rdf-processing-toolkit-pkg-parent/rdf-processing-toolkit-pkg-rpm-cli/target | grep '\.rpm$$'`
-	$(call loud,cp "$$p1" "rpt-$$ver.rpm")
-	$(call loud,$(MAKE) distjar)
-	file=`find '$(CWD)/rdf-processing-toolkit-pkg-parent/rdf-processing-toolkit-pkg-uberjar-cli/target' -name '*-jar-with-dependencies.jar'`
-	$(call loud,cp "$$file" "rpt-$$ver.jar")
-	$(call loud,$(MAKE) docker)
-	$(call loud,docker tag aksw/rpt aksw/rpt:$$ver)
-	$(call loud,gh release create v$$ver "rpt-$${ver/-/\~}.deb" "rpt-$$ver.rpm" "rpt-$$ver.jar")
-	$(call loud,docker push aksw/rpt:$$ver)
-	$(call loud,docker push aksw/rpt)
+	$(call loud,$(MAKE) uberjar-fuseki-mod)
+	file=`find '$(CWD)/graphql-over-sparql-pkg-parent/graphql-over-sparql-pkg-fuseki-mod/target' -name '*-jar-with-dependencies.jar'`
+	$(call loud,cp "$$file" "graphql-over-sparql-fuseki-mod-$$ver.jar")
+	$(call loud,gh release create v$$ver "graphql-over-sparql-fuseki-mod-$$ver.jar")
 

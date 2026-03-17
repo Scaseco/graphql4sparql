@@ -28,13 +28,6 @@
 		<dependency>
 			<groupId>org.aksw.commons</groupId>
 			<artifactId>aksw-commons-utils-trie</artifactId>
-			<version>0.9.12-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.aksw.commons</groupId>
-			<artifactId>aksw-commons-collectors</artifactId>
-			<version>0.9.12-SNAPSHOT</version>
 		</dependency>
 
 		<!-- Plugins bundle is needed for schema generator; specifically the

@@ -119,11 +119,13 @@
 				<scope>import</scope>
 			</dependency>
 
+			<!--
 			<dependency>
 				<groupId>org.aksw.graphql-over-sparql</groupId>
 				<artifactId>graphql-over-sparql-legacy</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			-->
 
 			<dependency>
 				<groupId>org.aksw.graphql-over-sparql</groupId>

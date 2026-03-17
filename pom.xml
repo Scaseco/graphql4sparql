@@ -45,6 +45,8 @@
 		<module>graphql-over-sparql-ui</module>
 		<module>graphql-over-sparql-fuseki-mod</module>
 		<module>graphql-over-sparql-bom</module>
+		<module>graphql-over-sparql-pkg-parent</module>
+		<module>graphql-over-sparql-release-dummy</module>
 	</modules>
 	<properties>
 		<jena.version>6.0.0</jena.version>
@@ -53,10 +55,10 @@
 		<junit.version>6.1.0-M1</junit.version>
 
 		<javaee-api.version>6.0</javaee-api.version>
-		
-<!--		<slf4j.version>2.0.17</slf4j.version>-->
-<!--		<log4j.version>2.25.3</log4j.version>-->
-		
+
+		<!--		<slf4j.version>2.0.17</slf4j.version>-->
+		<!--		<log4j.version>2.25.3</log4j.version>-->
+
 		<maven-surefire-plugin.version>3.5.5</maven-surefire-plugin.version>
 		<maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
 		<maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
@@ -66,9 +68,10 @@
 		<gitflow-maven-plugin.version>1.21.0</gitflow-maven-plugin.version>
 		<maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
 		<maven-source-plugin.version>3.4.0</maven-source-plugin.version>
-		
+		<maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
+
 		<lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
-		
+
 		<!-- Project Settings -->
 		<maven.compiler.release>21</maven.compiler.release>
 		<file.encoding>UTF-8</file.encoding>
@@ -89,6 +92,12 @@
 				<groupId>org.apache.jena</groupId>
 				<artifactId>jena-arq</artifactId>
 				<version>${jena.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.jena</groupId>
+				<artifactId>jena-tdb2</artifactId>
+				<version>${jena.version}</version>
+				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.jena</groupId>
@@ -237,6 +246,12 @@
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>${maven-deploy-plugin.version}</version>
+			</plugin>
+
 			<!-- Solution from
 			http://stackoverflow.com/questions/4725668/how-to-deploy-snapshot-with-sources-and-javadoc -->
 			<plugin>

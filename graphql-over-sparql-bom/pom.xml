@@ -6,7 +6,7 @@
 
 	<artifactId>graphql-over-sparql-bom</artifactId>
 	<name>graphql-over-sparql-bom</name>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 
 	<parent>
 		<groupId>org.aksw.graphql-over-sparql</groupId>

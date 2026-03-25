@@ -4,13 +4,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>graphql4sparql-schemagen</artifactId>
-	<name>graphql4sparql-schemagen</name>
+	<artifactId>graphql4sparql-schemagen-core</artifactId>
+	<name>graphql4sparql-schemagen-core</name>
 	<packaging>jar</packaging>
 
 	<parent>
 		<groupId>org.aksw.graphql4sparql</groupId>
-		<artifactId>graphql4sparql-parent</artifactId>
+		<artifactId>graphql4sparql-schemagen-parent</artifactId>
 		<version>6.0.0-1-SNAPSHOT</version>
 	</parent>
 

@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 import org.aksw.jenax.graphql.schema.generator.GraphQlSchemaGenerator;
 import org.aksw.jenax.graphql.schema.generator.GraphQlSchemaGenerator.TypeInfo;
 import org.aksw.jenax.graphql.schema.generator.GraphQlSchemaSummarizer;
+import org.aksw.jenax.graphql.sparql.v2.schema.GraphQlSchemaUtils;
 import org.aksw.jenax.graphql.util.GraphQlUtils;
 import org.apache.jena.graph.Graph;
 import org.apache.jena.graph.Node;
@@ -23,6 +24,7 @@ import org.apache.jena.system.G;
 import org.apache.jena.vocabulary.RDFS;
 
 import graphql.language.AstPrinter;
+import graphql.language.Definition;
 import graphql.language.Document;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -35,8 +37,10 @@ public class CmdGraphQlSchemaGen
     @Option(names = { "-h", "--help" }, usageHelp = true)
     public boolean help = false;
 
-//    @Mixin
-//    public CmdMixinSparqlDataset sparqlDataset = new CmdMixinSparqlDataset();
+    @Option(names = "--meta", negatable = true,
+        defaultValue = "true", fallbackValue = "true",
+        description = "Include meta schema definitions. True by default.")
+    public boolean includeMetaSchemaDefinitions;
 
     @Option(names = { "-l", "--label-source" }, description = "An RDF document with labels for the classes and properties. Local names will be used as fallback.")
     public String labelSource;
@@ -74,8 +78,21 @@ public class CmdGraphQlSchemaGen
             };
 
         GraphQlSchemaGenerator generator = new GraphQlSchemaGenerator(iriToLabel);
-        Document doc = generator.process(types);
-        String str = AstPrinter.printAst(doc);
+        Document schemaDoc = generator.process(types);
+
+        if (includeMetaSchemaDefinitions) {
+            Document metaDoc = GraphQlSchemaUtils.loadMetaSchema();
+
+            List<Definition> mergedDefinitions = new ArrayList<>();
+            mergedDefinitions.addAll(metaDoc.getDefinitions());
+            mergedDefinitions.addAll(schemaDoc.getDefinitions());
+
+            // Create a new merged document
+            Document mergedDoc = GraphQlSchemaUtils.merge(metaDoc, schemaDoc);
+            schemaDoc = GraphQlSchemaUtils.harmonize(mergedDoc);
+        }
+
+        String str = AstPrinter.printAst(schemaDoc);
 
         try (Writer writer = new OutputStreamWriter(StdIoUtils.openStdOutWithCloseShield())) {
             writer.write(str);

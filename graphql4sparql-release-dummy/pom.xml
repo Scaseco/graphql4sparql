@@ -4,20 +4,20 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>graphql-over-sparql-release-dummy</artifactId>
+	<artifactId>graphql4sparql-release-dummy</artifactId>
 	<packaging>jar</packaging>
 
 	<parent>
-		<groupId>org.aksw.graphql-over-sparql</groupId>
-		<artifactId>graphql-over-sparql-parent</artifactId>
+		<groupId>org.aksw.graphql4sparql</groupId>
+		<artifactId>graphql4sparql-parent</artifactId>
 		<version>6.0.0-1-SNAPSHOT</version>
 	</parent>
 
 	<dependencies>
 		<!-- Artifact not uploaded, so we shouldn't depend on it.
 		<dependency>
-			<groupId>org.aksw.graphql-over-sparql</groupId>
-			<artifactId>graphql-over-sparql-pkg-fuseki-mod</artifactId>
+			<groupId>org.aksw.graphql4sparql</groupId>
+			<artifactId>graphql4sparql-pkg-fuseki-mod</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		-->

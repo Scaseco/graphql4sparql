@@ -3,16 +3,15 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.aksw.graphql-over-sparql</groupId>
-	<artifactId>graphql-over-sparql-parent</artifactId>
+	<groupId>org.aksw.graphql4sparql</groupId>
+	<artifactId>graphql4sparql-parent</artifactId>
 	<version>6.0.0-1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>GraphQL over SPARQL System</name>
-	<description>GraphQL-to-SPARQL rewrite system and schema generator. Based on
-		Apache Jena.</description>
-	<url>https://github.com/Scaseco/graphql-over-sparql</url>
+	<description>GraphQL-to-SPARQL rewrite engine and schema generator. Based on Apache Jena.</description>
+	<url>https://github.com/Scaseco/graphql4sparql</url>
 	<issueManagement>
-		<url>https://github.com/Scaseco/graphql-over-sparql/issues</url>
+		<url>https://github.com/Scaseco/graphql4sparql/issues</url>
 		<system>GitHub</system>
 	</issueManagement>
 	<licenses>
@@ -24,9 +23,9 @@
 	</licenses>
 	<scm>
 		<url>https://github.com/Scaseco/jenax</url>
-		<connection>scm:git:git://github.com/Scaseco/graphql-over-sparql.git</connection>
+		<connection>scm:git:git://github.com/Scaseco/graphql4sparql.git</connection>
 		<developerConnection>
-			scm:git:git@github.com:Scaseco/graphql-over-sparql.git</developerConnection>
+			scm:git:git@github.com:Scaseco/graphql4sparql.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 	<developers>
@@ -38,15 +37,15 @@
 		</developer>
 	</developers>
 	<modules>
-		<!--		<module>graphql-over-sparql-legacy</module>-->
-		<module>graphql-over-sparql-utils</module>
-		<module>graphql-over-sparql-schemagen</module>
-		<module>graphql-over-sparql-engine</module>
-		<module>graphql-over-sparql-ui</module>
-		<module>graphql-over-sparql-fuseki-mod</module>
-		<module>graphql-over-sparql-bom</module>
-		<module>graphql-over-sparql-pkg-parent</module>
-		<module>graphql-over-sparql-release-dummy</module>
+		<!--		<module>graphql4sparql-legacy</module>-->
+		<module>graphql4sparql-utils</module>
+		<module>graphql4sparql-schemagen</module>
+		<module>graphql4sparql-engine</module>
+		<module>graphql4sparql-ui</module>
+		<module>graphql4sparql-fuseki-mod</module>
+		<module>graphql4sparql-bom</module>
+		<module>graphql4sparql-pkg-parent</module>
+		<module>graphql4sparql-release-dummy</module>
 	</modules>
 	<properties>
 		<jena.version>6.0.0</jena.version>
@@ -130,33 +129,33 @@
 
 			<!--
 			<dependency>
-				<groupId>org.aksw.graphql-over-sparql</groupId>
-				<artifactId>graphql-over-sparql-legacy</artifactId>
+				<groupId>org.aksw.graphql4sparql</groupId>
+				<artifactId>graphql4sparql-legacy</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			-->
 
 			<dependency>
-				<groupId>org.aksw.graphql-over-sparql</groupId>
-				<artifactId>graphql-over-sparql-utils</artifactId>
+				<groupId>org.aksw.graphql4sparql</groupId>
+				<artifactId>graphql4sparql-utils</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>org.aksw.graphql-over-sparql</groupId>
-				<artifactId>graphql-over-sparql-engine</artifactId>
+				<groupId>org.aksw.graphql4sparql</groupId>
+				<artifactId>graphql4sparql-engine</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>org.aksw.graphql-over-sparql</groupId>
-				<artifactId>graphql-over-sparql-ui</artifactId>
+				<groupId>org.aksw.graphql4sparql</groupId>
+				<artifactId>graphql4sparql-ui</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>org.aksw.graphql-over-sparql</groupId>
-				<artifactId>graphql-over-sparql-fuseki-mod</artifactId>
+				<groupId>org.aksw.graphql4sparql</groupId>
+				<artifactId>graphql4sparql-fuseki-mod</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>

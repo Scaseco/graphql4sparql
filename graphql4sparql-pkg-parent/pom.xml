@@ -4,18 +4,18 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>graphql-over-sparql-pkg-parent</artifactId>
-  <name>graphql-over-sparql-pkg-parent</name>
+  <artifactId>graphql4sparql-pkg-parent</artifactId>
+  <name>graphql4sparql-pkg-parent</name>
   <packaging>pom</packaging>
 
   <parent>
-    <groupId>org.aksw.graphql-over-sparql</groupId>
-    <artifactId>graphql-over-sparql-parent</artifactId>
+    <groupId>org.aksw.graphql4sparql</groupId>
+    <artifactId>graphql4sparql-parent</artifactId>
     <version>6.0.0-1-SNAPSHOT</version>
   </parent>
 
   <modules>
-    <module>graphql-over-sparql-pkg-fuseki-mod</module>
+    <module>graphql4sparql-pkg-fuseki-mod</module>
   </modules>
 	
   <build>

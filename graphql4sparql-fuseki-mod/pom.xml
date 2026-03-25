@@ -4,29 +4,29 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>graphql-over-sparql-fuseki-mod</artifactId>
-	<name>graphql-over-sparql-fuseki-mod</name>
+	<artifactId>graphql4sparql-fuseki-mod</artifactId>
+	<name>graphql4sparql-fuseki-mod</name>
 	<description>GraphQL Fuseki Module</description>
 
 	<parent>
-		<groupId>org.aksw.graphql-over-sparql</groupId>
-		<artifactId>graphql-over-sparql-parent</artifactId>
+		<groupId>org.aksw.graphql4sparql</groupId>
+		<artifactId>graphql4sparql-parent</artifactId>
 		<version>6.0.0-1-SNAPSHOT</version>
 	</parent>
 
 	<properties>
-		<automatic.module.name>org.apache.jena.fuseki.graphql-over-sparql</automatic.module.name>
+		<automatic.module.name>org.apache.jena.fuseki.graphql4sparql</automatic.module.name>
 	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.aksw.graphql-over-sparql</groupId>
-			<artifactId>graphql-over-sparql-engine</artifactId>
+			<groupId>org.aksw.graphql4sparql</groupId>
+			<artifactId>graphql4sparql-engine</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.aksw.graphql-over-sparql</groupId>
-			<artifactId>graphql-over-sparql-ui</artifactId>
+			<groupId>org.aksw.graphql4sparql</groupId>
+			<artifactId>graphql4sparql-ui</artifactId>
 		</dependency>
 
 		<dependency>

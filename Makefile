@@ -17,8 +17,8 @@ help:   ## Show these help instructions
 	@sed -rn 's/^([a-zA-Z_-]+):.*?## (.*)$$/"\1" "\2"/p' < $(MAKEFILE_LIST) | xargs printf "make %-20s# %s\n"
 
 uberjar-fuseki-mod: ## Create only the standalone jar-with-dependencies for the Fuseki Mod
-	$(MCCS) $(POM) package -Pbundle -pl :graphql-over-sparql-pkg-fuseki-mod -am $(ARGS)
-	file=`find '$(CWD)/graphql-over-sparql-pkg-parent/graphql-over-sparql-pkg-fuseki-mod/target' -name '*-jar-with-dependencies.jar'`
+	$(MCCS) $(POM) package -Pbundle -pl :graphql4sparql-pkg-fuseki-mod -am $(ARGS)
+	file=`find '$(CWD)/graphql4sparql-pkg-parent/graphql4sparql-pkg-fuseki-mod/target' -name '*-jar-with-dependencies.jar'`
 	printf '\nCreated package:\n\n%s\n\n' "$$file"
 
 release-github: SHELL:=/bin/bash
@@ -26,7 +26,7 @@ release-github: ## Create files for Github upload
 	@set -eu
 	ver=$(VER)
 	$(call loud,$(MAKE) uberjar-fuseki-mod)
-	file=`find '$(CWD)/graphql-over-sparql-pkg-parent/graphql-over-sparql-pkg-fuseki-mod/target' -name '*-jar-with-dependencies.jar'`
-	$(call loud,cp "$$file" "graphql-over-sparql-fuseki-mod-$$ver.jar")
-	$(call loud,gh release create v$$ver "graphql-over-sparql-fuseki-mod-$$ver.jar")
+	file=`find '$(CWD)/graphql4sparql-pkg-parent/graphql4sparql-pkg-fuseki-mod/target' -name '*-jar-with-dependencies.jar'`
+	$(call loud,cp "$$file" "graphql4sparql-fuseki-mod-$$ver.jar")
+	$(call loud,gh release create v$$ver "graphql4sparql-fuseki-mod-$$ver.jar")
 

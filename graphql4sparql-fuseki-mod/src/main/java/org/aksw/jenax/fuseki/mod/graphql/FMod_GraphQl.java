@@ -47,9 +47,9 @@ import graphql.schema.idl.SchemaParser;
 import graphql.schema.idl.TypeDefinitionRegistry;
 
 public class FMod_GraphQl implements FusekiAutoModule {
-    public static final String NS = "https://w3id.org/aksw/norse#graphql.";
+    public static final String NS = "https://w3id.org/aksw/graphql4sparql/fuseki#";
 
-    public static final String OP_NAME = NS + "fmod.op";
+    public static final String OP_NAME = NS + "query";
 
     public static final Symbol SYM_GRAPHQL_SCHEMA_NAVIGATOR = Symbol.create(NS + "graphQlSchemaNavigator");
     public static final Symbol SYM_GRAPHQL_SCHEMA = Symbol.create(NS + "schemaFile");

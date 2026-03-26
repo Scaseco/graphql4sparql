@@ -26,23 +26,24 @@ into Fuseki's extension directory. This should enable configuration of the Graph
 
 The relevant Apache Jena Fuseki config is as follows.
 ```turtle
-PREFIX ja:  <http://jena.hpl.hp.com/2005/11/Assembler#>
-PREFIX g4s: <https://w3id.org/aksw/graphql4sparql/Assembler#>
+PREFIX ja:     <http://jena.hpl.hp.com/2005/11/Assembler#>
+PREFIX fuseki: <http://jena.apache.org/fuseki#>
+PREFIX g4sf:   <https://w3id.org/aksw/graphql4sparql/fuseki#>
 
 <#service> rdf:type fuseki:Service ;
   fuseki:name "graphql" ;
   fuseki:endpoint [ fuseki:operation fuseki:query ] ;
   fuseki:endpoint [
-    fuseki:operation g4s:graphql ;
+    fuseki:operation g4sf:query ;
     ja:context [
       # Optional schema file.
-      ja:cxtName g4s:schemaFile ;
+      ja:cxtName g4sf:schemaFile ;
       ja:cxtValue "/run/configuration/schema.graphql" ;
     ] ;
     ja:context [
       # This setting is only to show a link from the graphql HTML page to the SPARQL endpoint.
       # The actual query target is determined by the 'fuseki:dataset' setting below.
-      ja:cxtName g4s:sparqlQueryEndpoint" ;
+      ja:cxtName g4sf:sparqlQueryEndpoint" ;
       ja:cxtValue "/your-public-query-endpoint" ;
     ] ;
     ja:context [
@@ -54,7 +55,7 @@ PREFIX g4s: <https://w3id.org/aksw/graphql4sparql/Assembler#>
     ] ;
     ja:context [
       # Use this config to use YasGUI as the SPARQL viewer
-      ja:cxtName g4s:sparqlQueryViewer" ;
+      ja:cxtName g4sf:sparqlQueryViewer" ;
       ja:cxtValue "https://yasgui.triply.cc/#?query={ENCODED_SPARQL_QUERY}&endpoint={ENCODED_SPARQL_QUERY_ENDPOINT}" ] ;
     ] ;
   ] ;

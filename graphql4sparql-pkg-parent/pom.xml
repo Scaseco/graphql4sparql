@@ -2,33 +2,32 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-  <artifactId>graphql4sparql-pkg-parent</artifactId>
-  <name>graphql4sparql-pkg-parent</name>
-  <packaging>pom</packaging>
+	<artifactId>graphql4sparql-pkg-parent</artifactId>
+	<name>graphql4sparql-pkg-parent</name>
+	<packaging>pom</packaging>
 
-  <parent>
-    <groupId>org.aksw.graphql4sparql</groupId>
-    <artifactId>graphql4sparql-parent</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
-  </parent>
+	<parent>
+		<groupId>org.aksw.graphql4sparql</groupId>
+		<artifactId>graphql4sparql-parent</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+	</parent>
 
-  <modules>
-    <module>graphql4sparql-pkg-uberjar-cli</module>
-    <module>graphql4sparql-pkg-fuseki-mod</module>
-  </modules>
-	
-  <build>
-    <plugins> 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <configuration>
-          <skip>false</skip>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+	<modules>
+		<module>graphql4sparql-pkg-uberjar-cli</module>
+		<module>graphql4sparql-pkg-fuseki-mod</module>
+	</modules>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>false</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

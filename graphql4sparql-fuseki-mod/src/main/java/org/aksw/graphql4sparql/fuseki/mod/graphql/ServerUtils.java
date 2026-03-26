@@ -1,4 +1,4 @@
-package org.aksw.jenax.fuseki.mod.graphql;
+package org.aksw.graphql4sparql.fuseki.mod.graphql;
 
 import java.lang.invoke.MethodHandles;
 import java.net.URISyntaxException;

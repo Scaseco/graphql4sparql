@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.aksw.jenax.fuseki.mod.graphql;
+package org.aksw.graphql4sparql.fuseki.mod.graphql;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -45,6 +45,7 @@
 		<module>graphql4sparql-ui</module>
 		<module>graphql4sparql-fuseki-mod</module>
 		<module>graphql4sparql-bom</module>
+		<module>graphql4sparql-cli</module>
 		<module>graphql4sparql-pkg-parent</module>
 		<module>graphql4sparql-release-dummy</module>
 	</modules>
@@ -81,6 +82,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<gpg.keyname>AKSW</gpg.keyname>
+		
+		<!-- Build timestamp format (affects info in CLI tooling) -->
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+        <custom.build.timestamp>${maven.build.timestamp}</custom.build.timestamp>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -163,6 +168,12 @@
 			<dependency>
 				<groupId>org.aksw.graphql4sparql</groupId>
 				<artifactId>graphql4sparql-schemagen-cli</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aksw.graphql4sparql</groupId>
+				<artifactId>graphql4sparql-cli</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 

@@ -31,7 +31,7 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 @Command(name = "schemagen", description = "Generate a schema GraphQL Schema over RDF data in files or in a SPARQL endpoinst.")
-public class CmdGraphQlSchemaGen
+public class CmdGraphQl4SparqlSchemaGen
     implements Callable<Integer> {
 
     @Option(names = { "-h", "--help" }, usageHelp = true)

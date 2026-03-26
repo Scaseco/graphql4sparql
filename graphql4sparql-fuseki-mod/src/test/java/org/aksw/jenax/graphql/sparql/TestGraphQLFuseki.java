@@ -12,7 +12,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import org.aksw.jenax.fuseki.mod.graphql.ServerUtils;
+import org.aksw.graphql4sparql.fuseki.mod.graphql.ServerUtils;
 import org.aksw.jenax.graphql.sparql.v2.exec.api.high.GraphQlExec;
 import org.aksw.jenax.graphql.sparql.v2.exec.api.high.GraphQlExecFactory;
 import org.aksw.jenax.graphql.sparql.v2.gon.model.GonProviderGson;
@@ -160,11 +160,7 @@ public class TestGraphQLFuseki {
 
         GraphQlExecFactory qef = GraphQlExecFactory.of(() -> QueryExec.service(sparqlQueryUrl));
         String queryStr = """
-            query moviesSPO @debug @pretty
-              @prefix(map: {
-                wd: "http://www.wikidata.org/entity/"
-                wdt: "http://www.wikidata.org/prop/direct/"
-              })
+            query spo @debug @pretty
             {
               subjects(limit: 10) @pattern(of: "SELECT DISTINCT ?s1 {?s1 ?p ?o }", to: "s1") @index(by: "?s1", oneIf: "true") {
                 predicates @pattern(of: "?s2 ?p2 ?o2", from: "s2", to: ["s2", "p2"]) @index(by: "?p2", oneIf: "true") {

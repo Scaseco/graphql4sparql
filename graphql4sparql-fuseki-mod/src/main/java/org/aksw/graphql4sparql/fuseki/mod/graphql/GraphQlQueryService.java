@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.aksw.jenax.fuseki.mod.graphql;
+package org.aksw.graphql4sparql.fuseki.mod.graphql;
 
 import java.io.IOException;
 import java.io.InputStream;

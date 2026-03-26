@@ -12,10 +12,14 @@
 		<version>6.0.0-1-SNAPSHOT</version>
 	</parent>
 
+	<properties>
+		<finalName>graphql4sparql-cli-${project.version}</finalName>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.aksw.graphql4sparql</groupId>
-			<artifactId>graphql4sparql-schemagen-cli</artifactId>
+			<artifactId>graphql4sparql-cli</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -54,6 +58,7 @@
 									<goal>shade</goal>
 								</goals>
 								<configuration>
+								    <finalName>${project.artifactId}-${project.version}-all</finalName>
 									<shadedArtifactAttached>true</shadedArtifactAttached>
 									<shadedClassifierName>jar-with-dependencies</shadedClassifierName>
 									<filters>
@@ -74,7 +79,7 @@
 											implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 											<manifestEntries>
 												<Main-Class>
-													org.aksw.graphql4sparql.schemagen.cli.main.MainCliGraphQlSchemaGen</Main-Class>
+													org.aksw.graphql4sparql.cli.main.MainCliGraphQl4Sparql</Main-Class>
 												<Multi-Release>true</Multi-Release>
 											</manifestEntries>
 										</transformer>

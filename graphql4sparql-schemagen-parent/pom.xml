@@ -17,7 +17,6 @@
 	<modules>
 		<module>graphql4sparql-schemagen-core</module>
 		<module>graphql4sparql-schemagen-cmds</module>
-		<module>graphql4sparql-schemagen-cli</module>
 	</modules>
 </project>
 

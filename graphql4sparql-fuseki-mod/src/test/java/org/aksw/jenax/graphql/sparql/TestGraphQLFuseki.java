@@ -63,7 +63,7 @@ public class TestGraphQLFuseki {
         // System.setProperty("FUSEKI_BASE",
         // "/home/raven/Repositories/coypu/fuseki-with-jenax/run/configuration");
 
-        Model configModel = RDFParser.fromString("""
+        String configStr = """
             PREFIX xdt:       <http://jsa.aksw.org/dt/sparql/>
             PREFIX rdf:       <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
             PREFIX rdfs:      <http://www.w3.org/2000/01/rdf-schema#>
@@ -74,19 +74,34 @@ public class TestGraphQLFuseki {
             PREFIX ja:        <http://jena.hpl.hp.com/2005/11/Assembler#>
             PREFIX geosparql: <http://jena.apache.org/geosparql#>
             PREFIX fuseki:    <http://jena.apache.org/fuseki#>
-            PREFIX norse:     <https://w3id.org/aksw/norse#>
+            PREFIX g4sf:      <https://w3id.org/aksw/graphql4sparql/fuseki#>
 
             <#service> rdf:type fuseki:Service ;
               fuseki:name "graphql-test" ;
               fuseki:dataset <#ds1> ;
               fuseki:endpoint [
                 fuseki:name "graphql" ;
-                fuseki:operation norse:graphql.fmod.op ;
-                # ja:context [ ja:cxtName "https://w3id.org/aksw/norse#graphql.schemaFile" ; ja:cxtValue "/run/configuration/mobydex.graphql" ];
-                # ja:context [ ja:cxtName "https://w3id.org/aksw/norse#graphql.schemaFile"          ; ja:cxtValue "/run/configuration/coypu.graphql" ] ;
-                ja:context [ ja:cxtName "https://w3id.org/aksw/norse#graphql.sparqlQueryEndpoint" ; ja:cxtValue "/mobydex" ] ;
-                ja:context [ ja:cxtName "https://w3id.org/aksw/norse#graphql.sparqlQueryViewer"   ; ja:cxtValue "https://yasgui.triply.cc/#?query={ENCODED_SPARQL_QUERY}&endpoint={ENCODED_SPARQL_QUERY_ENDPOINT}" ] ;
-                # ja:context [ ja:cxtName "https://w3id.org/aksw/norse#graphql.sparqlQueryViewer"   ; ja:cxtValue "/#/dataset/coypu/query?query={ENCODED_SPARQL_QUERY}" ] ;
+                fuseki:operation g4sf:query ;
+                # ja:context [
+                #   ja:cxtName g4sf:schemaFile ;
+                #   ja:cxtValue "/run/configuration/mobydex.graphql" ;
+                # ];
+                # ja:context [
+                #   ja:cxtName g4sf:schemaFile ;
+                #   ja:cxtValue "/run/configuration/coypu.graphql" ;
+                # ] ;
+                ja:context [
+                  ja:cxtName g4sf:sparqlQueryEndpoint ;
+                  ja:cxtValue "/mobydex" ;
+                ] ;
+                ja:context [
+                  ja:cxtName g4sf:sparqlQueryViewer ;
+                  ja:cxtValue "https://yasgui.triply.cc/#?query={ENCODED_SPARQL_QUERY}&endpoint={ENCODED_SPARQL_QUERY_ENDPOINT}"
+                ] ;
+                # ja:context [
+                #   ja:cxtName g4sf:sparqlQueryViewer ;
+                #   ja:cxtValue "/#/dataset/coypu/query?query={ENCODED_SPARQL_QUERY}" ;
+                # ] ;
               ] ;
               fuseki:endpoint [
                 fuseki:operation fuseki:query ;
@@ -103,8 +118,13 @@ public class TestGraphQLFuseki {
               .
 
               <#ds1> a ja:MemoryDataset .
-            """,
-            Lang.TURTLE).toModel();
+            """;
+
+        // Only Jena 6.1.0+ supports IRIs for ja:cxtName
+        configStr = configStr.replaceAll("(ja:cxtName\\s+)g4sf:(\\w+)", "$1'https://w3id.org/aksw/graphql4sparql/fuseki#$2'");
+        // System.err.println(configStr);
+
+        Model configModel = RDFParser.fromString(configStr, Lang.TURTLE).toModel();
 
         String[] argv = new String[] { "--empty" };
         int port = 3033;

@@ -12,13 +12,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.aksw.graphql4sparql.engine.exec.api.high.GraphQlExec;
+import org.aksw.graphql4sparql.engine.exec.api.high.GraphQlExecFactory;
+import org.aksw.graphql4sparql.engine.gon.model.GonProviderGson;
+import org.aksw.graphql4sparql.engine.io.GraphQlIoBridge;
+import org.aksw.graphql4sparql.engine.io.ObjectNotationWriterInMemory;
 import org.aksw.graphql4sparql.fuseki.mod.graphql.ServerUtils;
-import org.aksw.jenax.graphql.sparql.v2.exec.api.high.GraphQlExec;
-import org.aksw.jenax.graphql.sparql.v2.exec.api.high.GraphQlExecFactory;
-import org.aksw.jenax.graphql.sparql.v2.gon.model.GonProviderGson;
-import org.aksw.jenax.graphql.sparql.v2.io.GraphQlIoBridge;
-import org.aksw.jenax.graphql.sparql.v2.io.ObjectNotationWriterInMemory;
-import org.aksw.jenax.web.servlet.graphql.GraphQlUi;
+import org.aksw.graphql4sparql.ui.GraphQl4SparqlUi;
 import org.apache.jena.fuseki.main.FusekiMain;
 import org.apache.jena.fuseki.main.FusekiServer;
 import org.apache.jena.fuseki.main.sys.FusekiModules;
@@ -50,7 +50,7 @@ public class TestGraphQLFuseki {
     public void setUp() throws Exception {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        String graphQlUiResource = ServerUtils.getExternalForm(GraphQlUi.class);
+        String graphQlUiResource = ServerUtils.getExternalForm(GraphQl4SparqlUi.class);
         // System.out.println(getExternalForm(GraphQlUi.class));
 
 //        if (true) {

@@ -11,10 +11,10 @@ import org.junit.jupiter.api.Test;
 
 import org.aksw.commons.utils.trie.ShortNameMgr;
 import org.aksw.commons.utils.trie.ShortNameMgr.Name;
+import org.aksw.graphql4sparql.util.GraphQlUtils;
 import org.aksw.jenax.graphql.schema.generator.GraphQlSchemaGenerator;
 import org.aksw.jenax.graphql.schema.generator.GraphQlSchemaGenerator.TypeInfo;
 import org.aksw.jenax.graphql.schema.generator.GraphQlSchemaSummarizer;
-import org.aksw.jenax.graphql.util.GraphQlUtils;
 import org.apache.jena.graph.Graph;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFParserBuilder;

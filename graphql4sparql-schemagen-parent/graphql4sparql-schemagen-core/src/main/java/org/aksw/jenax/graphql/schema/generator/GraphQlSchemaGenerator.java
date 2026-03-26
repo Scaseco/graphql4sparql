@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.aksw.commons.utils.trie.ShortNameMgr;
-import org.aksw.jenax.graphql.util.GraphQlUtils;
+import org.aksw.graphql4sparql.util.GraphQlUtils;
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.NodeFactory;
 

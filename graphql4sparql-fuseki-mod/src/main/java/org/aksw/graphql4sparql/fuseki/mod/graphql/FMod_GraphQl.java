@@ -23,9 +23,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import org.aksw.jenax.graphql.sparql.v2.schema.GraphQlSchemaUtils;
-import org.aksw.jenax.graphql.sparql.v2.schema.SchemaNavigator;
-import org.aksw.jenax.web.servlet.graphql.GraphQlUi;
+import org.aksw.graphql4sparql.engine.schema.GraphQlSchemaUtils;
+import org.aksw.graphql4sparql.engine.schema.SchemaNavigator;
+import org.aksw.graphql4sparql.ui.GraphQl4SparqlUi;
 import org.apache.jena.fuseki.Fuseki;
 import org.apache.jena.fuseki.FusekiException;
 import org.apache.jena.fuseki.auth.AuthPolicy;
@@ -88,7 +88,7 @@ public class FMod_GraphQl implements FusekiAutoModule {
                 if (jsBundleBytes == null) {
                     String jsBundleName = "static/graphql/mui/graphql.bundle.js";
                     try {
-                        jsBundleBytes = IO2.readResourceAsBytes(GraphQlUi.class, jsBundleName);
+                        jsBundleBytes = IO2.readResourceAsBytes(GraphQl4SparqlUi.class, jsBundleName);
                     } catch (IOException e) {
                         throw new FusekiException(e);
                     }

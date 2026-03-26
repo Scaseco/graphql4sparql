@@ -24,12 +24,12 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
-import org.aksw.jenax.graphql.sparql.v2.exec.api.high.GraphQlExec;
-import org.aksw.jenax.graphql.sparql.v2.exec.api.high.GraphQlExecBuilder;
-import org.aksw.jenax.graphql.sparql.v2.exec.api.high.GraphQlExecFactory;
-import org.aksw.jenax.graphql.sparql.v2.exec.api.high.GraphQlExecUtils;
-import org.aksw.jenax.graphql.sparql.v2.io.GraphQlJsonUtils;
-import org.aksw.jenax.graphql.sparql.v2.schema.SchemaNavigator;
+import org.aksw.graphql4sparql.engine.exec.api.high.GraphQlExec;
+import org.aksw.graphql4sparql.engine.exec.api.high.GraphQlExecBuilder;
+import org.aksw.graphql4sparql.engine.exec.api.high.GraphQlExecFactory;
+import org.aksw.graphql4sparql.engine.exec.api.high.GraphQlExecUtils;
+import org.aksw.graphql4sparql.engine.io.GraphQlJsonUtils;
+import org.aksw.graphql4sparql.engine.schema.SchemaNavigator;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.atlas.io.IO;
 import org.apache.jena.fuseki.FusekiException;

@@ -1,7 +1,31 @@
 ## Example Fuseki Setup
 
-1. Build the fuseki plugin jar by running on the project root folder: `make fuseki-mod`
-2. Copy the built jar into Fuseki's `run/extra/` folder.
+The example sets up a Fuseki with the graphql4sparql plugin and example data.
+
+```bash
+$ make setup-example
+------------------------
+Fuseki set up! Start it with:
+
+(cd target/fuseki && ./fuseki-server --config=run/config.ttl --port 3030)
+
+The Web UI will be available at http://localhost:3030/graphql-test/graphql
+
+Here is an example query to put into the UI:
+
+query @debug @pretty {
+  Person {
+    uri
+    birthDate
+    topic_interest {
+      title
+      creator {
+        uri
+      }
+    }
+  }
+}
+```
 
 Once Fuseki is running, visit the graphql interface at: `http://localhost:3030/graphql-test/graphql`
 

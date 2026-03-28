@@ -8,7 +8,7 @@ import picocli.CommandLine.Option;
 
 @Command(
         name="graphql4sparql",
-        description = "GraphQl 4 Sparql Command Line Interface",
+        description = "GraphQl4Sparql Command Line Interface",
         versionProvider = VersionProviderGraphql4SparqlCli.class,
         subcommands = {
                 CmdGraphQl4SparqlSchemaGen.class

@@ -21,6 +21,15 @@ uberjar-fuseki-mod: ## Create only the standalone jar-with-dependencies for the 
 	file=`find '$(CWD)/graphql4sparql-pkg-parent/graphql4sparql-pkg-fuseki-mod/target' -name '*-jar-with-dependencies.jar'`
 	printf '\nCreated package:\n\n%s\n\n' "$$file"
 
+deb-rebuild: ## Rebuild the deb package (minimal build of only required modules)
+	$(MCIS) $(POM) -Pdeb -am -pl :graphql4sparql-pkg-deb-cli $(ARGS)
+
+deb-reinstall: ## Reinstall deb (requires prior build)
+	@p1=`find graphql4sparql-pkg-parent/graphql4sparql-pkg-deb-cli/target | grep '\.deb$$'`
+	sudo dpkg -i "$$p1"
+
+deb-rere: deb-rebuild deb-reinstall ## Rebuild and reinstall deb package
+
 release-github: SHELL:=/bin/bash
 release-github: ## Create files for Github upload
 	@set -eu

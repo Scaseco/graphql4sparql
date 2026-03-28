@@ -30,7 +30,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
-@Command(name = "schemagen", description = "Generate a schema GraphQL Schema over RDF data in files or in a SPARQL endpoinst.")
+@Command(name = "schemagen", description = "Generate a GraphQL Schema from data in RDF files.")
 public class CmdGraphQl4SparqlSchemaGen
     implements Callable<Integer> {
 
@@ -42,7 +42,7 @@ public class CmdGraphQl4SparqlSchemaGen
         description = "Include meta schema definitions. True by default.")
     public boolean includeMetaSchemaDefinitions;
 
-    @Option(names = { "-l", "--label-source" }, description = "An RDF document with labels for the classes and properties. Local names will be used as fallback.")
+    @Option(names = { "-l", "--label-source" }, description = "An optional RDF document with labels for the classes and properties. Local names will be used as fallback.")
     public String labelSource;
 
     @Parameters(arity = "0..*", description = "Input files")

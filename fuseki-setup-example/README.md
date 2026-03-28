@@ -73,11 +73,10 @@ GraphQl4Sparql also supports sophisticated patterns where GraphQL fields are tur
 The following is the generic "`SELECT SPO`" query which groups all data by subject, predicate and objects.
 
 ```graphql
-query spo @debug @pretty
-{
+query spo @debug @pretty {
   subjects @pattern(of: "SELECT DISTINCT ?s { ?s ?p ?o } ", to: "s") @index(by: "?s", oneIf: "true") {
-    predicates @pattern(of: "?s2 ?p2 ?o2", from: "s2", to: ["s2", "p2"]) @index(by: "?p2", oneIf: "false") @array {
-      objects @pattern(of: "?s3 ?p3 ?o3", from: ["s3", "p3"], to: "o3")
+    predicates @pattern(of: "?s2 ?p2 ?o2", from: "s2", to: ["s2", "p2", "o2"]) @index(by: "?p2", oneIf: "false") @array {
+      objects @bind(of: "?o2")
     }
   }
 }

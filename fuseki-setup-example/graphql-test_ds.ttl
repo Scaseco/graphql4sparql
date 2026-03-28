@@ -8,12 +8,7 @@ PREFIX text:      <http://jena.apache.org/text#>
 PREFIX ja:        <http://jena.hpl.hp.com/2005/11/Assembler#>
 PREFIX geosparql: <http://jena.apache.org/geosparql#>
 
-PREFIX fe:        <http://jena.apache.org/from-enhancer#>
-PREFIX se:        <http://jena.apache.org/service-enhancer#>
-PREFIX xdt:       <http://jsa.aksw.org/dt/sparql/>
-
-PREFIX jxp:       <http://jenax.aksw.org/plugin#>
-PREFIX norse:     <https://w3id.org/aksw/norse#>
+PREFIX g4sf:      <https://w3id.org/aksw/graphql4sparql/fuseki#>
 
 <#service> rdf:type fuseki:Service ;
   fuseki:name "graphql-test" ;
@@ -33,18 +28,32 @@ PREFIX norse:     <https://w3id.org/aksw/norse#>
   ] ;
   fuseki:endpoint [
     fuseki:name "graphql" ;
-    fuseki:operation norse:graphql.fmod.op ;
-    ja:context [ ja:cxtName "https://w3id.org/aksw/norse#graphql.schemaFile" ; ja:cxtValue "run/configuration/graphql-test.graphql" ];
-    # ja:context [ ja:cxtName "https://w3id.org/aksw/norse#graphql.schemaFile"          ; ja:cxtValue "run/configuration/graphql-test.graphql" ] ;
-    ja:context [ ja:cxtName "https://w3id.org/aksw/norse#graphql.sparqlQueryEndpoint" ; ja:cxtValue "/graphql-test" ] ;
-    ja:context [ ja:cxtName "https://w3id.org/aksw/norse#graphql.sparqlQueryViewer"   ; ja:cxtValue "https://yasgui.triply.cc/#?query={ENCODED_SPARQL_QUERY}&endpoint={ENCODED_SPARQL_QUERY_ENDPOINT}" ] ;
-    # ja:context [ ja:cxtName "https://w3id.org/aksw/norse#graphql.sparqlQueryViewer"   ; ja:cxtValue "/#/dataset/coypu/query?query={ENCODED_SPARQL_QUERY}" ] ;
+    fuseki:operation g4sf:query ;
+    ja:context [ ja:cxtName "https://w3id.org/aksw/graphql4sparql/fuseki#schemaFile" ; ja:cxtValue "run/configuration/mona-lisa.graphql" ];
+    # ja:context [ ja:cxtName "https://w3id.org/aksw/graphql4sparql/fuseki#schemaFile"          ; ja:cxtValue "run/configuration/graphql-test.graphql" ] ;
+    ja:context [ ja:cxtName "https://w3id.org/aksw/graphql4sparql/fuseki#sparqlQueryEndpoint" ; ja:cxtValue "/graphql-test" ] ;
+    ja:context [ ja:cxtName "https://w3id.org/aksw/graphql4sparql/fuseki#sparqlQueryViewer"   ; ja:cxtValue "https://yasgui.triply.cc/#?query={ENCODED_SPARQL_QUERY}&endpoint={ENCODED_SPARQL_QUERY_ENDPOINT}" ] ;
+    # ja:context [ ja:cxtName "https://w3id.org/aksw/graphql4sparql/fuseki#sparqlQueryViewer"   ; ja:cxtValue "/#/dataset/coypu/query?query={ENCODED_SPARQL_QUERY}" ] ;
   ] ;
   .
 
-<#baseDS> rdf:type tdb2:DatasetTDB2 ;
-    tdb2:location "run/databases/tdb2/graphql-testdb/" ;
-    tdb2:unionDefaultGraph true ;
-    ### tdb2:unionDefaultGraph false ;
-.
+<#baseDS> rdf:type      ja:RDFDataset ;
+  ja:defaultGraph <#graph> ;
+  # ja:namedGraph [
+  #   ja:graphName <http://example.org/name1> ;
+  #   ja:graph     <#graph2> ;
+  # ] ;
+  .
+
+<#graph> rdf:type ja:MemoryModel ;
+  ja:content [
+    ja:externalContent <file:../content/mona-lisa.ttl> ;
+  ] ;
+  .
+
+#<#baseDS> rdf:type tdb2:DatasetTDB2 ;
+#    tdb2:location "run/databases/tdb2/graphql-testdb/" ;
+#    tdb2:unionDefaultGraph true ;
+#    ### tdb2:unionDefaultGraph false ;
+#.
 

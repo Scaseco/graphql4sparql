@@ -11,7 +11,7 @@ PREFIX dbr: <http://dbpedia.org/resource/>
 
 eg:Bob
   foaf:knows eg:Alice ;
-  foaf:topic_interest <http://dbpedia.org/resource/Mona_Lisa> ;
+  foaf:topic_interest dbr:Mona_Lisa ;
   schema:birthDate "1990-07-04"^^xsd:date ;
   a foaf:Person .
 

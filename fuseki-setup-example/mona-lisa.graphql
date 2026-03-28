@@ -1,5 +1,5 @@
 
-/* This file was created with `graphql4sparql schemagen mona-lisa.ttl --no-meta` */
+# This file was manually created with `graphql4sparql schemagen mona-lisa.ttl --no-meta`
 
 type Person @uri(value: "http://xmlns.com/foaf/0.1/Person") {
   uri: Scalar @to

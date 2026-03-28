@@ -27,6 +27,13 @@ query @debug @pretty {
 }
 ```
 
+It is also possible to query with curl:
+
+```bash
+curl -X POST 'http://localhost:3030/graphql-test/graphql' -d \
+  '{"query":"query @debug @pretty { Person { uri birthDate topic_interest { title } } }"}'
+```
+
 Once Fuseki is running, visit the graphql interface at: `http://localhost:3030/graphql-test/graphql`
 
 Thanks to the schema, it is possible to write simple GraphQL queries such as the following.

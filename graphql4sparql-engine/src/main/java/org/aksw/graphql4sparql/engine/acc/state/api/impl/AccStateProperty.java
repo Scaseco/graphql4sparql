@@ -11,24 +11,44 @@ import org.aksw.graphql4sparql.engine.gon.meta.GonType;
 import org.aksw.graphql4sparql.engine.gon.model.GonProvider;
 import org.aksw.graphql4sparql.engine.io.ObjectNotationWriter;
 
+/**
+ * Accumulator for properties.
+ *
+ * @param <I> The input type
+ * @param <E> The environment type
+ * @param <K> The key type
+ * @param <V> The value type
+ */
 public class AccStateProperty<I, E, K, V>
     extends AccStatePropertyBase<I, E, K, V>
 {
+    /** The array mode for handling multiple values. */
     protected ArrayMode arrayMode;
 
     // protected Node currentTarget = null;
     // protected AccStateTypeProduceNode<I, E, K, V> targetAcc;
+    /** The target accumulator. */
     protected AccStateGon<I, E, K, V> targetAcc;
+    /** Whether skip output has started here. */
     protected boolean skipOutputStartedHere = false;
 
-    // since last call to begin()
+    /** Count of targets seen since last call to begin(). */
     protected long seenTargetCount = 0;
 
-     /** The current materialized value */
+    /** The current materialized value. */
     protected Object value;
 
     // public AccJsonProperty(TupleBridge3<Binding, Node> tripleAccessor, P_Path0 jsonKey, Node matchFieldId, boolean isForward, AccJsonNode targetAcc, boolean isSingle) {
     // public AccStateProperty(Object matchStateId, K memberKey, AccStateTypeProduceNode<I, E, K, V> targetAcc, boolean isSingle) {
+    /**
+     * Creates a new AccStateProperty.
+     *
+     * @param matchStateId The match state id
+     * @param memberKey The member key
+     * @param targetAcc The target accumulator
+     * @param isSingle Whether this is a single value
+     * @param arrayMode The array mode for handling multiple values
+     */
     public AccStateProperty(Object matchStateId, K memberKey, AccStateGon<I, E, K, V> targetAcc, boolean isSingle, ArrayMode arrayMode) {
         super(matchStateId, memberKey, isSingle);
         this.targetAcc = targetAcc;
@@ -58,11 +78,12 @@ public class AccStateProperty<I, E, K, V>
 //        this.targetAcc = targetAcc;
 //    }
 
-    /**
-     * Sets the source node which subsequent triples must match in addition to the fieldId.
-     * This method should be called by the owner of the edge such as AccJsonObject.
-     * @throws IOException
-     */
+/**
+      * Sets the source node which subsequent triples must match in addition to the fieldId.
+      * This method should be called by the owner of the edge such as AccJsonObject.
+      *
+      * @throws IOException If an I/O error occurs
+      */
     @Override
     public void beginActual() throws IOException {
         seenTargetCount = 0;
@@ -91,7 +112,15 @@ public class AccStateProperty<I, E, K, V>
         }
     }
 
-    /** Accepts a triple if source and field id match that of the current state */
+    /**
+     * Accepts a triple if source and field id match that of the current state.
+     *
+     * @param inputStateId The input state id
+     * @param input The input
+     * @param env The environment
+     * @return The target accumulator
+     * @throws IOException If an I/O error occurs
+     */
     @Override
     public AccStateGon<I, E, K, V> transitionActual(Object inputStateId, I input, E env) throws IOException {
         // AccStateTypeProduceNode<I, E, K, V> result = null;

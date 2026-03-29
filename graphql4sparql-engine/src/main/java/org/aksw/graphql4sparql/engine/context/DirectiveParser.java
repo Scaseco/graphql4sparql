@@ -2,12 +2,31 @@ package org.aksw.graphql4sparql.engine.context;
 
 import graphql.language.Directive;
 
+/**
+ * A parser for GraphQL directives.
+ *
+ * @param <T> The type of the parsed result
+ */
 public interface DirectiveParser<T> {
-    /** The directive which this parser parses. */
+    /**
+     * Returns the name of the directive this parser parses.
+     *
+     * @return The directive name
+     */
     String getName();
 
-    /** Whether the directive is unique. */
+    /**
+     * Returns whether the directive is unique.
+     *
+     * @return True if the directive is unique, false otherwise
+     */
     boolean isUnique();
 
+    /**
+     * Parses a directive.
+     *
+     * @param directive The directive to parse
+     * @return The parsed result
+     */
     T parser(Directive directive);
 }

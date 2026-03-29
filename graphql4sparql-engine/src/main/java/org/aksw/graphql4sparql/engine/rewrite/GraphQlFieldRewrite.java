@@ -9,7 +9,11 @@ import org.apache.jena.sparql.function.FunctionEnv;
 /**
  * Intermediate state for generating the final SPARQL query.
  *
- * @param <K>
+ * @param <K> The key type
+ * @param rootElementNode The root element node
+ * @param rootAggBuilder The root aggregation state builder
+ * @param isSingle Whether this field produces a single result
+ * @param graphQlNode The GraphQL node
  */
 public record GraphQlFieldRewrite<K>(
     ElementNode rootElementNode,

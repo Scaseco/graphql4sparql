@@ -2,7 +2,14 @@ package org.aksw.graphql4sparql.engine.acc.state.api.impl;
 
 import org.aksw.graphql4sparql.engine.acc.state.api.AccStateTypeProduceNode;
 
-/** AggState that does NOT PRODUCE entries. May produce literals, objects or arrays. */
+/**
+ * AggState that does NOT PRODUCE entries. May produce literals, objects or arrays.
+ *
+ * @param <I> The input type
+ * @param <E> The environment type
+ * @param <K> The key type
+ * @param <V> The value type
+ */
 public interface AggStateTypeProduceNode<I, E, K, V>
     extends AggStateGon<I, E, K, V>
 {

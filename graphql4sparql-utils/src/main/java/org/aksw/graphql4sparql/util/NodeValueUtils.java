@@ -5,43 +5,58 @@ import java.math.BigDecimal;
 import org.apache.jena.sparql.expr.Expr;
 import org.apache.jena.sparql.expr.NodeValue;
 
+/**
+ * Utility class for NodeValue operations.
+ */
 public class NodeValueUtils {
+    private NodeValueUtils() {
+    }
+
+    /**
+     * Gets the number value from a NodeValue.
+     *
+     * @param expr The NodeValue
+     * @return The number or null
+     */
     public static Number getNumber(NodeValue expr) {
         Object obj = getValue(expr);
 
-        Number result = obj instanceof Number ? (Number)obj : null;
+        Number result = obj instanceof Number ? (Number) obj : null;
         return result;
     }
 
-
-    /** Attempt to return a Java object for the given NodeValue */
+    /**
+     * Attempt to return a Java object for the given NodeValue.
+     *
+     * @param expr The NodeValue
+     * @return The Java object or Expr.NONE if null
+     */
     public static Object getValue(NodeValue expr) {
-        if(expr == null) {
+        if (expr == null) {
             return Expr.NONE; // FIMXE Why don't we return return null???
-        } else if(expr.isIRI()){
-            //logger.debug("HACK - Uri constants should be converted to RdfTerms first");
+        } else if (expr.isIRI()) {
+            // logger.debug("HACK - Uri constants should be converted to RdfTerms first");
             return expr.asNode().getURI();
-        } else if(expr.isBoolean()) {
+        } else if (expr.isBoolean()) {
             return expr.getBoolean();
-        } else if(expr.isNumber()) {
-            if(expr.isDecimal()) {
+        } else if (expr.isNumber()) {
+            if (expr.isDecimal()) {
                 BigDecimal d = expr.getDecimal();
-                if(d.scale() > 0) {
+                if (d.scale() > 0) {
                     return d.doubleValue();
                 } else {
                     return d.intValue();
                 }
-            }
-            else if(expr.isDouble()) {
+            } else if (expr.isDouble()) {
                 return expr.getDouble();
-            } else if(expr.isFloat()) {
+            } else if (expr.isFloat()) {
                 return expr.getFloat();
             } else {
                 return expr.getDecimal().longValue();
             }
-        } else if(expr.isString()) {
+        } else if (expr.isString()) {
             return expr.getString();
-        } else if(expr.isDateTime()) {
+        } else if (expr.isDateTime()) {
             return expr.getDateTime();
         }
 //        } else if(expr instanceof NodeValueNode) {

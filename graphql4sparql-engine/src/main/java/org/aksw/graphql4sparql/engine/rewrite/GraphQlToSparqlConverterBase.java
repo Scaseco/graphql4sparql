@@ -88,6 +88,8 @@ import graphql.util.TraverserContext;
 
 /**
  * Checks for &#064;pattern directives.
+ *
+ * @param <K> The key type
  */
 public abstract class GraphQlToSparqlConverterBase<K>
     extends NodeVisitorStub

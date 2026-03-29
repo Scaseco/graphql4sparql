@@ -19,15 +19,27 @@ import org.aksw.graphql4sparql.engine.io.ObjectNotationWriter;
  *
  * Always accepts the current state. (Matches the same stateId as the parent)
  * Never transitions into a new state.
+ *
+ * @param <I> The input type
+ * @param <E> The environment type
+ * @param <K> The key type
+ * @param <V> The value type
  */
 public class AccStateLiteral<I, E, K, V>
     extends AccStateBase<I, E, K, V>
     implements AccStateTypeProduceNode<I, E, K, V>
     // implements AccLateralNode<D, C, O>
 {
+    /** Function to extract the value from input. */
     protected BiFunction<I, E, ? extends V> inputToValue;
+    /** The current value. */
     protected V currentValue;
 
+    /**
+     * Creates a new AccStateLiteral.
+     *
+     * @param inputToValue Function to extract the value from input
+     */
     protected AccStateLiteral(BiFunction<I, E, ? extends V> inputToValue) {
         this.inputToValue = Objects.requireNonNull(inputToValue);
     }
@@ -42,6 +54,16 @@ public class AccStateLiteral<I, E, K, V>
 //        return (AccStateTypeNonObject<I, E, K, V>)super.getParent();
 //    }
 
+    /**
+     * Creates a new AccStateLiteral.
+     *
+     * @param <I> The input type
+     * @param <E> The environment type
+     * @param <K> The key type
+     * @param <V> The value type
+     * @param inputToValue Function to extract the value from input
+     * @return A new AccStateLiteral instance
+     */
     public static <I, E, K, V> AccStateLiteral<I, E, K, V> of(BiFunction<I, E, ? extends V> inputToValue) {
         return new AccStateLiteral<>(inputToValue);
     }

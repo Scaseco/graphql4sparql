@@ -19,17 +19,19 @@ import org.aksw.graphql4sparql.engine.gon.model.GonProvider;
  * [      3, member2    ]
  * [      1, objectId2  ]
  *
- * @param <I>
- * @param <E>
- * @param <K>
- * @param <V>
+ * @param <I> The input type
+ * @param <E> The environment type
+ * @param <K> The key type
+ * @param <V> The value type
  */
 public class AccStateObject<I, E, K, V>
     extends AccStateMemberSet<I, E, K, V>
     implements AccStateTypeProduceObject<I, E, K, V>
 {
     //protected BiFunction<I, E, ?> inputToObjectId;
+    /** The materialized value. */
     protected Object value;
+    /** Whether this is an array. */
     protected boolean isArray;
 
     /** Should not be used directly; use a builder. */
@@ -38,6 +40,13 @@ public class AccStateObject<I, E, K, V>
 //    }
 
     // BiFunction<I, E, ?> inputToObjectId,
+    /**
+     * Creates a new AccStateObject.
+     *
+     * @param fieldIdToIndex Map from field id to index in the edgeAccs array
+     * @param edgeAccs Array of edge accumulators
+     * @param isArray Whether this is an array
+     */
     protected AccStateObject(Map<Object, Integer> fieldIdToIndex, AccStateTypeTransition<I, E, K, V>[] edgeAccs, boolean isArray) {
         super(fieldIdToIndex, edgeAccs);
         this.isArray = isArray;
@@ -54,7 +63,18 @@ public class AccStateObject<I, E, K, V>
 //        super.setParent(parent);
 //    }
 
-    /** Create a new instance and set it as the parent on all the property accumulators */
+    /**
+     * Create a new instance and set it as the parent on all the property accumulators.
+     *
+     * @param <I> The input type
+     * @param <E> The environment type
+     * @param <K> The key type
+     * @param <V> The value type
+     * @param isArray Whether this is an array
+     * @param stateIdToIndex Map from state id to index in the edgeAccs array
+     * @param edgeAccs Array of edge accumulators
+     * @return A new AccStateObject instance
+     */
     public static <I, E, K, V> AccStateObject<I, E, K, V> of(boolean isArray, Map<Object, Integer> stateIdToIndex, AccStateTypeTransition<I, E, K, V>[] edgeAccs) {
         AccStateObject<I, E, K, V> result = new AccStateObject<>(stateIdToIndex, edgeAccs, isArray);
         for (AccStateTypeTransition<I, E, K, V> acc : edgeAccs) {

@@ -16,25 +16,52 @@ import org.apache.jena.sparql.path.P_Path0;
 import org.apache.jena.sparql.path.Path;
 import org.apache.jena.sparql.syntax.Element;
 
+/**
+ * A builder for creating Connective instances.
+ *
+ * @param <T> The builder type for fluent API
+ */
 public class ConnectiveBuilder<T extends ConnectiveBuilder<T>>
     implements HasTargetVarBuilder<T>, HasConnectVarBuilder<T>, SparqlPathTraversable<T>
 {
-    /** The graph pattern. */
+    ConnectiveBuilder() {}
+
+    /**
+     * The graph pattern.
+     */
     protected Element element;
 
-    /** The variables of the given element which to join on the parent variables. */
+    /**
+     * The variables of the given element which to join on the parent variables.
+     */
     protected List<Var> connectVars;
+
+    /**
+     * The default target variables.
+     */
     protected List<Var> defaultTargetVars;
 
     /** FIXME Implement allowed vars so it can be declared which variables can be referenced. */
     // protected List<Var> allowedVars;
 
+    /**
+     * Sets the element from a string representation.
+     *
+     * @param elementStr The element string
+     * @return This builder
+     */
     public T element(String elementStr) {
         Element elt = ParserARQ.parseElement(elementStr);
         this.element = elt;
         return self();
     }
 
+    /**
+     * Sets the element.
+     *
+     * @param element The element to set
+     * @return This builder
+     */
     public T element(Element element) {
         Objects.requireNonNull(element);
         this.element = element;
@@ -67,6 +94,11 @@ public class ConnectiveBuilder<T extends ConnectiveBuilder<T>>
         return self();
     }
 
+    /**
+     * Builds the Connective instance.
+     *
+     * @return The built Connective instance
+     */
     public Connective build() {
         Objects.requireNonNull(element);
 

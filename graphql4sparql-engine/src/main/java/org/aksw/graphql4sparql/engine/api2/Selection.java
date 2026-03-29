@@ -7,6 +7,11 @@ package org.aksw.graphql4sparql.engine.api2;
 public interface Selection
     extends ConnectiveNode
 {
+    /**
+     * Returns the name of this selection.
+     *
+     * @return The name
+     */
     String getName();
     // SelectionSet getParent();
 

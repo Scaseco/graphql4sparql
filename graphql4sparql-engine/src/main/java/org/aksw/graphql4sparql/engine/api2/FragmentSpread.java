@@ -5,13 +5,28 @@ import java.util.Map;
 
 import org.apache.jena.sparql.core.Var;
 
+/**
+ * A fragment spread in a selection set.
+ */
 public class FragmentSpread
     implements Selection, SelectionBuilder
 {
+    private FragmentSpread() {}
+
+    /**
+     * Returns the fragment being spread.
+     *
+     * @return The fragment
+     */
     public Fragment getFragment() {
         return null;
     }
 
+    /**
+     * Returns the mapping from fragment variables to input variables.
+     *
+     * @return The variable mapping
+     */
     public Map<Var, Var> getFragmentToInput() {
         return null;
         // return fragmentToInput;

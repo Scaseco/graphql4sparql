@@ -2,20 +2,46 @@ package org.aksw.graphql4sparql.engine.context;
 
 import java.util.Objects;
 
+/**
+ * A base class for cascading directives.
+ */
 public class Cascadable {
+    /**
+     * Whether this is a self reference.
+     */
     protected boolean isSelf;
+
+    /**
+     * Whether to cascade.
+     */
     protected boolean isCascade;
 
+    /**
+     * Creates a new Cascadable instance.
+     *
+     * @param isSelf Whether this is a self reference
+     * @param isCascade Whether to cascade
+     */
     public Cascadable(boolean isSelf, boolean isCascade) {
         super();
         this.isSelf = isSelf;
         this.isCascade = isCascade;
     }
 
+    /**
+     * Returns whether this is a self reference.
+     *
+     * @return True if this is a self reference, false otherwise
+     */
     public boolean isSelf() {
         return isSelf;
     }
 
+    /**
+     * Returns whether to cascade.
+     *
+     * @return True if cascading is enabled, false otherwise
+     */
     public boolean isCascade() {
         return isCascade;
     }

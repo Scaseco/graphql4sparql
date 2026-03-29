@@ -1,6 +1,6 @@
 package org.aksw.graphql4sparql.engine.io;
 
-/**
+/** Interface for object notation writers that produce an in-memory product.
  * @param <T> The object type of the product of a write operation. E.g. JsonElement.
  * @param <K> The key type of the object notation. Usually String but could be e.g. pairs of IRI and direction.
  * @param <V> The value type of the object notation. E.g. JsonElement or Jena's Node.

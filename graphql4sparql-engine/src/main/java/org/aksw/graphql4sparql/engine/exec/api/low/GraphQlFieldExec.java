@@ -13,6 +13,8 @@ import org.apache.jena.graph.Node;
  * In the initial design, this interface was intended for generating the results for a top-level field,
  * but now it is also used for producing all results for a document.
  * (The document is strictly speaking not a field in graphql terminology, so perhaps it should be renamed to GraphQlNodeExec).
+ *
+ * @param <K> The key type
  */
 public interface GraphQlFieldExec<K>
     extends GraphQlExecCore
@@ -37,14 +39,14 @@ public interface GraphQlFieldExec<K>
      * This can be used to expose additional information, such as the underlying
      * SPARQL query.
      *
-     * <pre>
+     * <pre>{@code
      * {
      *   "data": ...
      *   "extensions": {
      *      "sparqlQuery": "SELECT * { ... }"
      *   }
      * }
-     * <pre>
+     * }</pre>
      *
      * @param writer The writer in object state - i.e. {@code .beginObject()} must have been called.
      * @throws IOException

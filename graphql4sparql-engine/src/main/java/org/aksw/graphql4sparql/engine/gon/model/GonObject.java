@@ -2,25 +2,60 @@ package org.aksw.graphql4sparql.engine.gon.model;
 
 import java.util.Map;
 
+/**
+ * An object element.
+ *
+ * @param <K> The key type
+ * @param <V> The value type
+ */
 public interface GonObject<K, V>
     extends GonElement<K, V>
 {
-    /** Get the members of this object. */
+    /**
+     * Get the members of this object.
+     *
+     * @return The members map
+     */
     // XXX We may want to add support for dedicated forward / backward views
     Map<K, GonElement<K, V>> getMembers();
 
+    /**
+     * Adds a member to this object.
+     *
+     * @param key The key
+     * @param value The value
+     * @return This object
+     */
     GonObject<K, V> add(K key, GonElement<K, V> value);
 
+    /**
+     * Gets a member by name.
+     *
+     * @param name The name
+     * @return The member
+     */
     default GonElement<K, V> get(K name) {
         return get(name);
     }
 
+    /**
+     * Gets an object member by name.
+     *
+     * @param name The name
+     * @return The object member
+     */
     default GonObject<K, V> getObject(K name) {
         GonElement<K, V> elt = get(name);
         GonObject<K, V> result = elt == null ? null : elt.getAsObject();
         return result;
     }
 
+    /**
+     * Removes a member by name.
+     *
+     * @param name The name
+     * @return This object
+     */
     GonObject<K, V> remove(Object name);
 
 

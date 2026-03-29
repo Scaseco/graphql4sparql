@@ -46,15 +46,41 @@ import org.apache.jena.sparql.syntax.syntaxtransform.ElementTransformer;
  * (Elements) only
  */
 public class ExprTransformNodeElement extends ExprTransformCopy {
+    /**
+     * The node transform.
+     */
     private final NodeTransform    nodeTransform ;
+    /**
+     * The element transform.
+     */
     private final ElementTransform elementTransform ;
+    /**
+     * The before visitor.
+     */
     private final ElementVisitor beforeVisitor;
+    /**
+     * The after visitor.
+     */
     private final ElementVisitor afterVisitor;
 
+    /**
+     * Creates a new expression transform node element.
+     *
+     * @param nodeTransform The node transform
+     * @param eltrans The element transform
+     */
     public ExprTransformNodeElement(NodeTransform nodeTransform, ElementTransform eltrans) {
         this(nodeTransform, eltrans, null, null) ;
     }
 
+    /**
+     * Creates a new expression transform node element.
+     *
+     * @param nodeTransform The node transform
+     * @param eltrans The element transform
+     * @param beforeVisitor The before visitor
+     * @param afterVisitor The after visitor
+     */
     public ExprTransformNodeElement(NodeTransform nodeTransform, ElementTransform eltrans,
                                     ElementVisitor beforeVisitor, ElementVisitor afterVisitor) {
         this.nodeTransform = nodeTransform ;
@@ -63,6 +89,12 @@ public class ExprTransformNodeElement extends ExprTransformCopy {
         this.afterVisitor = afterVisitor ;
     }
 
+    /**
+     * Transforms an expression variable.
+     *
+     * @param nv The expression variable
+     * @return The transformed expression
+     */
     @Override
     public Expr transform(ExprVar nv) {
         Node n = nodeTransform.apply(nv.getAsNode()) ;

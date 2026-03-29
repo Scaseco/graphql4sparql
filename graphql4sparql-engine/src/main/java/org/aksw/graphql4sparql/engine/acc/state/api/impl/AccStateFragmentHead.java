@@ -18,10 +18,10 @@ import org.aksw.graphql4sparql.engine.gon.meta.GonType;
  * [      3, member2    ]
  * [      1, objectId2  ]
  *
- * @param <I>
- * @param <E>
- * @param <K>
- * @param <V>
+ * @param <I> The input type
+ * @param <E> The environment type
+ * @param <K> The key type
+ * @param <V> The value type
  */
 public class AccStateFragmentHead<I, E, K, V>
     // extends AccStateMemberSet<I, E, K, V>
@@ -34,10 +34,18 @@ public class AccStateFragmentHead<I, E, K, V>
 //    public AccStateObject() {
 //        this(BiFunction<I, E, ?> inputToObjectId, new HashMap<>(), new AccLateralStructMember[0]);
 //    }
+    /** The match state id. */
     protected Object matchStateId;
+    /** The fragment body accumulator. */
     protected AccStateGon<I, E, K, V> fragmentBody;
 
     // BiFunction<I, E, ?> inputToObjectId,
+    /**
+     * Creates a new AccStateFragmentHead.
+     *
+     * @param matchStateId The match state id
+     * @param fragmentBody The fragment body accumulator
+     */
     protected AccStateFragmentHead(Object matchStateId, AccStateGon<I, E, K, V> fragmentBody) {
         // super(matchStateId);
         this.matchStateId = matchStateId;
@@ -60,7 +68,17 @@ public class AccStateFragmentHead<I, E, K, V>
 //        super.setParent(parent);
 //    }
 
-    /** Create a new instance and set it as the parent on all the property accumulators */
+    /**
+     * Create a new instance and set it as the parent on all the property accumulators.
+     *
+     * @param <I> The input type
+     * @param <E> The environment type
+     * @param <K> The key type
+     * @param <V> The value type
+     * @param matchStateId The match state id
+     * @param fragmentBody The fragment body accumulator
+     * @return A new AccStateFragmentHead instance
+     */
     public static <I, E, K, V> AccStateFragmentHead<I, E, K, V> of(Object matchStateId, AccStateGon<I, E, K, V> fragmentBody) {
         AccStateFragmentHead<I, E, K, V> result = new AccStateFragmentHead<>(matchStateId, fragmentBody);
         fragmentBody.setParent(result);

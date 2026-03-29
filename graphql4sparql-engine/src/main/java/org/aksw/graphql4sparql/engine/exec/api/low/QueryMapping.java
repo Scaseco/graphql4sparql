@@ -16,6 +16,16 @@ import org.apache.jena.sparql.function.FunctionEnv;
  * any additional information needed to produce the overall object notation result.
  *
  * The main difference to {@link GraphQlFieldRewrite} is that the {@link ElementNode} has been converted to a query.
+ *
+ * @param <K> The key type
+ * @param name The name
+ * @param stateVar The state variable
+ * @param rootStateId The root state id
+ * @param query The SPARQL query
+ * @param stateVarMap The state variable map
+ * @param agg The aggregation state
+ * @param isSingle Whether this produces a single result
+ * @param fieldRewrite The field rewrite
  */
 public record QueryMapping<K>(
     String name, Var stateVar, Node rootStateId, Query query,

@@ -6,8 +6,14 @@ import java.util.Stack;
 import org.aksw.graphql4sparql.engine.gon.model.GonProviderApi;
 import org.aksw.graphql4sparql.engine.util.ObjectUtils;
 
-/** Writer with an in-memory destination.
- *  The produced object can be retrieved with {@link #getProduct()}. */
+/**
+ * Writer with an in-memory destination.
+ * The produced object can be retrieved with {@link #getProduct()}.
+ *
+ * @param <T> The object type
+ * @param <K> The key type
+ * @param <V> The value type
+ */
 public class ObjectNotationWriterViaGon<T, K, V>
     implements ObjectNotationWriterInMemory<T, K, V>
 {

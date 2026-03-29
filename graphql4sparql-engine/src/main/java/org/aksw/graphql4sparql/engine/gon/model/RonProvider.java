@@ -3,13 +3,8 @@ package org.aksw.graphql4sparql.engine.gon.model;
 import org.apache.jena.graph.Node;
 
 /**
- * Abstraction akin to JSONPath's JsonProvidere.
+ * Abstraction akin to JSONPath's JsonProvider.
  * There are subtle differences between JSON and RON: In RON, keys and literals are all RDF terms.
- *
- * @param <K> The key type of objects. The type correspondences are strings for JSON and RDF terms for RON.
- * @param <V> The type of values contained in literals. Typically object for JSON and RDF term for RON.
- *
- * If we allowed a V type, then we'd need a Java-to-V mapper, such as Object-to-Node.
  */
 public interface RonProvider {
     // Should we require the id of an object to be set in advance?

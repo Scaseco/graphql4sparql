@@ -8,6 +8,9 @@ import java.util.Map;
  * An RDF counterpart to a JSON object.
  * Member properties can have a forward or backward direction which
  * allows for deriving an RDF graph.
+ *
+ * @param <K> The key type
+ * @param <V> The value type
  */
 public class GonObjectImpl<K, V>
     extends GonElementBase<K, V>

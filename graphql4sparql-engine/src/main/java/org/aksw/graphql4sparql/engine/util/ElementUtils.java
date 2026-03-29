@@ -33,22 +33,55 @@ import org.apache.jena.sparql.syntax.syntaxtransform.ExprTransformNodeElement;
 
 import graphql.com.google.common.collect.Iterables;
 
+/**
+ * Utility class for working with SPARQL elements.
+ */
 public class ElementUtils {
+    private ElementUtils() {}
 
+    /**
+     * Recursively unnests groups of one element.
+     *
+     * @param elt The element
+     * @return The unnested element
+     */
     public static Element recursivelyUnnestGroupsOfOne(Element elt) {
         return elt instanceof ElementGroup g && g.size() == 1
             ? recursivelyUnnestGroupsOfOne(g.get(0))
             : elt;
     }
 
+    /**
+     * Creates an element triple with the given subject, predicate, and object.
+     *
+     * @param s The subject node
+     * @param p The predicate node
+     * @param o The object node
+     * @return The element triple
+     */
     public static ElementTriplesBlock createElementTriple(Node s, Node p, Node o) {
         return createElement(Triple.create(s, p, o));
     }
 
+    /**
+     * Creates an element triple with the given subject, predicate, and object.
+     *
+     * @param s The subject node
+     * @param p The predicate node
+     * @param o The object node
+     * @param isForward The direction flag
+     * @return The element triple
+     */
     public static ElementTriplesBlock createElementTriple(Node s, Node p, Node o, boolean isForward) {
         return createElement(TripleUtils.create(s, p, o, isForward));
     }
 
+    /**
+     * Creates an element from a triple.
+     *
+     * @param triple The triple
+     * @return The element
+     */
     public static ElementTriplesBlock createElement(Triple triple) {
         BasicPattern bgp = new BasicPattern();
         bgp.add(triple);
@@ -56,16 +89,36 @@ public class ElementUtils {
         return result;
     }
 
+    /**
+     * Creates an element path with the given subject, path, and object.
+     *
+     * @param s The subject node
+     * @param p The path
+     * @param o The object node
+     * @return The element path
+     */
     public static ElementPathBlock createElementPath(Node s, Path p, Node o) {
         ElementPathBlock result = createElementPath(new TriplePath(s, p, o));
         return result;
     }
 
+    /**
+     * Creates an element path with the given triple paths.
+     *
+     * @param tps The triple paths
+     * @return The element path
+     */
     public static ElementPathBlock createElementPath(TriplePath ... tps) {
         ElementPathBlock result = createElementPath(Arrays.asList(tps));
         return result;
     }
 
+    /**
+     * Creates an element path with the given iterable of triple paths.
+     *
+     * @param it The iterable of triple paths
+     * @return The element path
+     */
     public static ElementPathBlock createElementPath(Iterable<TriplePath> it) {
         ElementPathBlock result = new ElementPathBlock();
         for(TriplePath tp : it) {
@@ -74,6 +127,12 @@ public class ElementUtils {
         return result;
     }
 
+    /**
+     * Creates an element group with the given members.
+     *
+     * @param members The members
+     * @return The element group
+     */
     public static ElementGroup createElementGroup(Element ... members) {
         ElementGroup result = new ElementGroup();
         for(Element member : members) {
@@ -82,6 +141,12 @@ public class ElementUtils {
         return result;
     }
 
+    /**
+     * Groups the members if there are multiple, otherwise returns the single member.
+     *
+     * @param members The members
+     * @return The element
+     */
     public static Element groupIfNeeded(Iterable<? extends Element> members) {
         Element result = Iterables.size(members) == 1
                 ? members.iterator().next()
@@ -92,11 +157,23 @@ public class ElementUtils {
 
     }
 
+    /**
+     * Groups the members if there are multiple, otherwise returns the single member.
+     *
+     * @param members The members
+     * @return The element
+     */
     public static Element groupIfNeeded(Element ... members) {
         Element result = groupIfNeeded(Arrays.asList(members));
         return result;
     }
 
+    /**
+     * Creates an element group with the given iterable of members.
+     *
+     * @param members The members
+     * @return The element group
+     */
     public static ElementGroup createElementGroup(Iterable<? extends Element> members) {
         ElementGroup result = new ElementGroup();
         for(Element member : members) {
@@ -105,11 +182,23 @@ public class ElementUtils {
         return result;
     }
 
+    /**
+     * Unions the elements if there are multiple, otherwise returns the single element.
+     *
+     * @param elements The elements
+     * @return The element
+     */
     public static Element unionIfNeeded(Element ... elements) {
         Element result = unionIfNeeded(Arrays.asList(elements));
         return result;
     }
 
+    /**
+     * Unions the elements if there are multiple, otherwise returns the single element.
+     *
+     * @param elements The elements
+     * @return The element
+     */
     public static Element unionIfNeeded(Collection<Element> elements) {
         Element result;
         if(elements.size() == 1) {
@@ -125,18 +214,35 @@ public class ElementUtils {
         return result;
     }
 
-    /** If the argument is an element group then stream its members. Otherwise, return a singleton stream
-     * of the argument. */
+    /**
+     * If the argument is an element group then stream its members. Otherwise, return a singleton stream
+     * of the argument.
+     *
+     * @param elt The element
+     * @return The stream of elements
+     */
     public static Stream<Element> steamGroupMembersOrSelf(Element elt) {
         return elt instanceof ElementGroup g
                 ? g.getElements().stream()
                 : Stream.of(elt);
     }
 
+    /**
+     * Flattens a group of elements.
+     *
+     * @param elts The elements
+     * @return The flattened element
+     */
     public static Element flatGroup(Element ...elts) {
         return flatGroup(Arrays.asList(elts));
     }
 
+    /**
+     * Flattens a collection of elements.
+     *
+     * @param elts The elements
+     * @return The flattened element
+     */
     public static Element flatGroup(Collection<Element> elts) {
         ElementGroup group = new ElementGroup();
         elts.stream()
@@ -145,6 +251,13 @@ public class ElementUtils {
         return group.size() == 1 ? group.get(0) : group;
     }
 
+    /**
+     * Copies elements from source to target.
+     *
+     * @param target The target element group
+     * @param source The source element
+     * @return The target element group
+     */
     public static ElementGroup copyElements(ElementGroup target, Element source) {
         if(source instanceof ElementGroup) {
             ElementGroup es = (ElementGroup)source;
@@ -159,6 +272,12 @@ public class ElementUtils {
         return target;
     }
 
+    /**
+     * Creates a node transform from a map.
+     *
+     * @param nodeMap The node map
+     * @return The node transform
+     */
     public static NodeTransform createNodeTransform(Map<?, ? extends Node> nodeMap) {
         return node -> {
             Node r = nodeMap.get(node);
@@ -168,6 +287,13 @@ public class ElementUtils {
         };
     }
 
+    /**
+     * Creates a renamed element using a node map.
+     *
+     * @param element The element
+     * @param nodeMap The node map
+     * @return The renamed element
+     */
     public static Element createRenamedElement(Element element, Map<?, ? extends Node> nodeMap) {
         NodeTransform nodeTransform = createNodeTransform(nodeMap);
         Element result = applyNodeTransform(element, nodeTransform);
@@ -178,11 +304,25 @@ public class ElementUtils {
 //    	return applyNodeTransform(element, nodeTransform);
 //    }
 
+    /**
+     * Applies a node transform to an element.
+     *
+     * @param element The element
+     * @param nodeTransform The node transform
+     * @return The transformed element
+     */
     public static Element applyNodeTransform(Element element, NodeTransform nodeTransform) {
         // return applyNodeTransformJena(element, nodeTransform);
         return applyNodeTransformBackport(element, nodeTransform);
     }
 
+    /**
+     * Applies a node transform to an element using the backport version.
+     *
+     * @param element The element
+     * @param nodeTransform The node transform
+     * @return The transformed element
+     */
     public static Element applyNodeTransformBackport(Element element, NodeTransform nodeTransform) {
         ElementTransform elementTransform = new ElementTransformSubst2(nodeTransform);//new ElementTransformSubst2(nodeTransform);
 
@@ -194,6 +334,13 @@ public class ElementUtils {
         return result;
     }
 
+    /**
+     * Applies a node transform to an element using Jena's version.
+     *
+     * @param element The element
+     * @param nodeTransform The node transform
+     * @return The transformed element
+     */
     public static Element applyNodeTransformJena(Element element, NodeTransform nodeTransform) {
         org.apache.jena.sparql.syntax.syntaxtransform.ElementTransform elementTransform = new ElementTransformSubst2(nodeTransform);//new ElementTransformSubst2(nodeTransform);
         ExprTransform exprTransform = new ExprTransformNodeElement(nodeTransform, elementTransform);
@@ -205,6 +352,12 @@ public class ElementUtils {
         return result;
     }
 
+    /**
+     * Infers connection variables from an element.
+     *
+     * @param element The element
+     * @return The list of connection variables
+     */
     public static List<Var> inferConnecVars(Element element) {
         List<Var> result = null;
         Element elt = recursivelyUnnestGroupsOfOne(element);

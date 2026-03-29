@@ -7,17 +7,52 @@ import org.aksw.graphql4sparql.engine.acc.state.api.impl.AggStateGon;
 import org.aksw.graphql4sparql.engine.acc.state.api.impl.AggStateTransition;
 import org.aksw.graphql4sparql.engine.gon.meta.GonType;
 
+/**
+ * Aggregator state for fragment heads.
+ *
+ * @param <I> The input type
+ * @param <E> The environment type
+ * @param <K> The key type
+ * @param <V> The value type
+ */
 public class AggStateFragmentHead<I, E, K, V>
     implements AggStateTransition<I, E, K, V>
 {
+    /** The match state ID. */
     protected Object matchStateId;
+    /** The fragment body aggregator. */
     protected AggStateGon<I, E, K, V> fragmentBody;
 
+    /**
+     * Creates a new AggStateFragmentHead.
+     *
+     * @param matchStateId The match state ID
+     */
     public AggStateFragmentHead(Object matchStateId) {
         super();
         this.matchStateId = matchStateId;
     }
 
+    /**
+     * Gets the fragment body.
+     *
+     * @return The fragment body
+     */
+    public AggStateGon<I, E, K, V> getFragmentBody() {
+        return fragmentBody;
+    }
+
+    /**
+     * Creates a new AggStateFragmentHead.
+     *
+     * @param <I> The input type
+     * @param <E> The environment type
+     * @param <K> The key type
+     * @param <V> The value type
+     * @param matchStateId The match state ID
+     * @param fragmentBody The fragment body
+     * @return The new AggStateFragmentHead
+     */
     // @SafeVarargs
     // public static <I, E, K, V> AggStateObject<I, E, K, V> of(AggStateGon<I, E, K, V> ...edgeAggregators) {
     public static <I, E, K, V> AggStateFragmentHead<I, E, K, V> of(Object matchStateId, AggStateGon<I, E, K, V> fragmentBody) {

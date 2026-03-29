@@ -5,24 +5,48 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-// In principle RdfArray could extend RdfObject - similar to JavaScript - but probably sticking to
-// the JSON model is easier to use.
+//In principle RdfArray could extend RdfObject - similar to JavaScript - but probably sticking to
+//the JSON model is easier to use.
+
+/**
+ * A generic array implementation.
+ *
+ * @param <K> The key type
+ * @param <V> The value type
+ */
 public class GonArrayImpl<K, V>
     extends GonElementBase<K, V>
     implements GonArray<K, V>
 {
+    /**
+     * The elements list.
+     */
     // Maybe elements should be restricted to RdfObject
     protected List<GonElement<K, V>> elements;
 
+    /**
+     * Creates a new gon array implementation.
+     */
     public GonArrayImpl() {
         this(new ArrayList<>());
     }
 
+    /**
+     * Creates a new gon array implementation with the given elements.
+     *
+     * @param elements The elements
+     */
     protected GonArrayImpl(List<GonElement<K, V>> elements) {
         super();
         this.elements = elements;
     }
 
+    /**
+     * Accepts a visitor.
+     *
+     * @param visitor The visitor
+     * @return The result
+     */
     @Override
     public <T> T accept(GonElementVisitor<K, V, T> visitor) {
         T result = visitor.visit(this);

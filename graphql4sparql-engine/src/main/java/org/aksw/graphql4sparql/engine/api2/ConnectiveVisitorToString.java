@@ -10,18 +10,40 @@ import java.util.Objects;
 
 import org.aksw.graphql4sparql.engine.model.ElementNode;
 
+/**
+ * A visitor that converts connective nodes to string representation.
+ */
 public class ConnectiveVisitorToString
     implements ConnectiveVisitor<Void>
 {
+    /**
+     * The output stream to write to.
+     */
     protected PrintStream out;
+
+    /**
+     * The current indentation string.
+     */
     protected String indent;
 
+    /**
+     * Creates a new ConnectiveVisitorToString.
+     *
+     * @param out The output stream to write to
+     * @param indent The indentation string
+     */
     public ConnectiveVisitorToString(PrintStream out, String indent) {
         super();
         this.out = out;
         this.indent = indent;
     }
 
+    /**
+     * Converts a connective node to a string representation.
+     *
+     * @param node The node to convert
+     * @return The string representation
+     */
     public static String toString(ConnectiveNode node) {
         String result;
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -39,6 +61,14 @@ public class ConnectiveVisitorToString
         return result;
     }
 
+    /**
+     * Prints a value with proper indentation.
+     *
+     * @param out The output stream
+     * @param baseIndent The base indentation
+     * @param baseText The base text to prefix
+     * @param value The value to print
+     */
     public static void print(PrintStream out, String baseIndent, String baseText, String value) {
         if (value == null) {
             out.print(baseIndent);
@@ -84,9 +114,6 @@ public class ConnectiveVisitorToString
                 : "parent." + field.getJoinLink();
         out.println(indent + "|- connects " + parentStr); //+ " to this." + connective.getConnectVars());
 
-
-        // out.println(indent + "|- element " + connective.getElement());
-
         visit(connective);
 
         visitSelections(field.getSelections());
@@ -106,6 +133,11 @@ public class ConnectiveVisitorToString
         return null;
     }
 
+    /**
+     * Visits a collection of selections.
+     *
+     * @param selections The selections to visit
+     */
     protected void visitSelections(Collection<Selection> selections) {
         Iterator<Selection> it = selections.iterator();
         int i = 0;

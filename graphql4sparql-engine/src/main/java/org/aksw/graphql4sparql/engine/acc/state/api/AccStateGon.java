@@ -20,7 +20,11 @@ public interface AccStateGon<I, E, K, V>
     @Override
     AccStateGon<I, E, K, V> getParent();
 
-    /** The GON type which this accumulator produces. */
+    /**
+     * Gets the GON type which this accumulator produces.
+     *
+     * @return The GON type
+     */
     GonType getGonType();
 
     /** The ancestor to which to attach produced values. */
@@ -33,11 +37,21 @@ public interface AccStateGon<I, E, K, V>
         return parent == null ? this : parent.getRoot();
     }
 
+    /**
+     * Sets the parent state.
+     *
+     * @param parent The parent state to set
+     */
     void setParent(AccStateGon<I, E, K, V> parent);
 
     /** The state to which to backtrack if an input cannot be processed by the current state */
     // void setAncestorState(AccLateralStructure<I, E, K, V> ancestorState);
 
+    /**
+     * Sets the context for this accumulator.
+     *
+     * @param context The context to set
+     */
     void setContext(AccContext<K, V> context);
 
     /**

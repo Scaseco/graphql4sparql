@@ -14,10 +14,17 @@ import org.aksw.graphql4sparql.engine.acc.state.api.AccStateTypeProduceEntry;
 /**
  * This mapper only generates the keys - it does not generate the enclosing start/end object tags.
  *
+ * <pre>{@code
  * {
  *   k1: [k1v1, k1v2]
  *   k2: k2v
  * }
+ * }</pre>
+ *
+ * @param <I> The input type
+ * @param <E> The environment type
+ * @param <K> The key type
+ * @param <V> The value type
  */
 public class AccStateMap<I, E, K, V>
     extends AccStateBase<I, E, K, V>
@@ -26,19 +33,35 @@ public class AccStateMap<I, E, K, V>
     // AccStateTypeProduceObject
     // protected AccStateGon<I, E, K, V> valueParent;
 
+    /** Function to map input and environment to key. */
     protected BiFunction<I, E, ? extends K> inputToKeyMapper;
+    /** Predicate to test if the value is single. */
     protected BiPredicate<I, E> testIfSingle;
+    /** The sub-accumulator. */
     protected AccStateGon<I, E, K, V> subAcc;
 
+    /** The current key. */
     protected Object currentKey;
+    /** Whether the current key is single. */
     protected boolean isCurrentKeySingle;
 
+    /** Count of targets seen since last call to begin(). */
     protected int seenTargetCount = 0;
+    /** Whether skip output has started here. */
     protected boolean skipOutputStartedHere = false;
 
+    /** The match state id. */
     protected Object matchStateId;
 
     // public AccStateMap(Object matchStateId, BiFunction<I, E, ? extends K> inputToKeyMapper, BiPredicate<I, E> testIfSingle, AccStateTypeProduceNode<I, E, K, V> subAcc) {
+    /**
+     * Creates a new AccStateMap.
+     *
+     * @param matchStateId The match state id
+     * @param inputToKeyMapper Function to map input and environment to key
+     * @param testIfSingle Predicate to test if the value is single
+     * @param subAcc The sub-accumulator
+     */
     public AccStateMap(Object matchStateId, BiFunction<I, E, ? extends K> inputToKeyMapper, BiPredicate<I, E> testIfSingle, AccStateGon<I, E, K, V> subAcc) {
         super();
         this.matchStateId = matchStateId;
@@ -108,6 +131,11 @@ public class AccStateMap<I, E, K, V>
         return result;
     }
 
+    /**
+     * Ends the currently open array.
+     *
+     * @throws IOException If an I/O error occurs
+     */
     protected void endOpenArray() throws IOException {
         if (currentKey != null) {
             if (!isCurrentKeySingle) {

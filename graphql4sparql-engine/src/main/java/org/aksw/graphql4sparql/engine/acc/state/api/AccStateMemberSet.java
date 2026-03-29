@@ -7,16 +7,33 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 
-/** Common base class for accumulators of Objects and Fragments. */
+/**
+ * Common base class for accumulators of Objects and Fragments.
+ *
+ * @param <I> The input type
+ * @param <E> The environment type
+ * @param <K> The key type
+ * @param <V> The value type
+ */
 public abstract class AccStateMemberSet<I, E, K, V>
     extends AccStateBase<I, E, K, V>
 {
+    /** Map from state id to index in the edgeAccs array. */
     protected Map<Object, Integer> stateIdToIndex = new HashMap<>();
+    /** Array of edge accumulators. */
     protected AccStateGon<I, E, K, V>[] edgeAccs;
 
+    /** Current field index. */
     protected int currentFieldIndex = -1;
+    /** Current field accumulator. */
     protected AccStateGon<I, E, K, V> currentFieldAcc = null;
 
+    /**
+     * Creates a new AccStateMemberSet.
+     *
+     * @param stateIdToIndex Map from state id to index in the edgeAccs array
+     * @param edgeAccs Array of edge accumulators
+     */
     protected AccStateMemberSet(Map<Object, Integer> stateIdToIndex, AccStateGon<I, E, K, V>[] edgeAccs) {
         super();
         this.stateIdToIndex = stateIdToIndex;

@@ -4,6 +4,8 @@ import org.aksw.graphql4sparql.engine.acc.state.api.impl.AggStateGon;
 import org.aksw.graphql4sparql.engine.gon.meta.GonType;
 
 /**
+ * Builder interface for aggregator states.
+ *
  * <ul>
  *   <li>{@linkplain AggStateBuilderLiteral}: Only used with &commat;index as a leaf value. Emit a literal value.</li>
  *   <li>{@linkplain AggStateBuilderObject}: Emits an object with start and end markers whenever a given expression evaluates to a new id.</li>
@@ -23,13 +25,23 @@ import org.aksw.graphql4sparql.engine.gon.meta.GonType;
  *   AggStateBuilderProperty -> use its value.
  *   AggStateBuilderLiteralProperty -> use its value.
  *
- *
- * @param <I>
- * @param <E>
- * @param <K>
- * @param <V>
+ * @param <I> The input type
+ * @param <E> The environment type
+ * @param <K> The key type
+ * @param <V> The value type
  */
 public interface AggStateBuilder<I, E, K, V> {
+    /**
+     * Returns the GON type.
+     *
+     * @return The GON type
+     */
     GonType getGonType();
+
+    /**
+     * Creates a new aggregator.
+     *
+     * @return The new aggregator
+     */
     AggStateGon<I, E, K, V> newAggregator();
 }

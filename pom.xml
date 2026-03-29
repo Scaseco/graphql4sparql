@@ -51,7 +51,7 @@
 	</modules>
 	<properties>
 		<jena.version>6.0.0</jena.version>
-		<graphql.version>22.4</graphql.version>
+		<graphql.version>25.0</graphql.version>
 		<picocli.version>4.7.7</picocli.version>
 		<aksw-commons.version>0.9.12</aksw-commons.version>
 

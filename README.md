@@ -37,7 +37,7 @@ Link: https://github.com/Scaseco/jenax/tree/develop/jenax-graphql-parent/jenax-g
 
 ## Fuseki Plugin
 
-![GraphQL plugin in Apache Jena Fuseki Server.](images/2025-06-12-fuseki-plugin-screenshot.png "GraphQL plugin in Apache Jena Fuseki Server.")
+![GraphQL plugin in Apache Jena Fuseki Server.](docs/images/2025-06-12-fuseki-plugin-screenshot.png "GraphQL plugin in Apache Jena Fuseki Server.")
 
 The GraphQl4Sparql Fuseki Module is a plugin for Apache Jena's Fuseki Server Framework that provides our GraphQL endpoint type.
 Download the GraphQl4Sparql Plugin JAR from this repo's release section and place it into Fuseki's plugin folder.

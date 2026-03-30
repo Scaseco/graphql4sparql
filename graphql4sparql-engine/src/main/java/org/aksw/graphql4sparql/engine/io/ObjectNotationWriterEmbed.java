@@ -2,9 +2,12 @@ package org.aksw.graphql4sparql.engine.io;
 
 import java.io.IOException;
 
-/** Writer with support for embedding values. */
-@Deprecated // Embedding is more easily handled on the SPARQL engine:
-// JSON literals are always embedded, if this is undesired then simply convert to string in SPARQL
+/** Writer with support for embedding values.
+ * @deprecated Embedding is more easily handled on the SPARQL engine:
+ * // JSON literals are always embedded, if this is undesired then simply convert to string in SPARQL
+ * @param <K> The key type
+ * @param <V> The value type
+ */
 public interface ObjectNotationWriterEmbed<K, V>
     extends ObjectNotationWriter<K, V>
 {

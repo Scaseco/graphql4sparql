@@ -3,6 +3,10 @@ package org.aksw.graphql4sparql.engine.gon.model;
 /**
  * This class adds the generic type parameter T for the objects being constructed by the writer.
  * For example, for Gson this is JsonElement.
+ *
+ * @param <T> The type of objects being constructed
+ * @param <K> The key type
+ * @param <V> The value type
  */
 public interface GonProviderApi<T, K, V> // V extends T>
         extends GonProvider<K, V>

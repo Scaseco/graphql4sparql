@@ -76,8 +76,14 @@ public class QueryTransformOps {
 //        return q2 ;
 //    }
 
-    /** Transform a query using {@link ElementTransform} and {@link ExprTransform}.
+    /**
+     * Transforms a query using {@link ElementTransform} and {@link ExprTransform}.
      *  It is the responsibility of these transforms to transform to a legal SPARQL query.
+     *
+     * @param query The query to transform
+     * @param transform The element transform to apply
+     * @param exprTransform The expression transform to apply
+     * @return The transformed query
      */
     public static Query transform(Query query, ElementTransform transform, ExprTransform exprTransform) {
         Query q2 = QueryTransformOps.shallowCopy(query);
@@ -156,9 +162,18 @@ public class QueryTransformOps {
         VarExprListUtils.replace(varExprList, tmp);
     }
 
+    /**
+     * A shallow copy visitor for queries.
+     */
     static class QueryShallowCopy implements QueryVisitor {
+        /**
+         * The new query.
+         */
         final Query newQuery = new Query() ;
 
+        /**
+         * Creates a new query shallow copy visitor.
+         */
         QueryShallowCopy() {}
 
         @Override

@@ -15,15 +15,17 @@ import com.google.gson.JsonObject;
 /**
  * Visitor the writes out a RON structure in JSON.
  *
+ * <pre>{@code
  * {
  *   "@id": TERM,
  *   "@members": [{
- *      @property: TERM,
+ *      "@property": TERM,
  *    }, {
  *    ...
  *    }
  *   ]
  * }
+ * }</pre>
  *
  */
 public class RdfElementVisitorRdfToJsonX

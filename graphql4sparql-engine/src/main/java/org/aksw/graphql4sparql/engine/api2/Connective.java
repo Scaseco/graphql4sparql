@@ -13,20 +13,39 @@ import org.apache.jena.sparql.syntax.Element;
 import org.apache.jena.sparql.syntax.ElementGroup;
 import org.apache.jena.sparql.syntax.PatternVars;
 
+/**
+ * A connective represents a connected graph pattern in the GraphQL query.
+ */
 public class Connective
     extends BasicConnectInfo
     implements ConnectiveNode
     // extends SelectionSet // Connective is not a SelectionSet - Field is.
 {
-    /** The graph pattern. */
+    /**
+     * The graph pattern.
+     */
     protected final Element element;
 
-    /** The variables of the given element which to join on the parent variables. */
+    /**
+     * The variables of the given element which to join on the parent variables.
+     */
     protected final List<Var> connectVars;
 
     // Cached attributes
+    /**
+     * The algebra operator for this connective.
+     */
     protected final Op op;
 
+    /**
+     * Creates a new Connective instance.
+     *
+     * @param element The graph pattern element
+     * @param connectVars The variables to join on
+     * @param defaultTargetVars The default target variables
+     * @param op The algebra operator
+     * @param visibleVars The set of visible variables
+     */
     public Connective(Element element, List<Var> connectVars, List<Var> defaultTargetVars, Op op, Set<Var> visibleVars) {
         super(defaultTargetVars, visibleVars);
         this.element = element;
@@ -34,15 +53,30 @@ public class Connective
         this.op = op;
     }
 
+    /**
+     * Returns the graph pattern element.
+     *
+     * @return The graph pattern element
+     */
     public Element getElement() {
         return element;
     }
 
+    /**
+     * Returns the variables to join on.
+     *
+     * @return The connect variables
+     */
     public List<Var> getConnectVars() {
         return connectVars;
     }
 
-    /** Create a new connective (copy) where nodes have been remapped accordingly. */
+    /**
+     * Create a new connective (copy) where nodes have been remapped accordingly.
+     *
+     * @param nodeTransform The node transform to apply
+     * @return A new connective with transformed nodes
+     */
     public Connective applyNodeTransform(NodeTransform nodeTransform) {
         Connective result = Connective.newBuilder()
             .element(ElementUtils.applyNodeTransform(element, nodeTransform))
@@ -68,27 +102,52 @@ public class Connective
         return result;
     }
 
+    /**
+     * Returns whether this connective is empty.
+     *
+     * @return True if empty, false otherwise
+     */
     public boolean isEmpty() {
         return element instanceof ElementGroup g
             ? g.isEmpty() && connectVars != null && connectVars.isEmpty() && defaultTargetVars != null && defaultTargetVars.isEmpty()
             : false;
     }
 
-    /** Visible vars + variables mentioned in the pattern. */
+    /**
+     * Returns visible vars + variables mentioned in the pattern.
+     *
+     * @return The set of mentioned variables
+     */
     public Set<Var> getMentionedVars() {
         Set<Var> result = new LinkedHashSet<>(visibleVars);
         PatternVars.vars(result, element);
         return result;
     }
 
+    /**
+     * Creates a new ConnectiveBuilder.
+     *
+     * @return A new ConnectiveBuilder instance
+     */
     public static ConnectiveBuilder<?> newBuilder() {
         return new ConnectiveBuilder<>();
     }
 
+    /**
+     * Creates a new Connective from a path.
+     *
+     * @param path The path to create the connective from
+     * @return A new Connective instance
+     */
     public static Connective of(Path path) {
         return Connective.newBuilder().step(path).build();
     }
 
+    /**
+     * Creates an empty Connective.
+     *
+     * @return An empty Connective instance
+     */
     public static Connective empty() {
         return Connective.newBuilder()
                 .connectVarNames()
@@ -97,6 +156,14 @@ public class Connective
                 .build();
     }
 
+    /**
+     * Creates a new Connective from source and target variables and an element.
+     *
+     * @param sourceVars The source variables
+     * @param targetVars The target variables
+     * @param elt The graph pattern element
+     * @return A new Connective instance
+     */
     public static Connective of(List<Var> sourceVars, List<Var> targetVars, Element elt) {
         return Connective.newBuilder()
             .connectVars(sourceVars)

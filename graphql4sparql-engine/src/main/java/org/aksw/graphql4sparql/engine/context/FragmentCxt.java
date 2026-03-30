@@ -6,5 +6,11 @@ import org.apache.jena.sparql.core.Var;
 
 import graphql.language.Node;
 
+/**
+ * A fragment context.
+ *
+ * @param startNode The start node
+ * @param connectVars The connection variables
+ */
 public record FragmentCxt(Node startNode,  List<Var> connectVars) {
 }

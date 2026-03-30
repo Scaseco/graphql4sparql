@@ -15,6 +15,8 @@ import org.apache.jena.shared.PrefixMapping;
  * Intended purpose is to allow for tying additional non-RDF information to a Node.
  * For example, a (Node, RdfObject) pair could be used to extract all outgoing/incoming
  * triples based on the RdfObject.
+ *
+ * @param <T> The type of the wrapped object
  */
 public abstract class NodeWrapper<T>
     extends Node_Ext<T> // Cannot extend Node directly because its ctor is package private

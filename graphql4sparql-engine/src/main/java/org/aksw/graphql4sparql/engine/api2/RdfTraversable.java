@@ -4,7 +4,11 @@ import org.apache.jena.graph.Node;
 import org.apache.jena.graph.NodeFactory;
 import org.apache.jena.rdf.model.Resource;
 
-/** Interface for things that can be traversed with RDF properties in forward or backward direction. */
+/**
+ * Interface for things that can be traversed with RDF properties in forward or backward direction.
+ *
+ * @param <T> The type of the traversable
+ */
 public interface RdfTraversable<T> {
     default T fwd(String propertyIri) {
         Node node = NodeFactory.createURI(propertyIri);

@@ -7,6 +7,11 @@ import org.aksw.graphql4sparql.engine.gon.meta.GonType;
  * The keys emitted by an AccStateTypeEntry can be dynamic - both in value and amount.
  * From the perspective of an ObjectNotation writer, this method invokes the
  * ".name(key)" method.
+ *
+ * @param <I> The input type
+ * @param <E> The environment type
+ * @param <K> The key type
+ * @param <V> The value type
  */
 public interface AccStateTypeProduceEntry<I, E, K, V>
     extends AccStateTypeTransition<I, E, K, V>
@@ -18,5 +23,10 @@ public interface AccStateTypeProduceEntry<I, E, K, V>
         return GonType.ENTRY;
     }
 
+    /**
+     * Gets the match state id.
+     *
+     * @return The match state id
+     */
     Object getMatchStateId();
 }

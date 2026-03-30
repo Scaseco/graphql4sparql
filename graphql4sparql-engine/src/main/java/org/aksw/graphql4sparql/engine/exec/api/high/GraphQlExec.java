@@ -12,6 +12,8 @@ import org.apache.jena.graph.Node;
 /**
  * Adapter to wrap the execution's intended for individual nodes as one for an overall document.
  * (Perhaps this interface should be renamed to GraphQlDocumentExec or maybe it can even be removed?)
+ *
+ * @param <K> The key type
  */
 public class GraphQlExec<K>
     implements GraphQlExecCore

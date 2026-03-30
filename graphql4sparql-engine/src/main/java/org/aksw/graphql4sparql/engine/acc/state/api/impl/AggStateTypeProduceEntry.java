@@ -3,6 +3,14 @@ package org.aksw.graphql4sparql.engine.acc.state.api.impl;
 import org.aksw.graphql4sparql.engine.acc.state.api.AccStateTypeProduceEntry;
 import org.aksw.graphql4sparql.engine.gon.meta.GonType;
 
+/**
+ * Aggregator state that produces entries (edges/properties).
+ *
+ * @param <I> The input type
+ * @param <E> The environment type
+ * @param <K> The key type
+ * @param <V> The value type
+ */
 public interface AggStateTypeProduceEntry<I, E, K, V>
     extends AggStateTransition<I, E, K, V>
 {

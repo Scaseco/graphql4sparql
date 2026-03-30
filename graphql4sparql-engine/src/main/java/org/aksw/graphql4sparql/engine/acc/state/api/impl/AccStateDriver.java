@@ -21,21 +21,29 @@ import org.aksw.graphql4sparql.engine.acc.state.api.AccStateGon;
  *     UPDATE We can decide if we use tupleBridges with dimension == 1
  *   - Access to tuple components: Probably this could be separated using a tuple accessor.
  *
- * @param <D> tuple type
- * @param <C> component type
+ * @param <I> The input type
+ * @param <E> The environment type
+ * @param <K> The key type
+ * @param <V> The value type
  */
 public class AccStateDriver<I, E, K, V>
 // its like an accumulator but depending on the context the final value may be absent (null) if it was in streaming mode
 // 	implements Accumulator<Quad, AccContext, >
 {
+    /** The context for this driver. */
     protected AccContext<K, V> context;
+    /** The current accumulator state. */
     protected AccStateGon<I, E, K, V> currentState;
+    /** The current source node. */
     protected Object currentSource;
 
+    /** Count of sources seen. */
     protected long sourcesSeen = 0;
+    /** Whether to enforce single values only. */
     protected boolean isSingle;
 
     // protected List<Expr> idExprs;
+    /** Function to map input and environment to state id. */
     protected BiFunction<I, E, ?> inputToStateId;
     // protected VarExprList idExprs;
     // protected TupleBridge<D, C> primaryIdAccessor;
@@ -47,6 +55,14 @@ public class AccStateDriver<I, E, K, V>
 //        this.isSingle = isSingle;
 //    }
 
+    /**
+     * Creates a new AccStateDriver.
+     *
+     * @param context The context for this driver
+     * @param rootAcc The root accumulator
+     * @param isSingle Whether to enforce single values only
+     * @param inputToStateId Function to map input and environment to state id
+     */
     protected AccStateDriver(AccContext<K, V> context, AccStateGon<I, E, K, V> rootAcc, boolean isSingle, BiFunction<I, E, ?> inputToStateId) {
         super();
         if (rootAcc.getParent() != null) {
@@ -58,34 +74,77 @@ public class AccStateDriver<I, E, K, V>
         setContext(context);
     }
 
+    /**
+     * Creates a new AccStateDriver.
+     *
+     * @param <I> The input type
+     * @param <E> The environment type
+     * @param <K> The key type
+     * @param <V> The value type
+     * @param context The context for this driver
+     * @param rootAcc The root accumulator
+     * @param isSingle Whether to enforce single values only
+     * @param inputToStateId Function to map input and environment to state id
+     * @return A new AccStateDriver instance
+     */
     public static <I, E, K, V> AccStateDriver<I, E, K, V> of(AccContext<K, V> context, AccStateGon<I, E, K, V> rootAcc, boolean isSingle, BiFunction<I, E, ?> inputToStateId) { // , TupleBridge<D, C> primaryIdAccessor) {
         // return new AccStateDriver<>(rootAcc, isSingle); //, primaryIdAccessor);
         return new AccStateDriver<>(context, rootAcc, isSingle, inputToStateId);
     }
 
+    /**
+     * Gets the function to map input and environment to state id.
+     *
+     * @return The input to state id function
+     */
     public BiFunction<I, E, ?> getInputToStateId() {
         return inputToStateId;
     }
 
+    /**
+     * Gets the context for this driver.
+     *
+     * @return The context
+     */
     public AccContext<K, V> getContext() {
         return context;
     }
 
+    /**
+     * Gets the count of sources seen.
+     *
+     * @return The count of sources seen
+     */
     public long getSourcesSeen() {
         return sourcesSeen;
     }
 
+   /**
+     * Sets the context for this driver.
+     *
+     * @param context The context to set
+     */
     public void setContext(AccContext<K, V> context) {
         this.context = context;
         currentState.setContext(context);
     }
 
 
+    /** Whether there is pending input to process. */
     boolean hasPendingInput = false;
+    /** The pending input state id. */
     protected Object pendingInputStateId;
+    /** The pending input. */
     protected I pendingInput;
+    /** The pending environment. */
     protected E pendingEnv;
 
+    /**
+     * Processes any pending input.
+     *
+     * @return true if an object was completed
+     * @throws IOException If an I/O error occurs
+     */
     protected boolean processPendingInput() throws IOException {
         boolean completedAnObject = false;
         if (hasPendingInput) {
@@ -103,9 +162,10 @@ public class AccStateDriver<I, E, K, V>
      * We expect each root node to be announced with a dummy quad that does not carry any
      * edge information (s, s, ANY, ANY)
      *
-     * @param input
-     * @param cxt
-     * @throws IOException
+     * @param input The input
+     * @param env The environment
+     * @return true if an item was completed
+     * @throws IOException If an I/O error occurs
      */
     public boolean accumulate(I input, E env) throws IOException {
 
@@ -166,6 +226,16 @@ public class AccStateDriver<I, E, K, V>
         return completedAnObject;
     }
 
+    /**
+     * Processes the input and transitions to the appropriate state.
+     *
+     * @param inputStateId The input state id
+     * @param input The input
+     * @param env The environment
+     * @param isNewSource Whether this is a new source
+     * @return true if an item was completed
+     * @throws IOException If an I/O error occurs
+     */
     public boolean processInput(Object inputStateId, I input, E env, boolean isNewSource) throws IOException {
 
         boolean completedAnItem = false;
@@ -212,7 +282,12 @@ public class AccStateDriver<I, E, K, V>
 //
 //    }
 
-    // True if another item was emitted
+    /**
+     * Ends the current item processing.
+     *
+     * @return true if another item was emitted
+     * @throws IOException If an I/O error occurs
+     */
     public boolean end() throws IOException {
         boolean result;
         if (hasPendingInput) {
@@ -229,7 +304,11 @@ public class AccStateDriver<I, E, K, V>
 //        return currentState.getValue();
 //    }
 
-    /** Recursively calls end() on the current accumulator and all its ancestors */
+    /**
+     * Recursively calls end() on the current accumulator and all its ancestors.
+     *
+     * @throws IOException If an I/O error occurs
+     */
     protected void endCurrentItem() throws IOException {
         while (true) {
             // If no item was seen then begin was not called on the currentState

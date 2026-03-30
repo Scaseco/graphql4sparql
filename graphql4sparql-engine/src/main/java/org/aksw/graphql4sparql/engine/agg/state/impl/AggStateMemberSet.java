@@ -10,43 +10,43 @@ import org.aksw.graphql4sparql.engine.acc.state.api.AccStateTypeTransition;
 import org.aksw.graphql4sparql.engine.acc.state.api.impl.AggStateGon;
 import org.aksw.graphql4sparql.engine.acc.state.api.impl.AggStateTransition;
 
+/**
+ * Base class for aggregator states with member sets.
+ *
+ * @param <I> The input type
+ * @param <E> The environment type
+ * @param <K> The key type
+ * @param <V> The value type
+ */
 public abstract class AggStateMemberSet<I, E, K, V>
     implements AggStateGon<I, E, K, V>
 {
+    /**
+     * The member aggregators map.
+     */
     protected Map<Object, AggStateTransition<I, E, K, V>> memberAggs = new LinkedHashMap<>();
 
+    /**
+     * Creates a new AggStateMemberSet.
+     */
     public AggStateMemberSet() {
         super();
     }
 
-//    @SafeVarargs
-//    // public static <I, E, K, V> AggStateObject<I, E, K, V> of(AggStateGon<I, E, K, V> ...edgeAggregators) {
-//    public static <I, E, K, V> AggStateMemberSet<I, E, K, V> of(AggStateTransition<I, E, K, V> ...edgeAggregators) {
-//      AggStateFragmentBody<I, E, K, V> result = new AggStateFragmentBody<>();
-//      for (AggStateTransition<I, E, K, V> agg : edgeAggregators) {
-//          result.addPropertyAggregator(agg);
-//      }
-//      return result;
-//  }
-
-//  @Override
-//  public Object getMatchStateId() {
-//      return matchStateId;
-//  }
-
-//  public static <I, E, K, V> AggStateObject<I, E, K, V> ofList(Collection<? extends AggStateTypeProduceEntry<I, E, K, V>> edgeAggregators) {
-//      AggStateObject<I, E, K, V> result = new AggStateObject<>();
-//      for (AggStateTypeProduceEntry<I, E, K, V> agg : edgeAggregators) {
-//          result.addPropertyAggregator(agg);
-//      }
-//      return result;
-//  }
-
+    /**
+     * Gets the property aggregators.
+     *
+     * @return The property aggregators map
+     */
     public Map<Object, AggStateTransition<I, E, K, V>> getPropertyAggregators() {
         return memberAggs;
     }
 
-    // protected void addPropertyAggregator(AggStateTypeProduceEntry<I, E, K, V> propertyAggregator) {
+    /**
+     * Adds a property aggregator.
+     *
+     * @param propertyAggregator The property aggregator to add
+     */
     protected void addPropertyAggregator(AggStateTransition<I, E, K, V> propertyAggregator) {
         // XXX Validate that there is no clash in member keys
         Object matchStateId = propertyAggregator.getMatchStateId();
@@ -56,8 +56,22 @@ public abstract class AggStateMemberSet<I, E, K, V>
     @Override
     public abstract AccStateGon<I, E, K, V> newAccumulator();
 
+    /**
+     * Record holding member accumulator information.
+     * @param <I> The input type
+     * @param <E> The environment type
+     * @param <K> The key type
+     * @param <V> The value type
+     * @param fieldIdToIndex Map from field ID to index
+     * @param edgeAccs Array of edge accumulators
+     */
     public static record MemberAccs<I, E, K, V>(Map<Object, Integer> fieldIdToIndex, AccStateTypeTransition<I, E, K, V>[] edgeAccs) {}
 
+    /**
+     * Builds the member accumators.
+     *
+     * @return The member accumators
+     */
     public MemberAccs<I, E, K, V> buildMemberAccs() {
         int n = memberAggs.size();
 
@@ -77,7 +91,6 @@ public abstract class AggStateMemberSet<I, E, K, V>
             ++fieldIndex;
         }
 
-        // AccStateFragmentBody<I, E, K, V> result = AccStateFragmentBody.of(fieldIdToIndex, edgeAccs);
         return new MemberAccs<>(fieldIdToIndex, edgeAccs);
     }
 }

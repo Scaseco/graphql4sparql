@@ -6,6 +6,8 @@ import java.io.IOException;
 /**
  * Object notation writers support objects (aka "associative arrays", "dictionaries", "maps")
  * and arrays. Methods for writing values are provided by specializations.
+ * @param <K> The key type
+ * @param <V> The value type
  */
 public interface ObjectNotationWriter<K, V>
     extends Flushable

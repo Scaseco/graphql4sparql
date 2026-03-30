@@ -25,17 +25,35 @@ import org.apache.jena.sparql.syntax.syntaxtransform.ElementTransformCopyBase;
 //It transforms within ElementData elements
 
 /**
- * An {@link ElementTransform} which replaces occurences of a variable with a
- * Node value. Because a {@link Var} is a subclass of {@link Node_Variable}
- * which is a {@link Node}, this includes variable renaming.
+ /**
+ * An ElementTransform which replaces occurrences of a variable with a
+ * Node value. Because a Var is a subclass of Node_Variable
+ * which is a Node, this includes variable renaming.
  * <p>
- * This is a transformation on the syntax - all occurences of a variable are
- * replaced, even if inside sub-select's and not project (which means it is
+ * This is a transformation on the syntax - all occurrences of a variable are
+ * replaced, even if inside sub-selects and not project (which means it is
+ * effectively a different variable).
+ */
+/**
+ * An ElementTransform which replaces occurrences of a variable with a
+ * Node value. Because a Var is a subclass of Node_Variable
+ * which is a Node, this includes variable renaming.
+ * <p>
+ * This is a transformation on the syntax - all occurrences of a variable are
+ * replaced, even if inside sub-selects and not project (which means it is
  * effectively a different variable).
  */
 public class ElementTransformSubst2 extends ElementTransformCopyBase {
+    /**
+     * The node transform.
+     */
     private final NodeTransform nodeTransform;
 
+    /**
+     * Creates a new element transform subst.
+     *
+     * @param nodeTransform The node transform
+     */
     public ElementTransformSubst2(NodeTransform nodeTransform) {
         this.nodeTransform = nodeTransform;
     }
@@ -86,6 +104,12 @@ public class ElementTransformSubst2 extends ElementTransformCopyBase {
         return new TriplePath(s1, path.getPath(), o1);
     }
 
+    /**
+     * Transforms a triple.
+     *
+     * @param triple The triple to transform
+     * @return The transformed triple
+     */
     public Triple transform(Triple triple) {
         Node s = triple.getSubject();
         Node s1 = transform(s);
@@ -99,10 +123,23 @@ public class ElementTransformSubst2 extends ElementTransformCopyBase {
         return Triple.create(s1, p1, o1);
     }
 
+    /**
+     * Transforms a node.
+     *
+     * @param n The node to transform
+     * @return The transformed node
+     */
     protected Node transform(Node n) {
         return nodeTransform.apply(n);
     }
 
+    /**
+     * Transforms an element data.
+     *
+     * @param el The element data
+     * @param nodeTransform The node transform
+     * @return The transformed element data
+     */
     public static ElementData transform(ElementData el, NodeTransform nodeTransform) {
         Table inTable = el.getTable();
         // Does not transform data in tables - only the result vars (jena 3.11.0)
@@ -116,6 +153,13 @@ public class ElementTransformSubst2 extends ElementTransformCopyBase {
         return result;
     }
 
+    /**
+     * Transforms a binding.
+     *
+     * @param b The binding to transform
+     * @param transform The node transform
+     * @return The transformed binding
+     */
     public static Binding transform(Binding b, NodeTransform transform) {
         BindingBuilder b2 = BindingBuilder.create();
         List<Var> vars = Iter.toList(b.vars());

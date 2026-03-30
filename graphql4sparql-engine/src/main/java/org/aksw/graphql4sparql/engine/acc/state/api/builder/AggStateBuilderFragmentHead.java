@@ -4,9 +4,22 @@ import org.aksw.graphql4sparql.engine.acc.state.api.impl.AggStateGon;
 import org.aksw.graphql4sparql.engine.agg.state.impl.AggStateFragmentHead;
 import org.aksw.graphql4sparql.engine.gon.meta.GonType;
 
+/**
+ * Builder for fragment head aggregators.
+ *
+ * @param <I> The input type
+ * @param <E> The environment type
+ * @param <K> The key type
+ * @param <V> The value type
+ */
 public class AggStateBuilderFragmentHead<I, E, K, V>
     extends AggStateBuilderTransitionBase<I, E, K, V>
 {
+    /**
+     * Creates a new AggStateBuilderFragmentHead.
+     *
+     * @param matchStateId The match state ID
+     */
     public AggStateBuilderFragmentHead(Object matchStateId) { //, AggStateBuilder<I, E, K, V> subAggBuilder) {
         super(matchStateId);
     }

@@ -4,12 +4,19 @@ import java.io.IOException;
 
 import graphql.com.google.common.base.Preconditions;
 
-/** Base class for acc states that produce GON output.
- *  Keeps track of the current input being processed.
- */
-public abstract class AccStateBase<I, E, K, V>
-    implements AccStateGon<I, E, K, V>
-{
+   /**
+     * Base class for accumulator states that produce GON output.
+     * Keeps track of the current input being processed.
+     *
+     * @param <I> The input type
+     * @param <E> The environment type
+     * @param <K> The key type
+     * @param <V> The value type
+     */
+    public abstract class AccStateBase<I, E, K, V>
+        implements AccStateGon<I, E, K, V>
+    {
+    /** The parent state. */
     protected AccStateGon<I, E, K, V> parent;
 
     // Usually the mapping of input to stateId is independent of the current state and could thus be part of the context
@@ -19,19 +26,30 @@ public abstract class AccStateBase<I, E, K, V>
     /** The materialized value - requires materialization to be enabled in the context */
     // protected JsonElement value = null;
     // protected O value = null;
+    /** Old value stored for debugging. */
     protected Object oldSourceNode; // Old value stored for debugging
 
+    /** Whether the state has begun processing. */
     protected boolean hasBegun = false;
+    /** The current source node being processed. Can be null. */
     protected Object currentSourceNode; // can be null
 
+    /** Protected constructor for subclasses. */
+    protected AccStateBase() {
+    }
+
+    /** The parent input. */
     protected I parentInput;
 
-    /** Copy of the input passed to the most recent call of {@link #transition(Object, Object)}. */
+    /** Copy of the input passed to the most recent call of {@link #transition(Object, Object, Object)}. */
     protected I currentInput;
 
+    /** Whether to skip output. */
     protected boolean skipOutput = false;
+    /** The context for this accumulator. */
     protected AccContext<K, V> context;
 
+    /** The state id. */
     protected Object stateId;
 
 //    protected Object getInputStateId(I input, E env) {
@@ -58,6 +76,11 @@ public abstract class AccStateBase<I, E, K, V>
         setContextOnChildren(context);
     }
 
+    /**
+     * Sets the context on all children.
+     *
+     * @param context The context to set
+     */
     protected void setContextOnChildren(AccContext<K, V> context) {
         children().forEachRemaining(child -> child.setContext(context));
     }
@@ -72,6 +95,11 @@ public abstract class AccStateBase<I, E, K, V>
         return hasBegun;
     }
 
+    /**
+     * Ensures that the state has begun processing.
+     *
+     * @throws IllegalStateException If the state has not begun
+     */
     public void ensureBegun() {
         Preconditions.checkState(hasBegun == true);
     }
@@ -86,11 +114,13 @@ public abstract class AccStateBase<I, E, K, V>
 
 
     /**
+     * Begins state processing.
      *
-     * @param joinTuple The values by which the tuple that is about to be passed to transition joined with the parent accumulator.
-     * @param cxt
-     * @param skipOutput
-     * @throws IOException
+     * @param fromStateId The state id of the parent
+     * @param parentInput The parent input
+     * @param env The environment
+     * @param skipOutput Whether to skip output
+     * @throws IOException If an error occurs during processing
      */
     @Override
     public final void begin(Object fromStateId, I parentInput, E env, boolean skipOutput) throws IOException {
@@ -121,15 +151,28 @@ public abstract class AccStateBase<I, E, K, V>
         // this.context = null;
     }
 
+    /**
+     * Performs the actual state transition.
+     *
+     * @param inputStateId The input state ID
+     * @param input The input
+     * @param env The environment
+     * @return The new state after transition
+     * @throws IOException If an error occurs during transition
+     */
     public abstract AccStateGon<I, E, K, V> transitionActual(Object inputStateId, I input, E env) throws IOException;
 
     /**
-     * @throws IOException
+     * Performs the actual beginning of the state processing.
+     *
+     * @throws IOException If an error occurs during processing
      */
     protected void beginActual() throws IOException {}
 
     /**
-     * @throws IOException
+     * Performs the actual ending of the state processing.
+     *
+     * @throws IOException If an error occurs during processing
      */
     protected void endActual() throws IOException {}
 

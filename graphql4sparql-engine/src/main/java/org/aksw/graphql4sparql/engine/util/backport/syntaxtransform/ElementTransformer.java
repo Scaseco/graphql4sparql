@@ -71,26 +71,57 @@ import org.apache.jena.sparql.syntax.syntaxtransform.UpdateTransformOps;
 public class ElementTransformer {
     private static ElementTransformer singleton = new ElementTransformer() ;
 
-    /** Get the current transformer */
+    /**
+     * Get the current transformer.
+     *
+     * @return The current transformer
+     */
     public static ElementTransformer get() {
         return singleton ;
     }
 
-    /** Set the current transformer - use with care */
+    /**
+     * Set the current transformer - use with care.
+     *
+     * @param value The transformer to set
+     */
     public static void set(ElementTransformer value) {
         ElementTransformer.singleton = value ;
     }
 
-    /** Transform an algebra expression */
+    /**
+     * Transform an element.
+     *
+     * @param element The element to transform
+     * @param transform The element transform to apply
+     * @return The transformed element
+     */
     public static Element transform(Element element, ElementTransform transform) {
         return transform(element, transform, null, null, null) ;
     }
 
-    /** Transformation with specific ElementTransform and ExprTransform */
+    /**
+     * Transformation with specific ElementTransform and ExprTransform.
+     *
+     * @param element The element to transform
+     * @param transform The element transform to apply
+     * @param exprTransform The expression transform to apply
+     * @return The transformed element
+     */
     public static Element transform(Element element, ElementTransform transform, ExprTransform exprTransform) {
         return get().transformation(element, transform, exprTransform, null, null) ;
     }
 
+    /**
+     * Transform an element with the given transformers and visitors.
+     *
+     * @param element The element to transform
+     * @param transform The element transform to apply
+     * @param exprTransform The expression transform to apply
+     * @param beforeVisitor The visitor to call before transformation
+     * @param afterVisitor The visitor to call after transformation
+     * @return The transformed element
+     */
     public static Element transform(Element element, ElementTransform transform, ExprTransform exprTransform,
                                     ElementVisitor beforeVisitor, ElementVisitor afterVisitor) {
         return get().transformation(element, transform, exprTransform, beforeVisitor, afterVisitor) ;
@@ -104,8 +135,17 @@ public class ElementTransformer {
         return transformation(v, element, beforeVisitor, afterVisitor) ;
     }
 
+   /**
+     * Transforms an element.
+     *
+     * @param transformApply The transform visitor
+     * @param element The element to transform
+     * @param beforeVisitor The before visitor
+     * @param afterVisitor The after visitor
+     * @return The transformed element
+     */
     protected Element transformation(ApplyTransformVisitor transformApply, Element element,
-                                     ElementVisitor beforeVisitor, ElementVisitor afterVisitor) {
+                                      ElementVisitor beforeVisitor, ElementVisitor afterVisitor) {
         if ( element == null ) {
             Log.warn(this, "Attempt to transform a null element - ignored") ;
             return element ;
@@ -113,7 +153,15 @@ public class ElementTransformer {
         return applyTransformation(transformApply, element, beforeVisitor, afterVisitor) ;
     }
 
-    /** The primitive operation to apply a transformation to an Op */
+    /**
+     * The primitive operation to apply a transformation to an Op.
+     *
+     * @param transformApply The transform visitor
+     * @param element The element to transform
+     * @param beforeVisitor The before visitor
+     * @param afterVisitor The after visitor
+     * @return The transformed element
+     */
     protected Element applyTransformation(ApplyTransformVisitor transformApply, Element element,
                                           ElementVisitor beforeVisitor, ElementVisitor afterVisitor) {
 //        ElementWalker.walk(element, transformApply) ; // , beforeVisitor,
@@ -126,8 +174,14 @@ public class ElementTransformer {
         return r ;
     }
 
+    /**
+     * Creates a new element transformer.
+     */
     protected ElementTransformer() {}
 
+    /**
+     * A transform visitor that applies transformations to elements.
+     */
     static class ApplyTransformVisitor implements ElementVisitor {
         protected final ElementTransform transform ;
         private final ExprTransform      exprTransform ;

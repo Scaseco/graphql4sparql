@@ -39,15 +39,35 @@ import org.apache.jena.sparql.syntax.ElementLateral;
 import org.apache.jena.sparql.syntax.ElementSubQuery;
 import org.apache.jena.sparql.syntax.syntaxtransform.NodeTransformSubst;
 
+/**
+ * A generator for element with LATERAL support.
+ */
 public class ElementGeneratorLateral {
+    private ElementGeneratorLateral() {}
 
+    /**
+     * A mapping of element to variable maps.
+     *
+     * @param element The element
+     * @param stateVarMap The state variable map
+     * @param sortConditions The sort conditions
+     */
     public record ElementMapping(
-            Element element,
-            Map<Node, Map<Var, Var>> stateVarMap,
-            List<SortCondition> sortConditions) {
+        Element element,
+        Map<Node, Map<Var, Var>> stateVarMap,
+        List<SortCondition> sortConditions) {
     }
 
 
+    /**
+     * A node in the sort hierarchy.
+     *
+     * @param parent The parent sort node
+     * @param localIdx The local index
+     * @param stateId The state ID
+     * @param sortConditions The sort conditions
+     * @param children The child sort nodes
+     */
     public record SortNode(
         SortNode parent,
         int localIdx,
@@ -55,27 +75,46 @@ public class ElementGeneratorLateral {
         List<SortCondition> sortConditions,
         List<SortNode> children
     ) {
+        /**
+         * Returns the path to this node.
+         *
+         * @return The path as a list of integers
+         */
         public List<Integer> getPath() {
             List<Integer> result = new ArrayList<>();
             collectPath(result);
             return result;
         }
 
+        /**
+         * Collects the path to this node.
+         *
+         * @param out The output list to append to
+         */
         private void collectPath(List<Integer> out) {
-             if (parent != null) {
-                 if (parent.parent != null) {
-                     parent.collectPath(out);
-                 }
-                 out.add(localIdx);
-             }
+            if (parent != null) {
+                if (parent.parent != null) {
+                    parent.collectPath(out);
+                }
+                out.add(localIdx);
+            }
         }
 
         @Override
         public final String toString() {
             return getPath() + ": " + sortConditions;
         }
-    }
+   }
 
+
+    /**
+     * Converts an element node to a LATERAL element mapping.
+     *
+     * @param globalOrderBy Whether to apply global ordering
+     * @param rootField The root element node
+     * @param stateVar The state variable
+     * @return The element mapping
+     */
     public static ElementMapping toLateral(boolean globalOrderBy, ElementNode rootField, Var stateVar) {
         Map<Node, Map<Var, Var>> stateVarMap = new LinkedHashMap<>();
         Map<Node, Map<Var, Var>> outStateOriginalToGlobalMap = new LinkedHashMap<>();
@@ -138,8 +177,21 @@ public class ElementGeneratorLateral {
         return new ElementMapping(element, stateVarMap, globalSortConditions);
     }
 
+    /**
+     * A mapping of element node to variable maps.
+     *
+     * @param node The element node
+     * @param stateVarMap The state variable map
+     */
     public record ElementNodeVarMapping(ElementNode node, Map<Object, Map<Var, Var>> stateVarMap) {}
 
+    /**
+     * Harmonizes variables for an element node.
+     *
+     * @param elementNode The element node
+     * @param prefix The prefix for variable names
+     * @return The harmonized element node mapping
+     */
     public static ElementNodeVarMapping harmonizeVariables(ElementNode elementNode, String prefix) {
         // PathStr basePath = PathStr.newRelativePath(prefix);
         List<String> basePath = List.of(prefix);
@@ -154,11 +206,11 @@ public class ElementGeneratorLateral {
     /**
      * For each node, compute a variable mapping such that all elements can be safely combined into a single graph pattern.
      *
-     * @param elementNode
-     * @param parentPath
-     * @param parentRenames
-     * @param outStateVarMap
-     * @return
+     * @param elementNode The element node
+     * @param parentPath The parent path
+     * @param parentRenames The parent variable renames
+     * @param outStateVarMap The output state variable map
+     * @return The harmonized element node
      */
     // TODO This method should be a separate phase in the toLateral() conversion.
     public static ElementNode harmonizeVariables(ElementNode elementNode, List<String> parentPath, Map<Var, Var> parentRenames, Map<Object, Map<Var, Var>> outStateVarMap) {
@@ -234,6 +286,14 @@ public class ElementGeneratorLateral {
         return resultNode;
     }
 
+    /**
+     * Resolves an ancestor variable.
+     *
+     * @param elementNode The element node
+     * @param outStateVarMap The output state variable map
+     * @param var The variable to resolve
+     * @return The resolved variable
+     */
     public static Var resolveAncestorVar(ElementNode elementNode, Map<Node, Map<Var, Var>> outStateVarMap, Var var) {
         String id = elementNode.getIdentifier();
         Node idNode = NodeFactory.createLiteralString(id);
@@ -249,6 +309,14 @@ public class ElementGeneratorLateral {
     }
 
 
+    /**
+     * Resolves a variable map.
+     *
+     * @param elementNode The element node
+     * @param outStateVarMap The output state variable map
+     * @param expr The expression
+     * @return The resolved variable map
+     */
     public static Map<Var, Var> resolveVarMap(ElementNode elementNode, Map<Node, Map<Var, Var>> outStateVarMap, Expr expr) {
         Set<Var> vars = expr.getVarsMentioned();
         Map<Var, Var> localToGlobal = new HashMap<>();
@@ -262,6 +330,14 @@ public class ElementGeneratorLateral {
         return localToGlobal;
     }
 
+    /**
+     * Resolves local variables in an expression.
+     *
+     * @param elementNode The element node
+     * @param outStateVarMap The output state variable map
+     * @param expr The expression
+     * @return The expression with resolved variables
+     */
     public static Expr resolveLocalVarsInExpr(ElementNode elementNode, Map<Node, Map<Var, Var>> outStateVarMap, Expr expr) {
         Map<Var, Var> localToGlobal = resolveVarMap(elementNode, outStateVarMap, expr);
         Expr result = ExprTransformer.transform(new NodeTransformExpr(new NodeTransformSubst(localToGlobal)), expr);
@@ -269,13 +345,18 @@ public class ElementGeneratorLateral {
     }
 
     /**
+     * Converts an element node to a LATERAL element.
      *
-     * @param node
-     * @param parentPath
-     * @param parentRenames
-     * @param discriminatorVar
+     * @param globalOrderBy Whether to apply global ordering
+     * @param node The element node
+     * @param parentPath The parent path
+     * @param discriminatorVar The discriminator variable
      * @param outStateVarMap For each state the mapping of the original var to the renamed var. The rationale is: Access to the original variable needs to be remapped to the renamed one.
-     * @return
+     * @param outStateOriginalToGlobalMap The mapping of original variables to global variables
+     * @param levelVars This list is appended to as needed for level variables
+     * @param parentPathIdx The parent path index
+     * @param thisSortNode The sort node for this level
+     * @return The element
      */
     public static Element toLateral(
             boolean globalOrderBy,
@@ -284,7 +365,7 @@ public class ElementGeneratorLateral {
             Var discriminatorVar,
             Map<Node, Map<Var, Var>> outStateVarMap,
             Map<Node, Map<Var, Var>> outStateOriginalToGlobalMap,
-            List<Var> levelVars, // This list is appended to as needed
+            List<Var> levelVars, // This list is appended to as needed for level variables
             List<Integer> parentPathIdx,
             SortNode thisSortNode) {
 
@@ -620,6 +701,14 @@ public class ElementGeneratorLateral {
         return result;
     }
 
+    /**
+     * Applies offset and limit to an element.
+     *
+     * @param elt The element to slice
+     * @param offset The offset (can be null)
+     * @param limit The limit (can be null)
+     * @return The sliced element
+     */
     public static Element applySlice(Element elt, Long offset, Long limit) {
         Element result = elt;
         if (limit != null || offset != null) {

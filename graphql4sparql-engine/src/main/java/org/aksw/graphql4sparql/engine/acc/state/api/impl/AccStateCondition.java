@@ -9,14 +9,23 @@ import org.aksw.graphql4sparql.engine.acc.state.api.AccStateGon;
 import org.aksw.graphql4sparql.engine.acc.state.api.AccStateTypeTransition;
 import org.aksw.graphql4sparql.engine.gon.meta.GonType;
 
-/** Transition to a sub-acc state if a condition is met. Used for fragments. */
+/**
+ * Transition to a sub-acc state if a condition is met. Used for fragments.
+ *
+ * @param <I> The input type
+ * @param <E> The environment type
+ * @param <K> The key type
+ * @param <V> The value type
+ */
 public class AccStateCondition<I, E, K, V>
     extends AccStateBase<I, E, K, V>
     implements AccStateTypeTransition<I, E, K, V>
 {
+    /** The match field id for AccJsonObject to index AccJsonEdge by this attribute. */
     protected Object matchFieldId; // AccJsonObject should index AccJsonEdge by this attribute
 
 //    protected Node currentTarget = null;
+    /** The sub-accumulator to transition to. */
     protected AccStateGon<I, E, K, V> subAcc;
 //    protected boolean skipOutputStartedHere = false;
 
@@ -26,6 +35,12 @@ public class AccStateCondition<I, E, K, V>
     /** If true then no array is created. Any item after the first raises an error event. */
     // protected boolean isSingle = false;
 
+    /**
+     * Creates a new AccStateCondition.
+     *
+     * @param matchFieldId The match field id
+     * @param subAcc The sub-accumulator to transition to
+     */
     public AccStateCondition(Object matchFieldId, AccStateGon<I, E, K, V> subAcc) {
         super();
         this.matchFieldId = matchFieldId;

@@ -9,11 +9,22 @@ import org.apache.jena.sparql.core.Var;
 import org.apache.jena.sparql.syntax.Element;
 import org.apache.jena.sparql.syntax.ElementNamedGraph;
 
+/**
+ * A transformation that wraps an element with a named graph.
+ */
 public class ElementTransformGraph
     implements ElementTransform
 {
+    /**
+     * The graph node.
+     */
     protected Node node;
 
+    /**
+     * Creates a new element transform graph.
+     *
+     * @param node The graph node
+     */
     public ElementTransformGraph(Node node) {
         super();
         this.node = Objects.requireNonNull(node);

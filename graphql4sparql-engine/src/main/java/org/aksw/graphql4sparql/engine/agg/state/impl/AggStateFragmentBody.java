@@ -4,13 +4,34 @@ import org.aksw.graphql4sparql.engine.acc.state.api.impl.AccStateFragmentBody;
 import org.aksw.graphql4sparql.engine.acc.state.api.impl.AggStateTransition;
 import org.aksw.graphql4sparql.engine.gon.meta.GonType;
 
+/**
+ * Aggregator state for fragment bodies.
+ *
+ * @param <I> The input type
+ * @param <E> The environment type
+ * @param <K> The key type
+ * @param <V> The value type
+ */
 public class AggStateFragmentBody<I, E, K, V>
     extends AggStateMemberSet<I, E, K, V>
 {
+    /**
+     * Creates a new AggStateFragmentBody.
+     */
     public AggStateFragmentBody() {
         super();
     }
 
+    /**
+     * Creates a new AggStateFragmentBody with the given edge aggregators.
+     *
+     * @param <I> The input type
+     * @param <E> The environment type
+     * @param <K> The key type
+     * @param <V> The value type
+     * @param edgeAggregators The edge aggregators
+     * @return The new AggStateFragmentBody
+     */
     @SafeVarargs
     // public static <I, E, K, V> AggStateObject<I, E, K, V> of(AggStateGon<I, E, K, V> ...edgeAggregators) {
     public static <I, E, K, V> AggStateFragmentBody<I, E, K, V> of(AggStateTransition<I, E, K, V> ...edgeAggregators) {

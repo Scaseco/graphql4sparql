@@ -18,16 +18,22 @@ import org.aksw.graphql4sparql.engine.gon.meta.GonType;
  * [      3, member2    ]
  * [      1, objectId2  ]
  *
- * @param <I>
- * @param <E>
- * @param <K>
- * @param <V>
+ * @param <I> The input type
+ * @param <E> The environment type
+ * @param <K> The key type
+ * @param <V> The value type
  */
 public class AccStateFragmentBody<I, E, K, V>
     extends AccStateMemberSet<I, E, K, V>
 {
-    protected AccStateFragmentBody(Map<Object, Integer> fieldIdToIndex, AccStateTypeTransition<I, E, K, V>[] edgeAccs) {
-        super(fieldIdToIndex, edgeAccs);
+    /**
+     * Creates a new AccStateFragmentBody.
+     *
+     * @param stateIdToIndex Map from state id to index in the edgeAccs array
+     * @param edgeAccs Array of edge accumulators
+     */
+    protected AccStateFragmentBody(Map<Object, Integer> stateIdToIndex, AccStateTypeTransition<I, E, K, V>[] edgeAccs) {
+        super(stateIdToIndex, edgeAccs);
     }
 
     @Override
@@ -35,7 +41,17 @@ public class AccStateFragmentBody<I, E, K, V>
         return GonType.ENTRY;
     }
 
-    /** Create a new instance and set it as the parent on all the property accumulators */
+    /**
+     * Create a new instance and set it as the parent on all the property accumulators.
+     *
+     * @param <I> The input type
+     * @param <E> The environment type
+     * @param <K> The key type
+     * @param <V> The value type
+     * @param stateIdToIndex Map from state id to index in the edgeAccs array
+     * @param edgeAccs Array of edge accumulators
+     * @return A new AccStateFragmentBody instance
+     */
     public static <I, E, K, V> AccStateFragmentBody<I, E, K, V> of(Map<Object, Integer> stateIdToIndex, AccStateTypeTransition<I, E, K, V>[] edgeAccs) {
         AccStateFragmentBody<I, E, K, V> result = new AccStateFragmentBody<>(stateIdToIndex, edgeAccs);
         for (AccStateTypeTransition<I, E, K, V> acc : edgeAccs) {

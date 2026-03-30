@@ -13,29 +13,57 @@ import org.apache.jena.sparql.engine.binding.Binding;
 
 
 /**
- * A view over a binding. The variable maps the exposed variables to that of the bindings.
+ * A view over a binding that remaps variables.
  * This class is useful in situations where the original variables were remapped to internal ones, and an internal
  * binding should appear as an original one to the application.
  */
 public class BindingRemapped
     implements Binding
 {
+    /**
+     * The delegate binding that this class wraps.
+     */
     protected Binding delegate;
+
+    /**
+     * The mapping from variables to their remapped variables.
+     */
     protected Map<Var, Var> varMap;
 
     // Computed when needed
+    /**
+     * The set of effective keys (variables that exist in both the map and delegate).
+     */
     protected transient Set<Var> effectiveKeys;
 
+    /**
+     * Creates a new BindingRemapped instance.
+     *
+     * @param delegate The delegate binding to wrap
+     * @param varMap The variable mapping to apply
+     */
     protected BindingRemapped(Binding delegate, Map<Var, Var> varMap) {
         super();
         this.delegate = Objects.requireNonNull(delegate);
         this.varMap = Objects.requireNonNull(varMap);
     }
 
+    /**
+     * Creates a new BindingRemapped instance.
+     *
+     * @param delegate The delegate binding to wrap
+     * @param varMap The variable mapping to apply
+     * @return A new BindingRemapped instance
+     */
     public static Binding of(Binding delegate, Map<Var, Var> varMap) {
         return new BindingRemapped(delegate, varMap);
     }
 
+    /**
+     * Returns the set of effective keys (variables that exist in both the map and delegate).
+     *
+     * @return The set of effective keys
+     */
     protected Set<Var> effectiveKeys() {
         if (effectiveKeys == null) {
             effectiveKeys= varMap.keySet().stream().filter(delegate::contains).collect(Collectors.toSet());

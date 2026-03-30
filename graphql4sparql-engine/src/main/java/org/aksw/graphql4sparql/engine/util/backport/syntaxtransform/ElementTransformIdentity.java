@@ -50,7 +50,8 @@ import org.apache.jena.sparql.syntax.ElementUnion;
 import org.apache.jena.sparql.syntax.syntaxtransform.ElementTransform;
 import org.apache.jena.sparql.syntax.syntaxtransform.ElementTransformCopyBase;
 
-/** Transformation function on an Element that does nothing.
+/**
+ * Transformation function on an Element that does nothing.
  * Do not extend - it assumes that no change below happens.
  * Use {@link ElementTransformCopyBase} instead.
  *  @see ElementTransformer
@@ -58,11 +59,15 @@ import org.apache.jena.sparql.syntax.syntaxtransform.ElementTransformCopyBase;
  */
 public final class ElementTransformIdentity implements ElementTransform
 {
+    /**
+     * Creates a new element transform identity.
+     */
     public ElementTransformIdentity() {}
     private static ElementTransformIdentity singleton = new ElementTransformIdentity() ;
     public static ElementTransform get() { return singleton ; }
 
-    @Override
+
+   @Override
     public Element transform(ElementTriplesBlock el) { return el ; }
     @Override
     public Element transform(ElementPathBlock el) { return el ; }

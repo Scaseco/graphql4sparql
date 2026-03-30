@@ -35,17 +35,25 @@ import org.apache.jena.sparql.syntax.syntaxtransform.ElementTransform;
  * */
 public class ExprTransformApplyElementTransform extends ExprTransformCopy
 {
+    /**
+     * The element transform.
+     */
     private final ElementTransform transform ;
-    
+
+    /**
+     * Creates a new expression transform apply element transform.
+     *
+     * @param transform The element transform
+     */
     public ExprTransformApplyElementTransform(ElementTransform transform) {
-        this.transform = transform ; 
+        this.transform = transform ;
     }
-    
+
     @Override
     public Expr transform(ExprFunctionOp funcOp, ExprList args, Op opArg)
     {
         Element el2 = ElementTransformer.transform(funcOp.getElement(), transform) ;
-        
+
         if ( el2 == funcOp.getElement() )
             return super.transform(funcOp, args, opArg) ;
         if ( funcOp instanceof E_Exists )

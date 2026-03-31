@@ -47,7 +47,7 @@
 		<module>graphql4sparql-bom</module>
 		<module>graphql4sparql-cli</module>
 		<module>graphql4sparql-pkg-parent</module>
-		<module>graphql4sparql-release-dummy</module>
+		<!-- <module>graphql4sparql-release-dummy</module> -->
 	</modules>
 	<properties>
 		<jena.version>6.0.0</jena.version>

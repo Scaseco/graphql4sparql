@@ -11,7 +11,7 @@
 	<parent>
 		<groupId>org.aksw.graphql4sparql</groupId>
 		<artifactId>graphql4sparql-parent</artifactId>
-		<version>0.7.0-SNAPSHOT</version>
+		<version>0.7.0</version>
 	</parent>
 
 	<dependencies>

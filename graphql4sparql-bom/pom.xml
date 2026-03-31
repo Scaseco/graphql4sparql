@@ -15,32 +15,42 @@
 	</parent>
 
 	<dependencies>
-			<!--
-			<dependency>
-				<groupId>org.aksw.graphql4sparql</groupId>
-				<artifactId>graphql4sparql-legacy</artifactId>
-			</dependency>
-			-->
+		<!--
+		<dependency>
+			<groupId>org.aksw.graphql4sparql</groupId>
+			<artifactId>graphql4sparql-legacy</artifactId>
+		</dependency>
+		-->
 
-			<dependency>
-				<groupId>org.aksw.graphql4sparql</groupId>
-				<artifactId>graphql4sparql-utils</artifactId>
-			</dependency>
+		<dependency>
+			<groupId>org.aksw.graphql4sparql</groupId>
+			<artifactId>graphql4sparql-utils</artifactId>
+		</dependency>
 
-			<dependency>
-				<groupId>org.aksw.graphql4sparql</groupId>
-				<artifactId>graphql4sparql-engine</artifactId>
-			</dependency>
+		<dependency>
+			<groupId>org.aksw.graphql4sparql</groupId>
+			<artifactId>graphql4sparql-engine</artifactId>
+		</dependency>
 
-			<dependency>
-				<groupId>org.aksw.graphql4sparql</groupId>
-				<artifactId>graphql4sparql-ui</artifactId>
-			</dependency>
+		<dependency>
+			<groupId>org.aksw.graphql4sparql</groupId>
+			<artifactId>graphql4sparql-ui</artifactId>
+		</dependency>
 
-			<dependency>
-				<groupId>org.aksw.graphql4sparql</groupId>
-				<artifactId>graphql4sparql-fuseki-mod</artifactId>
-			</dependency>
+		<dependency>
+			<groupId>org.aksw.graphql4sparql</groupId>
+			<artifactId>graphql4sparql-fuseki-mod</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aksw.graphql4sparql</groupId>
+			<artifactId>graphql4sparql-schemagen-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aksw.graphql4sparql</groupId>
+			<artifactId>graphql4sparql-schemagen-cmds</artifactId>
+		</dependency>
 	</dependencies>
 </project>
 

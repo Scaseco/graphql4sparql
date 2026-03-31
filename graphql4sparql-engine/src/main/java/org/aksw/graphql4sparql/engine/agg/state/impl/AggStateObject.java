@@ -1,0 +1,90 @@
+package org.aksw.graphql4sparql.engine.agg.state.impl;
+
+import org.aksw.graphql4sparql.engine.acc.state.api.impl.AccStateObject;
+import org.aksw.graphql4sparql.engine.acc.state.api.impl.AggStateTransition;
+import org.aksw.graphql4sparql.engine.acc.state.api.impl.AggStateTypeProduceNode;
+import org.aksw.graphql4sparql.engine.gon.meta.GonType;
+
+/**
+ * Aggregator state for objects.
+ *
+ * @param <I> The input type
+ * @param <E> The environment type
+ * @param <K> The key type
+ * @param <V> The value type
+ */
+public class AggStateObject<I, E, K, V>
+    extends AggStateMemberSet<I, E, K, V>
+    implements AggStateTypeProduceNode<I, E, K, V>
+{
+    /**
+     * Whether the object is an array.
+     */
+    protected boolean isArray;
+
+    /**
+     * Creates a new AggStateObject.
+     *
+     * @param isArray Whether the object is an array
+     */
+    public AggStateObject(boolean isArray) {
+        super();
+        this.isArray = isArray;
+    }
+
+    /**
+     * Creates a new AggStateObject with the given edge aggregators.
+     *
+     * @param <I> The input type
+     * @param <E> The environment type
+     * @param <K> The key type
+     * @param <V> The value type
+     * @param edgeAggregators The edge aggregators
+     * @return The new AggStateObject
+     */
+    @SafeVarargs
+    // public static <I, E, K, V> AggStateObject<I, E, K, V> of(AggStateGon<I, E, K, V> ...edgeAggregators) {
+    public static <I, E, K, V> AggStateObject<I, E, K, V> of(AggStateTransition<I, E, K, V> ...edgeAggregators) {
+        return of(false, edgeAggregators);
+    }
+
+    /**
+     * Creates a new AggStateObject with the given array flag and edge aggregators.
+     *
+     * @param <I> The input type
+     * @param <E> The environment type
+     * @param <K> The key type
+     * @param <V> The value type
+     * @param isArray Whether the object is an array
+     * @param edgeAggregators The edge aggregators
+     * @return The new AggStateObject
+     */
+    @SafeVarargs
+    // public static <I, E, K, V> AggStateObject<I, E, K, V> of(AggStateGon<I, E, K, V> ...edgeAggregators) {
+    public static <I, E, K, V> AggStateObject<I, E, K, V> of(boolean isArray, AggStateTransition<I, E, K, V> ...edgeAggregators) {
+        AggStateObject<I, E, K, V> result = new AggStateObject<>(isArray);
+        for (AggStateTransition<I, E, K, V> agg : edgeAggregators) {
+            result.addPropertyAggregator(agg);
+        }
+        return result;
+    }
+
+    @Override
+    public GonType getGonType() {
+        return GonType.OBJECT;
+    }
+
+    // protected void addPropertyAggregator(AggStateTypeProduceEntry<I, E, K, V> propertyAggregator) {
+//    protected void addPropertyAggregator(AggStateTransition<I, E, K, V> propertyAggregator) {
+//        // XXX Validate that there is no clash in member keys
+//        Object matchStateId = propertyAggregator.getMatchStateId();
+//        memberAggs.put(matchStateId, propertyAggregator);
+//    }
+
+    @Override
+    public AccStateObject<I, E, K, V> newAccumulator() {
+        MemberAccs<I, E, K, V> subAccs = buildMemberAccs();
+        AccStateObject<I, E, K, V> result = AccStateObject.of(isArray, subAccs.fieldIdToIndex(), subAccs.edgeAccs());
+        return result;
+    }
+}

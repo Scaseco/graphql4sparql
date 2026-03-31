@@ -1,2 +1,224 @@
-# graphql-over-sparql
-Fast streaming GraphQL system for getting JSON responses from SPARQL endpoints.
+# GraphQl4Sparql
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Maven Central](https://img.shields.io/maven-central/v/org.aksw.graphql4sparql/graphql4sparql-parent)](https://mvnrepository.com/artifact/org.aksw.graphql4sparql)
+
+Fast streaming GraphQL-to-SPARQL rewrite system for getting JSON responses from SPARQL endpoints.
+The engine only depends on [Apache Jena](https://jena.apache.org/) and [GraphQL-Java](https://www.graphql-java.com/).
+
+Note, that this project does not use GraphQL-Java's execution engine.
+Instead, GraphQL documents are processed into a SPARQL query and a corresponding SPARQL result set processor.
+
+## Status
+
+This project is actively maintained as part of the [AKSW research group](http://aksw.org).
+
+## Usage of the GraphQl4Sparql Rewriting Engine as a Dependency
+
+Add the following dependency to your `pom.xml`:
+
+```xml
+<dependency>
+  <groupId>org.aksw.graphql4sparql</groupId>
+  <artifactId>graphql4sparql-engine</artifactId>
+  <version>VERSION</version>
+</dependency>
+```
+
+## Usage of the CLI package:
+
+The CLI package currently only provides the schema generator.
+The schema generator reads an RDF file and emits a corresponding GraphQL schema based on the classes and properties.
+Schemas are optional but remove the need for having to write SPARQL graph patterns into the GraphQL queries.
+
+```bash
+# Download from releases
+wget https://github.com/Scaseco/graphql4sparql/releases/download/v0.1.0/graphql4sparql-cli-0.1.0.jar
+java -jar graphql4sparql-cli-0.1.0.jar --help
+```
+
+```bash
+# Generate a GraphQL schema from your RDF data
+java -jar graphql4sparql.jar schemagen YOUR_DATA.ttl > schema.graphql
+```
+
+## Source Code
+
+The GraphQL module comprises the engine, a simple user interface and a plugin for the Jena Fuseki server.
+Link: https://github.com/Scaseco/jenax/tree/develop/jenax-graphql-parent/jenax-graphql-v2-parent
+
+## Demos
+
+* GraphQL-over-SPARQL demo: https://smartdataanalytics.github.io/RdfProcessingToolkit/graphql/
+* Coypu endpoint (the one from the Screenshot): https://data.aksw.org/#/dataset/coypu/info
+
+## Fuseki Plugin
+
+![GraphQL plugin in Apache Jena Fuseki Server.](docs/images/2025-06-12-fuseki-plugin-screenshot.png "GraphQL plugin in Apache Jena Fuseki Server.")
+
+The GraphQl4Sparql Fuseki Module is a plugin for Apache Jena's Fuseki Server Framework that provides our GraphQL endpoint type.
+Download the GraphQl4Sparql Plugin JAR from this repo's release section and place it into Fuseki's plugin folder.
+By default this is `<fuseki-root>/run/extra` (the folder may need to be created manually).
+
+### Fuseki Example Setup
+
+A complete example setup with demo data is provided in [/example-setup-fuseki](/example-setup-fuseki).
+
+### GraphQl4Sparql Fuseki Configuration
+
+The relevant config to setup your own service with
+<details>
+<summary>Fuseki 6.1.0+ Configuration</summary>
+
+Since Jena 6.1.0 it is possible to IRIs for values of `ja:cxtName`.
+
+```turtle
+# run/configuration/graphql-test_ds.ttl
+PREFIX fuseki:    <http://jena.apache.org/fuseki#>
+PREFIX ja:        <http://jena.hpl.hp.com/2005/11/Assembler#>
+PREFIX g4sf:      <https://w3id.org/aksw/graphql4sparql/fuseki#>
+
+<#service> rdf:type fuseki:Service ;
+  fuseki:name "example-graphql4sparql" ;
+  fuseki:dataset <#baseDS> ;
+  fuseki:endpoint [
+    fuseki:operation fuseki:query ;
+  ] ;
+  fuseki:endpoint [
+    fuseki:name "graphql" ;
+    fuseki:operation g4sf:query ;
+    ja:context [
+      ja:cxtName  g4sf:schemaFile ;
+      ja:cxtValue "run/configuration/mona-lisa.graphql" ;
+    ] ;
+    ja:context [
+      ja:cxtName  g4sf:sparqlQueryEndpoint ;
+      ja:cxtValue "/example-graphql4sparql" ;
+    ] ;
+    # Link to fuseki's query interface.
+    ja:context [ 
+      ja:cxtName g4sf:sparqlQueryViewer ;
+      ja:cxtValue "/#/dataset/example-graphql4sparql/query?query={ENCODED_SPARQL_QUERY}" ;
+    ] ;
+    # Link to public YasGUI:
+    # ja:context [
+    #   ja:cxtName g4sf:sparqlQueryViewer ;
+    #   ja:cxtValue "https://yasgui.triply.cc/#?query={ENCODED_SPARQL_QUERY}&endpoint={ENCODED_SPARQL_QUERY_ENDPOINT}" ;
+    # ] ;
+  ] ;
+  .
+  
+<#baseDS> rdf:type tdb2:DatasetTDB2 ;
+  tdb2:location "run/databases/tdb2/example-graphql4sparql/" ;
+  ### tdb2:unionDefaultGraph true ;
+  .
+```
+
+</details>
+<details>
+<summary>Fuseki 6.0.0 Configuration</summary>
+
+```turtle
+PREFIX fuseki:    <http://jena.apache.org/fuseki#>
+PREFIX ja:        <http://jena.hpl.hp.com/2005/11/Assembler#>
+PREFIX g4sf:      <https://w3id.org/aksw/graphql4sparql/fuseki#>
+
+<#service> rdf:type fuseki:Service ;
+  fuseki:name "example-graphql4sparql" ;
+  fuseki:dataset <#baseDS> ;
+  fuseki:endpoint [
+    fuseki:operation fuseki:query ;
+  ] ;
+  fuseki:endpoint [
+    fuseki:name "graphql" ;
+    fuseki:operation g4sf:query ;
+    ja:context [
+      ja:cxtName  "https://w3id.org/aksw/graphql4sparql/fuseki#schemaFile" ;
+      ja:cxtValue "run/configuration/mona-lisa.graphql" ;
+    ] ;
+    ja:context [
+      ja:cxtName  "https://w3id.org/aksw/graphql4sparql/fuseki#sparqlQueryEndpoint" ;
+      ja:cxtValue "/example-graphql4sparql" ;
+    ] ;
+    # Link to fuseki's query interface.
+    ja:context [ 
+      ja:cxtName "https://w3id.org/aksw/graphql4sparql/fuseki#sparqlQueryViewer" ;
+      ja:cxtValue "/#/dataset/example-graphql4sparql/query?query={ENCODED_SPARQL_QUERY}" ;
+    ] ;
+    # Link to public YasGUI:
+    # ja:context [
+    #   ja:cxtName "https://w3id.org/aksw/graphql4sparql/fuseki#sparqlQueryViewer" ;
+    #   ja:cxtValue "https://yasgui.triply.cc/#?query={ENCODED_SPARQL_QUERY}&endpoint={ENCODED_SPARQL_QUERY_ENDPOINT}" ;
+    # ] ;
+  ] ;
+  .
+  
+<#baseDS> rdf:type tdb2:DatasetTDB2 ;
+  tdb2:location "run/databases/tdb2/example-graphql4sparql/" ;
+  ### tdb2:unionDefaultGraph true ;
+  .
+```
+
+</details>
+
+See also: [Fuseki Modules](https://jena.apache.org/documentation/fuseki2/fuseki-modules.html).
+
+## Using GraphQL with the RDF Processing Toolkit
+
+This project is integrated in our [RDF Processing Toolkit (RPT)](https://github.com/Scaseco/RdfProcessingToolkit).
+RPT is a tool for any kind of SPARQL-based RDF manipulation with minimum configuration overhead.
+It can be used for shell scripting, but also comes with a web server rapid prototyping. It ships with several SPARQL(-based) extensions,
+such as this GraphQL engine.
+
+The examples below use `YOUR_DATA.ttl`, but any RDF format supported by Apache Jena can be used (e.g. rdf/xml).
+
+* The schema generator is part of rpt:
+
+```bash
+rpt graphqltk schemagen YOUR_DATA.ttl > your-schema.graphql
+```
+
+* Start a server over a file with your own RDF data
+
+```bash
+rpt integrate --server YOUR_DATA.ttl --graphql-schema your-schema.graphql
+```
+
+* Start a server with SPARQL polyfill for LATERAL (will make many requests!)
+
+```bash
+rpt integrate -e remote --loc http://your.sparql/endpoint --graphql-schema schema.graphql --polyfill-lateral
+```
+
+## Execution Model
+
+The SPARQL queries generated by the GraphQl4Sparql system make certain non-standard assumptions about the SPARQL semantics,
+which are not met by every engine.
+For engines that do not fulfill these assumptions, it is possibly to "polyfill" these unmet assumptions using a
+SPARQL middleware. However, this typically results in breaking an original holistic GraphQl4Sparql SPARQL query down into a
+large amount of smaller SPARQL requests.
+
+A SPARQL engine must support the following features to leverage maximum performance with GraphQl4Sparql:
+* Lateral joins with the `LATERAL` keyword.
+* Order preserving evaluation, especially:
+    * `A LATERAL B`: For each binding in A, all corresponding bindings in B must be emitted immediately and in order.  
+    * Inter-order preserving unions: Evaluation of `A UNION B` must yield all bindings of A before those of B.
+    * Order-preserving graph pattern: Evaluation of `{ SELECT [...] ORDER BY [...] }` must preserve the order when evaluating the outer group graph pattern.
+
+Known implementations of lateral joins:
+* [LATERAL/Jena](https://jena.apache.org/documentation/query/lateral-join.html)
+* [LATERAL/Oxigraph](https://github.com/oxigraph/oxigraph/wiki/SPARQL#sep-0006-and-sep-0007-lateral-joins).
+
+## License
+
+This project is licensed under the Apache License, Version 2.0. See the [LICENSE](LICENSE) file for details.
+
+## Contributing
+
+Contributions are welcome! Please read our [contributing guidelines](CONTRIBUTING.md) before opening a pull request.
+
+## Contact
+
+* Issue tracker: https://github.com/Scaseco/graphql4sparql/issues
+* Author: [Claus Stadler](http://aksw.org/ClausStadler)
+

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>graphql4sparql-schemagen-parent</artifactId>
+<name>GraphQl4Sparql - Schema Generator - Parent</name>
+<description>GraphQl4Sparql Schema Generator Parent</description>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.aksw.graphql4sparql</groupId>
+		<artifactId>graphql4sparql-parent</artifactId>
+		<version>0.7.0</version>
+	</parent>
+
+	<modules>
+		<module>graphql4sparql-schemagen-core</module>
+		<module>graphql4sparql-schemagen-cmds</module>
+	</modules>
+</project>
+

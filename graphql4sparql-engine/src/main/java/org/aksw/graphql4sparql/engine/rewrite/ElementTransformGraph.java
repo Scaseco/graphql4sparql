@@ -1,0 +1,47 @@
+package org.aksw.graphql4sparql.engine.rewrite;
+
+import java.util.Objects;
+import java.util.Set;
+
+import org.aksw.graphql4sparql.engine.api2.ElementTransform;
+import org.apache.jena.graph.Node;
+import org.apache.jena.sparql.core.Var;
+import org.apache.jena.sparql.syntax.Element;
+import org.apache.jena.sparql.syntax.ElementNamedGraph;
+
+/**
+ * A transformation that wraps an element with a named graph.
+ */
+public class ElementTransformGraph
+    implements ElementTransform
+{
+    /**
+     * The graph node.
+     */
+    protected Node node;
+
+    /**
+     * Creates a new element transform graph.
+     *
+     * @param node The graph node
+     */
+    public ElementTransformGraph(Node node) {
+        super();
+        this.node = Objects.requireNonNull(node);
+    }
+
+    @Override
+    public Element apply(Element t) {
+        return new ElementNamedGraph(node, t);
+    }
+
+    @Override
+    public Set<Var> getDeclaredVariables() {
+        return node instanceof Var v ? Set.of(v) : Set.of();
+    }
+
+    @Override
+    public String toString() {
+        return "ElementTransformGraph [node=" + node + "]";
+    }
+}

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>graphql4sparql-ui</artifactId>
+	<name>GraphQl4Sparql - Web UI</name>
+	<description>GraphQl4Sparql - Web UI</description>
+
+	<parent>
+		<groupId>org.aksw.graphql4sparql</groupId>
+		<artifactId>graphql4sparql-parent</artifactId>
+		<version>0.7.0</version>
+	</parent>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.15.0</version>
+				<executions>
+					<execution>
+						<id>install-node-and-yarn</id>
+						<goals>
+							<goal>install-node-and-yarn</goal>
+						</goals>
+						<configuration>
+							<nodeVersion>v18.17.1</nodeVersion>
+							<yarnVersion>v1.22.19</yarnVersion>
+							<workingDirectory>frontend</workingDirectory>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>yarn-install</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<configuration>
+							<arguments>install</arguments>
+							<workingDirectory>frontend</workingDirectory>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>yarn-run-build</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>run build</arguments>
+							<workingDirectory>frontend</workingDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Maven Resources Plugin -->
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.2.0</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>
+								${project.build.outputDirectory}/static</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/frontend/build</directory>
+									<includes>
+										<include>**/*</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+
+	<dependencies>
+	</dependencies>
+</project>

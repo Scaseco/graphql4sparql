@@ -1,0 +1,410 @@
+package org.aksw.graphql4sparql.engine.util;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Stream;
+
+import org.aksw.graphql4sparql.engine.util.backport.syntaxtransform.ElementTransformer;
+import org.apache.jena.atlas.lib.tuple.Tuple;
+import org.apache.jena.graph.Node;
+import org.apache.jena.graph.Triple;
+import org.apache.jena.query.Query;
+import org.apache.jena.sparql.algebra.Algebra;
+import org.apache.jena.sparql.algebra.Op;
+import org.apache.jena.sparql.algebra.OpVars;
+import org.apache.jena.sparql.core.BasicPattern;
+import org.apache.jena.sparql.core.TriplePath;
+import org.apache.jena.sparql.core.Var;
+import org.apache.jena.sparql.expr.ExprTransform;
+import org.apache.jena.sparql.graph.NodeTransform;
+import org.apache.jena.sparql.path.Path;
+import org.apache.jena.sparql.syntax.Element;
+import org.apache.jena.sparql.syntax.ElementGroup;
+import org.apache.jena.sparql.syntax.ElementPathBlock;
+import org.apache.jena.sparql.syntax.ElementSubQuery;
+import org.apache.jena.sparql.syntax.ElementTriplesBlock;
+import org.apache.jena.sparql.syntax.ElementUnion;
+import org.apache.jena.sparql.syntax.syntaxtransform.ElementTransform;
+import org.apache.jena.sparql.syntax.syntaxtransform.ExprTransformNodeElement;
+
+import graphql.com.google.common.collect.Iterables;
+
+/**
+ * Utility class for working with SPARQL elements.
+ */
+public class ElementUtils {
+    private ElementUtils() {}
+
+    /**
+     * Recursively unnests groups of one element.
+     *
+     * @param elt The element
+     * @return The unnested element
+     */
+    public static Element recursivelyUnnestGroupsOfOne(Element elt) {
+        return elt instanceof ElementGroup g && g.size() == 1
+            ? recursivelyUnnestGroupsOfOne(g.get(0))
+            : elt;
+    }
+
+    /**
+     * Creates an element triple with the given subject, predicate, and object.
+     *
+     * @param s The subject node
+     * @param p The predicate node
+     * @param o The object node
+     * @return The element triple
+     */
+    public static ElementTriplesBlock createElementTriple(Node s, Node p, Node o) {
+        return createElement(Triple.create(s, p, o));
+    }
+
+    /**
+     * Creates an element triple with the given subject, predicate, and object.
+     *
+     * @param s The subject node
+     * @param p The predicate node
+     * @param o The object node
+     * @param isForward The direction flag
+     * @return The element triple
+     */
+    public static ElementTriplesBlock createElementTriple(Node s, Node p, Node o, boolean isForward) {
+        return createElement(TripleUtils.create(s, p, o, isForward));
+    }
+
+    /**
+     * Creates an element from a triple.
+     *
+     * @param triple The triple
+     * @return The element
+     */
+    public static ElementTriplesBlock createElement(Triple triple) {
+        BasicPattern bgp = new BasicPattern();
+        bgp.add(triple);
+        ElementTriplesBlock result = new ElementTriplesBlock(bgp);
+        return result;
+    }
+
+    /**
+     * Creates an element path with the given subject, path, and object.
+     *
+     * @param s The subject node
+     * @param p The path
+     * @param o The object node
+     * @return The element path
+     */
+    public static ElementPathBlock createElementPath(Node s, Path p, Node o) {
+        ElementPathBlock result = createElementPath(new TriplePath(s, p, o));
+        return result;
+    }
+
+    /**
+     * Creates an element path with the given triple paths.
+     *
+     * @param tps The triple paths
+     * @return The element path
+     */
+    public static ElementPathBlock createElementPath(TriplePath ... tps) {
+        ElementPathBlock result = createElementPath(Arrays.asList(tps));
+        return result;
+    }
+
+    /**
+     * Creates an element path with the given iterable of triple paths.
+     *
+     * @param it The iterable of triple paths
+     * @return The element path
+     */
+    public static ElementPathBlock createElementPath(Iterable<TriplePath> it) {
+        ElementPathBlock result = new ElementPathBlock();
+        for(TriplePath tp : it) {
+            result.addTriple(tp);
+        }
+        return result;
+    }
+
+    /**
+     * Creates an element group with the given members.
+     *
+     * @param members The members
+     * @return The element group
+     */
+    public static ElementGroup createElementGroup(Element ... members) {
+        ElementGroup result = new ElementGroup();
+        for(Element member : members) {
+            result.addElement(member);
+        }
+        return result;
+    }
+
+    /**
+     * Groups the members if there are multiple, otherwise returns the single member.
+     *
+     * @param members The members
+     * @return The element
+     */
+    public static Element groupIfNeeded(Iterable<? extends Element> members) {
+        Element result = Iterables.size(members) == 1
+                ? members.iterator().next()
+                : createElementGroup(members)
+                ;
+
+        return result;
+
+    }
+
+    /**
+     * Groups the members if there are multiple, otherwise returns the single member.
+     *
+     * @param members The members
+     * @return The element
+     */
+    public static Element groupIfNeeded(Element ... members) {
+        Element result = groupIfNeeded(Arrays.asList(members));
+        return result;
+    }
+
+    /**
+     * Creates an element group with the given iterable of members.
+     *
+     * @param members The members
+     * @return The element group
+     */
+    public static ElementGroup createElementGroup(Iterable<? extends Element> members) {
+        ElementGroup result = new ElementGroup();
+        for(Element member : members) {
+            result.addElement(member);
+        }
+        return result;
+    }
+
+    /**
+     * Unions the elements if there are multiple, otherwise returns the single element.
+     *
+     * @param elements The elements
+     * @return The element
+     */
+    public static Element unionIfNeeded(Element ... elements) {
+        Element result = unionIfNeeded(Arrays.asList(elements));
+        return result;
+    }
+
+    /**
+     * Unions the elements if there are multiple, otherwise returns the single element.
+     *
+     * @param elements The elements
+     * @return The element
+     */
+    public static Element unionIfNeeded(Collection<Element> elements) {
+        Element result;
+        if(elements.size() == 1) {
+            result = elements.iterator().next();
+        } else {
+            ElementUnion e = new ElementUnion();
+            for(Element element : elements) {
+                e.addElement(element);
+            }
+            result = e;
+        }
+
+        return result;
+    }
+
+    /**
+     * If the argument is an element group then stream its members. Otherwise, return a singleton stream
+     * of the argument.
+     *
+     * @param elt The element
+     * @return The stream of elements
+     */
+    public static Stream<Element> steamGroupMembersOrSelf(Element elt) {
+        return elt instanceof ElementGroup g
+                ? g.getElements().stream()
+                : Stream.of(elt);
+    }
+
+    /**
+     * Flattens a group of elements.
+     *
+     * @param elts The elements
+     * @return The flattened element
+     */
+    public static Element flatGroup(Element ...elts) {
+        return flatGroup(Arrays.asList(elts));
+    }
+
+    /**
+     * Flattens a collection of elements.
+     *
+     * @param elts The elements
+     * @return The flattened element
+     */
+    public static Element flatGroup(Collection<Element> elts) {
+        ElementGroup group = new ElementGroup();
+        elts.stream()
+            .flatMap(ElementUtils::steamGroupMembersOrSelf)
+            .forEach(group::addElement);
+        return group.size() == 1 ? group.get(0) : group;
+    }
+
+    /**
+     * Copies elements from source to target.
+     *
+     * @param target The target element group
+     * @param source The source element
+     * @return The target element group
+     */
+    public static ElementGroup copyElements(ElementGroup target, Element source) {
+        if(source instanceof ElementGroup) {
+            ElementGroup es = (ElementGroup)source;
+
+            for(Element e : es.getElements()) {
+                target.addElement(e);
+            }
+        } else {
+            target.addElement(source);
+        }
+
+        return target;
+    }
+
+    /**
+     * Creates a node transform from a map.
+     *
+     * @param nodeMap The node map
+     * @return The node transform
+     */
+    public static NodeTransform createNodeTransform(Map<?, ? extends Node> nodeMap) {
+        return node -> {
+            Node r = nodeMap.get(node);
+            if (r == null) {
+                r = node;
+            } return r;
+        };
+    }
+
+    /**
+     * Creates a renamed element using a node map.
+     *
+     * @param element The element
+     * @param nodeMap The node map
+     * @return The renamed element
+     */
+    public static Element createRenamedElement(Element element, Map<?, ? extends Node> nodeMap) {
+        NodeTransform nodeTransform = createNodeTransform(nodeMap);
+        Element result = applyNodeTransform(element, nodeTransform);
+        return result;
+    }
+
+//    public static Element createRenamedElement(Element element, NodeTransform nodeTransform) {
+//    	return applyNodeTransform(element, nodeTransform);
+//    }
+
+    /**
+     * Applies a node transform to an element.
+     *
+     * @param element The element
+     * @param nodeTransform The node transform
+     * @return The transformed element
+     */
+    public static Element applyNodeTransform(Element element, NodeTransform nodeTransform) {
+        // return applyNodeTransformJena(element, nodeTransform);
+        return applyNodeTransformBackport(element, nodeTransform);
+    }
+
+    /**
+     * Applies a node transform to an element using the backport version.
+     *
+     * @param element The element
+     * @param nodeTransform The node transform
+     * @return The transformed element
+     */
+    public static Element applyNodeTransformBackport(Element element, NodeTransform nodeTransform) {
+        ElementTransform elementTransform = new ElementTransformSubst2(nodeTransform);//new ElementTransformSubst2(nodeTransform);
+
+        // Need to use backport version because of substitution in aggregators
+        ExprTransform exprTransform = new org.aksw.graphql4sparql.engine.util.backport.syntaxtransform.ExprTransformNodeElement(nodeTransform, elementTransform);
+
+        Element result = ElementTransformer.transform(element, elementTransform, exprTransform);
+
+        return result;
+    }
+
+    /**
+     * Applies a node transform to an element using Jena's version.
+     *
+     * @param element The element
+     * @param nodeTransform The node transform
+     * @return The transformed element
+     */
+    public static Element applyNodeTransformJena(Element element, NodeTransform nodeTransform) {
+        org.apache.jena.sparql.syntax.syntaxtransform.ElementTransform elementTransform = new ElementTransformSubst2(nodeTransform);//new ElementTransformSubst2(nodeTransform);
+        ExprTransform exprTransform = new ExprTransformNodeElement(nodeTransform, elementTransform);
+
+        //Element result = ElementTransformer.transform(element, elementTransform, exprTransform);
+//      Element result = org.aksw.jena_sparql_api.backports.syntaxtransform.ElementTransformer.transform(element, elementTransform, exprTransform);
+        Element result = org.apache.jena.sparql.syntax.syntaxtransform.ElementTransformer.transform(element, elementTransform, exprTransform);
+
+        return result;
+    }
+
+    /**
+     * Infers connection variables from an element.
+     *
+     * @param element The element
+     * @return The list of connection variables
+     */
+    public static List<Var> inferConnecVars(Element element) {
+        List<Var> result = null;
+        Element elt = recursivelyUnnestGroupsOfOne(element);
+        if (elt instanceof ElementSubQuery e) {
+            Query q = e.getQuery();
+            List<Var> projVars = q.getProjectVars();
+            int n = projVars.size();
+            // Treat three variables as "?s ?p ?o": from 's' to 'o'.
+            if (n > 0 && n <= 3) {
+                result = List.of(projVars.get(0), projVars.get(n - 1));
+            }
+        } else {
+            Op op = Algebra.compile(element);
+
+//            Set<Var> allVars = new LinkedHashSet<>();
+//            OpVars.mentionedVars(op, allVars);
+            Set<Var> visibleVars = OpVars.visibleVars(op);
+
+            // TODO We probably need to filter the mentions by whether they are visible!
+
+            // If there is just a single variable in subject and object that use that
+            Tuple<Set<Var>> mentions = OpVars.mentionedVarsByPosition(op);
+
+            // 0=g, 1=s, 2=p, 3=o, 4=unknown
+            Set<Var> ss = mentions.get(1);
+            Set<Var> oo = mentions.get(3);
+            Set<Var> unknowns = mentions.get(4);
+
+            if (unknowns.isEmpty() &&
+                ss.size() <= 1 && oo.size() <= 1 && !(ss.isEmpty() && oo.isEmpty())) {
+                result = new ArrayList<>(2);
+                if (ss.size() == 1) {
+                    result.add(ss.iterator().next());
+                }
+                if (oo.size() == 1) {
+                    result.add(oo.iterator().next());
+                }
+            }
+
+            // If we did not derive a var:
+            //   if there is just one var then use that.
+            if (result == null) {
+                if (visibleVars.size() == 1) {
+                    result = List.of(visibleVars.iterator().next());
+                }
+            }
+        }
+        return result;
+    }
+}

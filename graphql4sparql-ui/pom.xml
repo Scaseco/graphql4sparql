@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>graphql4sparql-ui</artifactId>
-	<name>graphql4sparql-ui</name>
+	<name>GraphQl4Sparql - Web UI</name>
 	<description>GraphQl4Sparql - Web UI</description>
 
 	<parent>

@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>graphql4sparql-bom</artifactId>
-	<name>graphql4sparql-bom</name>
+	<name>GraphQl4Sparql - BOM</name>
 	<description>GraphQl4Sparql - Bill of Materials</description>
 	<packaging>pom</packaging>
 

@@ -5,8 +5,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>graphql4sparql-schemagen-parent</artifactId>
-	<name>graphql4sparql-schemagen-parent</name>
-	<description>GraphQl4Sparql - Schema Generator Parent</description>
+<name>GraphQl4Sparql - Schema Generator - Parent</name>
+<description>GraphQl4Sparql Schema Generator Parent</description>
 	<packaging>pom</packaging>
 
 	<parent>

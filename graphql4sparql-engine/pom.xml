@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>graphql4sparql-engine</artifactId>
-	<name>graphql4sparql-engine</name>
+	<name>GraphQl4Sparql - Engine</name>
 	<description>GraphQl4Sparql - Engine</description>
 	<packaging>jar</packaging>
 

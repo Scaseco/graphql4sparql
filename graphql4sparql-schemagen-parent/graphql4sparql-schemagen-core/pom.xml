@@ -5,8 +5,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>graphql4sparql-schemagen-core</artifactId>
-	<name>graphql4sparql-schemagen-core</name>
-	<description>GraphQl4Sparql - Schema Generator Core</description>
+	<name>GraphQl4Sparql - Schema Generator - Core</name>
+	<description>GraphQl4Sparql Schema Generator Core</description>
 	<packaging>jar</packaging>
 
 	<parent>

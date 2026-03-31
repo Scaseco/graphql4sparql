@@ -7,7 +7,7 @@
 	<artifactId>graphql4sparql-parent</artifactId>
 	<version>0.7.0</version>
 	<packaging>pom</packaging>
-	<name>GraphQL over SPARQL System</name>
+	<name>GraphQl4Sparql - Parent</name>
 	<description>GraphQl4Sparql - GraphQL to SPARQL rewrite engine and schema generator. Based on Apache Jena.</description>
 	<url>https://github.com/Scaseco/graphql4sparql</url>
 	<issueManagement>
@@ -60,11 +60,11 @@
 		<!-- <slf4j.version>2.0.17</slf4j.version> -->
 		<!-- <log4j.version>2.25.3</log4j.version> -->
 
-		<jdeb.version>1.10</jdeb.version>
+		<jdeb.version>1.14</jdeb.version>
 
 		<maven-surefire-plugin.version>3.5.5</maven-surefire-plugin.version>
 		<maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
-		<maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
+		<maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
 		<maven-release-plugin.version>3.3.1</maven-release-plugin.version>
 		<central-publishing-maven-plugin.version>0.10.0</central-publishing-maven-plugin.version>
 		<maven-shade-plugin.version>3.6.2</maven-shade-plugin.version>
@@ -75,7 +75,7 @@
 		<maven-jar-plugin.version>3.5.0</maven-jar-plugin.version>
 		<maven-war-plugin.version>3.5.1</maven-war-plugin.version>
 		<maven-install-plugin.version>3.1.4</maven-install-plugin.version>
-		<maven-dependency-plugin.version>3.0.2</maven-dependency-plugin.version>
+		<maven-dependency-plugin.version>3.10.0</maven-dependency-plugin.version>
 
 		<spotless-maven-plugin.version>3.4.0</spotless-maven-plugin.version>
 		<google-java-format.version>1.35.0</google-java-format.version>

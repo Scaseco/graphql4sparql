@@ -15,7 +15,7 @@
 	</parent>
 
 	<modules>
-		<module>graphql4sparql-pkg-fuseki-mod</module>
+		<module>graphql4sparql-pkg-fuseki-plugin</module>
 		<module>graphql4sparql-pkg-uberjar-cli</module>
 		<module>graphql4sparql-pkg-deb-cli</module>
 	</modules>

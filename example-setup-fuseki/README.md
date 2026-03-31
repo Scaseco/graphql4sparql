@@ -9,7 +9,7 @@ Fuseki set up! Start it with:
 
 (cd target/fuseki && ./fuseki-server --config=run/config.ttl --port 3030)
 
-The Web UI will be available at http://localhost:3030/graphql-test/graphql
+The Web UI will be available at http://localhost:3030/example-graphql4sparql/graphql
 
 Here is an example query to put into the UI:
 
@@ -30,11 +30,11 @@ query @debug @pretty {
 It is also possible to query with curl:
 
 ```bash
-curl -X POST 'http://localhost:3030/graphql-test/graphql' -d \
+curl -X POST 'http://localhost:3030/example-graphql4sparql/graphql' -d \
   '{"query":"query @debug @pretty { Person { uri birthDate topic_interest { title } } }"}'
 ```
 
-Once Fuseki is running, visit the graphql interface at: `http://localhost:3030/graphql-test/graphql`
+Once Fuseki is running, visit the graphql interface at: `http://localhost:3030/example-graphql4sparql/graphql`
 
 Thanks to the schema, it is possible to write simple GraphQL queries such as the following.
 Use `@pretty` for pretty formatting and `@debug` for the generated response to include the underlying SPARQL query string.

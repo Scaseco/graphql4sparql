@@ -2,14 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>graphql4sparql-pkg-fuseki-mod</artifactId>
-  <description>Graphql2Sparql - Fuseki Mod - Plugin Jar</description>
-
   <parent>
     <groupId>org.aksw.graphql4sparql</groupId>
     <artifactId>graphql4sparql-pkg-parent</artifactId>
     <version>0.1.0-SNAPSHOT</version>
   </parent>
+
+  <artifactId>graphql4sparql-pkg-fuseki-plugin</artifactId>
+  <description>Graphql4Sparql - Fuseki Plugin Jar</description>
+
+  <properties>
+    <outputBaseName>graphql4sparql-fuseki-plugin-${project.version}</outputBaseName>
+  </properties>
 
   <dependencies>
     <dependency>
@@ -48,8 +52,8 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
-          <windowtitle>GraphQL over SPARQL Fuseki Mod</windowtitle>
-          <doctitle>GraphQL over SPARQL Fuseki Mod ${project.version}</doctitle>
+          <windowtitle>GraphQL over SPARQL Fuseki Plugin</windowtitle>
+          <doctitle>GraphQL over SPARQL Fuseki Plugin ${project.version}</doctitle>
         </configuration>
       </plugin>
      
@@ -73,9 +77,35 @@
           <artifactId>jena-arq</artifactId>
           <scope>provided</scope>
         </dependency>
+        <dependency>
+          <groupId>org.apache.jena</groupId>
+          <artifactId>jena-fuseki-server</artifactId>
+          <scope>provided</scope>
+        </dependency>
       </dependencies>
       <build>  
         <plugins>
+          <!-- jar file produced with this configuration gets intensionally overwritten by the shade plugin -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-jar</id>
+                <phase>package</phase>
+              </execution>
+            </executions>
+            <configuration>
+              <finalName>${outputBaseName}</finalName>
+              <!-- Skip manifest as shade will overwrite -->
+<!--              <archive>-->
+<!--                <manifest>-->
+<!--                  <addDefaultImplementationEntries>false</addDefaultImplementationEntries>-->
+<!--                  <addDefaultSpecificationEntries>false</addDefaultSpecificationEntries>-->
+<!--                </manifest>-->
+<!--              </archive>-->
+            </configuration>
+          </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-shade-plugin</artifactId>
@@ -86,14 +116,8 @@
                   <goal>shade</goal>
                 </goals>
                 <configuration>
-                <shadedArtifactAttached>true</shadedArtifactAttached>
-                  <shadedClassifierName>jar-with-dependencies</shadedClassifierName>
-                  <relocations>
-                    <relocation>
-                      <pattern>graphql</pattern>
-                      <shadedPattern>org.aksw.graphql4sparql.shaded.graphql</shadedPattern>
-                    </relocation>
-                  </relocations>
+                  <shadedArtifactAttached>false</shadedArtifactAttached>
+                  <outputFile>${project.build.directory}/${outputBaseName}.jar</outputFile>
                   <transformers>
                     <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
                     <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer" />
@@ -103,7 +127,6 @@
                   </transformers>
                   <filters>
                     <filter>
-                      <artifact>*:*</artifact>
                       <excludes>
                         <exclude>META-INF/*.SF</exclude>
                         <exclude>META-INF/*.DSA</exclude>

@@ -11,7 +11,7 @@ PREFIX geosparql: <http://jena.apache.org/geosparql#>
 PREFIX g4sf:      <https://w3id.org/aksw/graphql4sparql/fuseki#>
 
 <#service> rdf:type fuseki:Service ;
-  fuseki:name "graphql-test" ;
+  fuseki:name "example-graphql4sparql" ;
   fuseki:dataset <#baseDS> ;
   fuseki:endpoint [
     fuseki:operation fuseki:query ;
@@ -29,11 +29,26 @@ PREFIX g4sf:      <https://w3id.org/aksw/graphql4sparql/fuseki#>
   fuseki:endpoint [
     fuseki:name "graphql" ;
     fuseki:operation g4sf:query ;
-    ja:context [ ja:cxtName "https://w3id.org/aksw/graphql4sparql/fuseki#schemaFile" ; ja:cxtValue "run/configuration/mona-lisa.graphql" ];
-    # ja:context [ ja:cxtName "https://w3id.org/aksw/graphql4sparql/fuseki#schemaFile"          ; ja:cxtValue "run/configuration/graphql-test.graphql" ] ;
-    ja:context [ ja:cxtName "https://w3id.org/aksw/graphql4sparql/fuseki#sparqlQueryEndpoint" ; ja:cxtValue "/graphql-test" ] ;
-    ja:context [ ja:cxtName "https://w3id.org/aksw/graphql4sparql/fuseki#sparqlQueryViewer"   ; ja:cxtValue "https://yasgui.triply.cc/#?query={ENCODED_SPARQL_QUERY}&endpoint={ENCODED_SPARQL_QUERY_ENDPOINT}" ] ;
-    # ja:context [ ja:cxtName "https://w3id.org/aksw/graphql4sparql/fuseki#sparqlQueryViewer"   ; ja:cxtValue "/#/dataset/coypu/query?query={ENCODED_SPARQL_QUERY}" ] ;
+    ja:context [
+      ja:cxtName "https://w3id.org/aksw/graphql4sparql/fuseki#schemaFile" ;
+      ja:cxtValue "run/configuration/mona-lisa.graphql" ;
+    ];
+    # ja:context [
+    #   ja:cxtName "https://w3id.org/aksw/graphql4sparql/fuseki#schemaFile" ;
+    #   ja:cxtValue "run/configuration/graphql-test.graphql" ;
+    # ] ;
+    ja:context [
+      ja:cxtName "https://w3id.org/aksw/graphql4sparql/fuseki#sparqlQueryEndpoint" ;
+      ja:cxtValue "/example-graphql4sparql" ;
+    ] ;
+    ja:context [
+      ja:cxtName "https://w3id.org/aksw/graphql4sparql/fuseki#sparqlQueryViewer" ;
+      ja:cxtValue "https://yasgui.triply.cc/#?query={ENCODED_SPARQL_QUERY}&endpoint={ENCODED_SPARQL_QUERY_ENDPOINT}" ;
+    ] ;
+    # ja:context [
+    #   ja:cxtName "https://w3id.org/aksw/graphql4sparql/fuseki#sparqlQueryViewer" ;
+    #   ja:cxtValue "/#/dataset/coypu/query?query={ENCODED_SPARQL_QUERY}" ;
+    # ] ;
   ] ;
   .
 

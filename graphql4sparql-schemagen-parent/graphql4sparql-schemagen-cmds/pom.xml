@@ -6,6 +6,7 @@
 
 	<artifactId>graphql4sparql-schemagen-cmds</artifactId>
 	<name>graphql4sparql-schemagen-cmds</name>
+	<description>GraphQl4Sparql - Schema Generator Commands</description>
 	<packaging>jar</packaging>
 
 	<parent>

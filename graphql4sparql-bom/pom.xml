@@ -6,6 +6,7 @@
 
 	<artifactId>graphql4sparql-bom</artifactId>
 	<name>graphql4sparql-bom</name>
+	<description>GraphQl4Sparql - Bill of Materials</description>
 	<packaging>pom</packaging>
 
 	<parent>

@@ -6,6 +6,7 @@
 
 	<artifactId>graphql4sparql-schemagen-parent</artifactId>
 	<name>graphql4sparql-schemagen-parent</name>
+	<description>GraphQl4Sparql - Schema Generator Parent</description>
 	<packaging>pom</packaging>
 
 	<parent>

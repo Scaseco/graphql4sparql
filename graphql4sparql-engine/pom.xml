@@ -6,6 +6,7 @@
 
 	<artifactId>graphql4sparql-engine</artifactId>
 	<name>graphql4sparql-engine</name>
+	<description>GraphQl4Sparql - Engine</description>
 	<packaging>jar</packaging>
 
 	<parent>

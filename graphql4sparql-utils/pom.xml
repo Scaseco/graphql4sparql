@@ -6,6 +6,7 @@
 
 	<artifactId>graphql4sparql-utils</artifactId>
 	<name>graphql4sparql-utils</name>
+	<description>GraphQl4Sparql - Utilities</description>
 	<packaging>jar</packaging>
 
 	<parent>

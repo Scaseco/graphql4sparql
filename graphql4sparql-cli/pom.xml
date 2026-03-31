@@ -6,6 +6,7 @@
 
 	<artifactId>graphql4sparql-cli</artifactId>
 	<name>graphql4sparql-cli</name>
+	<description>GraphQl4Sparql - Command Line Interface</description>
 	<packaging>jar</packaging>
 
 	<parent>

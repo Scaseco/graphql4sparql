@@ -6,6 +6,7 @@
 
 	<artifactId>graphql4sparql-ui</artifactId>
 	<name>graphql4sparql-ui</name>
+	<description>GraphQl4Sparql - Web UI</description>
 
 	<parent>
 		<groupId>org.aksw.graphql4sparql</groupId>

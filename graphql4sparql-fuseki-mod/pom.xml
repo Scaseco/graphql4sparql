@@ -6,7 +6,7 @@
 
 	<artifactId>graphql4sparql-fuseki-mod</artifactId>
 	<name>graphql4sparql-fuseki-mod</name>
-	<description>GraphQL Fuseki Module</description>
+	<description>GraphQl4Sparql - Fuseki Module</description>
 
 	<parent>
 		<groupId>org.aksw.graphql4sparql</groupId>

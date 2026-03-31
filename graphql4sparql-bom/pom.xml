@@ -5,42 +5,53 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>graphql4sparql-bom</artifactId>
-	<name>graphql4sparql-bom</name>
+	<name>GraphQl4Sparql - BOM</name>
+	<description>GraphQl4Sparql - Bill of Materials</description>
 	<packaging>pom</packaging>
 
 	<parent>
 		<groupId>org.aksw.graphql4sparql</groupId>
 		<artifactId>graphql4sparql-parent</artifactId>
-		<version>0.7.0-SNAPSHOT</version>
+		<version>0.7.0</version>
 	</parent>
 
 	<dependencies>
-			<!--
-			<dependency>
-				<groupId>org.aksw.graphql4sparql</groupId>
-				<artifactId>graphql4sparql-legacy</artifactId>
-			</dependency>
-			-->
+		<!--
+		<dependency>
+			<groupId>org.aksw.graphql4sparql</groupId>
+			<artifactId>graphql4sparql-legacy</artifactId>
+		</dependency>
+		-->
 
-			<dependency>
-				<groupId>org.aksw.graphql4sparql</groupId>
-				<artifactId>graphql4sparql-utils</artifactId>
-			</dependency>
+		<dependency>
+			<groupId>org.aksw.graphql4sparql</groupId>
+			<artifactId>graphql4sparql-utils</artifactId>
+		</dependency>
 
-			<dependency>
-				<groupId>org.aksw.graphql4sparql</groupId>
-				<artifactId>graphql4sparql-engine</artifactId>
-			</dependency>
+		<dependency>
+			<groupId>org.aksw.graphql4sparql</groupId>
+			<artifactId>graphql4sparql-engine</artifactId>
+		</dependency>
 
-			<dependency>
-				<groupId>org.aksw.graphql4sparql</groupId>
-				<artifactId>graphql4sparql-ui</artifactId>
-			</dependency>
+		<dependency>
+			<groupId>org.aksw.graphql4sparql</groupId>
+			<artifactId>graphql4sparql-ui</artifactId>
+		</dependency>
 
-			<dependency>
-				<groupId>org.aksw.graphql4sparql</groupId>
-				<artifactId>graphql4sparql-fuseki-mod</artifactId>
-			</dependency>
+		<dependency>
+			<groupId>org.aksw.graphql4sparql</groupId>
+			<artifactId>graphql4sparql-fuseki-mod</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aksw.graphql4sparql</groupId>
+			<artifactId>graphql4sparql-schemagen-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aksw.graphql4sparql</groupId>
+			<artifactId>graphql4sparql-schemagen-cmds</artifactId>
+		</dependency>
 	</dependencies>
 </project>
 

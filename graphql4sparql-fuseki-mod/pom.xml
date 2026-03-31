@@ -5,13 +5,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>graphql4sparql-fuseki-mod</artifactId>
-	<name>graphql4sparql-fuseki-mod</name>
-	<description>GraphQL Fuseki Module</description>
+<name>GraphQl4Sparql - Fuseki Module</name>
+<description>GraphQl4Sparql - Fuseki Module</description>
 
 	<parent>
 		<groupId>org.aksw.graphql4sparql</groupId>
 		<artifactId>graphql4sparql-parent</artifactId>
-		<version>0.7.0-SNAPSHOT</version>
+		<version>0.7.0</version>
 	</parent>
 
 	<properties>

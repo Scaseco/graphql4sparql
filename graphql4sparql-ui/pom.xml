@@ -5,12 +5,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>graphql4sparql-ui</artifactId>
-	<name>graphql4sparql-ui</name>
+	<name>GraphQl4Sparql - Web UI</name>
+	<description>GraphQl4Sparql - Web UI</description>
 
 	<parent>
 		<groupId>org.aksw.graphql4sparql</groupId>
 		<artifactId>graphql4sparql-parent</artifactId>
-		<version>0.7.0-SNAPSHOT</version>
+		<version>0.7.0</version>
 	</parent>
 
 	<build>

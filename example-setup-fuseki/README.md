@@ -75,7 +75,7 @@ The following is the generic "`SELECT SPO`" query which groups all data by subje
 ```graphql
 query spo @debug @pretty {
   subjects @pattern(of: "SELECT DISTINCT ?s { ?s ?p ?o } ", to: "s") @index(by: "?s", oneIf: "true") {
-    predicates @pattern(of: "?s2 ?p2 ?o2", from: "s2", to: ["s2", "p2", "o2"]) @index(by: "?p2", oneIf: "false") @array {
+    predicates @pattern(of: "?s2 ?p2 ?o2", from: "s2", to: "o2") @index(by: "?p2", oneIf: "false") @array {
       objects @bind(of: "?o2")
     }
   }

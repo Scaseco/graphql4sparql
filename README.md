@@ -79,7 +79,7 @@ PREFIX ja:        <http://jena.hpl.hp.com/2005/11/Assembler#>
 PREFIX g4sf:      <https://w3id.org/aksw/graphql4sparql/fuseki#>
 
 <#service> rdf:type fuseki:Service ;
-  fuseki:name "graphql-test" ;
+  fuseki:name "example-graphql4sparql" ;
   fuseki:dataset <#baseDS> ;
   fuseki:endpoint [
     fuseki:operation fuseki:query ;
@@ -93,12 +93,12 @@ PREFIX g4sf:      <https://w3id.org/aksw/graphql4sparql/fuseki#>
     ] ;
     ja:context [
       ja:cxtName  g4sf:sparqlQueryEndpoint ;
-      ja:cxtValue "/graphql-test" ;
+      ja:cxtValue "/example-graphql4sparql" ;
     ] ;
     # Link to fuseki's query interface.
     ja:context [ 
       ja:cxtName g4sf:sparqlQueryViewer ;
-      ja:cxtValue "/#/dataset/graphql-test/query?query={ENCODED_SPARQL_QUERY}" ;
+      ja:cxtValue "/#/dataset/example-graphql4sparql/query?query={ENCODED_SPARQL_QUERY}" ;
     ] ;
     # Link to public YasGUI:
     # ja:context [
@@ -109,7 +109,7 @@ PREFIX g4sf:      <https://w3id.org/aksw/graphql4sparql/fuseki#>
   .
   
 <#baseDS> rdf:type tdb2:DatasetTDB2 ;
-  tdb2:location "run/databases/tdb2/graphql-testdb/" ;
+  tdb2:location "run/databases/tdb2/example-graphql4sparql/" ;
   ### tdb2:unionDefaultGraph true ;
   .
 ```
@@ -124,7 +124,7 @@ PREFIX ja:        <http://jena.hpl.hp.com/2005/11/Assembler#>
 PREFIX g4sf:      <https://w3id.org/aksw/graphql4sparql/fuseki#>
 
 <#service> rdf:type fuseki:Service ;
-  fuseki:name "graphql-test" ;
+  fuseki:name "example-graphql4sparql" ;
   fuseki:dataset <#baseDS> ;
   fuseki:endpoint [
     fuseki:operation fuseki:query ;
@@ -138,12 +138,12 @@ PREFIX g4sf:      <https://w3id.org/aksw/graphql4sparql/fuseki#>
     ] ;
     ja:context [
       ja:cxtName  "https://w3id.org/aksw/graphql4sparql/fuseki#sparqlQueryEndpoint" ;
-      ja:cxtValue "/graphql-test" ;
+      ja:cxtValue "/example-graphql4sparql" ;
     ] ;
     # Link to fuseki's query interface.
     ja:context [ 
       ja:cxtName "https://w3id.org/aksw/graphql4sparql/fuseki#sparqlQueryViewer" ;
-      ja:cxtValue "/#/dataset/graphql-test/query?query={ENCODED_SPARQL_QUERY}" ;
+      ja:cxtValue "/#/dataset/example-graphql4sparql/query?query={ENCODED_SPARQL_QUERY}" ;
     ] ;
     # Link to public YasGUI:
     # ja:context [
@@ -154,7 +154,7 @@ PREFIX g4sf:      <https://w3id.org/aksw/graphql4sparql/fuseki#>
   .
   
 <#baseDS> rdf:type tdb2:DatasetTDB2 ;
-  tdb2:location "run/databases/tdb2/graphql-testdb/" ;
+  tdb2:location "run/databases/tdb2/example-graphql4sparql/" ;
   ### tdb2:unionDefaultGraph true ;
   .
 ```
